@@ -1,5 +1,4 @@
 # Common
-.DS_Store
 Thumbs.db
 db.json
 *.log
@@ -11,7 +10,7 @@ public/
 /dev
 
 # Hidden routing rules for Wjghj Server
-\@*
+@*.*
 
 # Secret
 secret_*.*
