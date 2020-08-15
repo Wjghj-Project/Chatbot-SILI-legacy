@@ -12,5 +12,6 @@ public/
 # Hidden routing rules for Wjghj Server
 @*.*
 
-# Secret
+# Secret files (save passwords etc.)
 secret_*.*
+secret/

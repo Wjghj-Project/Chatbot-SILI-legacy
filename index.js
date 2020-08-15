@@ -13,13 +13,13 @@
 const { App, startAll, createUser, createGroup, UserFlag, GroupFlag } = require('koishi') // koishi 机器人库
 require('koishi-database-mysql') // 数据库驱动
 const axios = require('axios') // axios 用于发送http请求
-const { fandomCommunitySearch } = require('./models/cmd_fandomCommunitySearch') // fandomCommunitySearch
+const { fandomCommunitySearch } = require('./commands/fandomCommunitySearch') // fandomCommunitySearch
 const md5 = require('md5') // md5 生成哈希值
-const { random } = require('./models/random') // random 从数组中随机抽取一个
-const { sysLog } = require('./models/sysLog') // sysLog 保存日志
+const { random } = require('./utils/random') // random 从数组中随机抽取一个
+const { sysLog } = require('./utils/sysLog') // sysLog 保存日志
 
 // 以下文件不会被推送
-const qqNumber = require('./models/secret_qqNumber')
+const qqNumber = require('./secret/qqNumber')
 
 /**
  * @instance app koishi实例
@@ -48,7 +48,7 @@ function init() {
    * @module util-qq-link
    * @description Fandom QQ群 → Discord
    */
-  app.group(254794102).receiver.on('message', meta => {
+  app.group(qqNumber.group.fandom).receiver.on('message', meta => {
     meta.message = meta.message.replace(new RegExp('&#91;', 'g'), '[')
     meta.message = meta.message.replace(new RegExp('&#93;', 'g'), ']')
     var send = ''
@@ -67,7 +67,7 @@ function init() {
       content: send,
       avatar_url: 'https://www.gravatar.com/avatar/' + md5(meta.sender.userId + '@qq.com')
     }
-    axios.post(require('./models/secret_discord').fandom_zh.webhook, body)
+    axios.post(require('./secret/discord').fandom_zh.webhook, body)
       .then(res => {
         sysLog('⇿', '消息已推送到Discord')
       })
@@ -80,7 +80,10 @@ function init() {
    * @module util-fandom-qq-group
    * @description Fandom QQ Group Extensions
    */
-  app.group(254794102, 1029954579).receiver.on('message', meta => {
+  app.group(
+    qqNumber.group.fandom,
+    qqNumber.group.dftest
+  ).receiver.on('message', meta => {
     // wikiUrl
     meta.message = meta.message.replace(new RegExp('&#91;', 'g'), '[')
     meta.message = meta.message.replace(new RegExp('&#93;', 'g'), ']')
@@ -114,7 +117,7 @@ function init() {
   })
 
   /**
-   * @module cmd-contactFandom
+   * @module command-contactFandom
    */
   app.command('contact-fandom', '回应Fandom的zendesk链接的快捷方式')
     .alias('fandom-zendesk')
@@ -126,7 +129,7 @@ function init() {
     })
 
   /**
-   * @module cmd-fandomHelpCenter
+   * @module command-fandomHelpCenter
    */
   app.command('fandom-help-center', '回应Fandom的帮助中心链接的快捷方式')
     .alias('fandom-help')
@@ -141,7 +144,7 @@ function init() {
     })
 
   /**
-   * @module cmd-fandomCommunitySearch
+   * @module command-fandomCommunitySearch
    */
   app.command('fandom-community-search <wiki>', '通过名称搜索Fandom Wiki，预设搜索语言为en')
     .alias('搜索fandom', 'fandom-wiki-search', 'search-fandom', 'fandoms', 'fms')
@@ -184,7 +187,7 @@ function init() {
     })
 
   /**
-   * @module cmd-ping
+   * @module command-ping
    */
   app.command('ping', '应答测试')
     .alias('在吗', '测试', '!')
@@ -204,7 +207,7 @@ function init() {
     })
 
   /**
-   * @module cmd-say
+   * @module command-say
    */
   app.command('say <msg...>', '让SILI进行发言')
     .alias('说')
@@ -221,7 +224,7 @@ function init() {
     })
 
   /**
-   * @module cmd-inpageeditSearch
+   * @module command-inpageeditSearch
    */
   app.command('inpageedit-search <sitename>', '通过Wiki名称查询InPageEdit的使用情况')
     .alias('ipe-search', 'ipes')
@@ -271,7 +274,7 @@ function init() {
     })
 
   /**
-   * @module cmd-about
+   * @module command-about
    */
   app.command('about', '显示SILI的相关信息').alias('自我介绍', '关于', 'sili').action(({ meta }) => {
     meta.$send([
@@ -386,12 +389,12 @@ function init() {
 
   // 添加好友
   app.receiver.on('friend-add', meta => {
-    console.log('❤', '已添加好友', meta)
+    sysLog('❤', '已添加好友', meta)
   })
 
   // 入群申请
   app.receiver.on('request/group/add', meta => {
-    console.log('💭', '收到入群申请', meta)
+    sysLog('💭', '收到入群申请', meta)
   })
 
   // 加群邀请
@@ -404,14 +407,14 @@ function init() {
   app.receiver.on('group-increase', meta => {
     sysLog('🔰', '检测到群成员增加', '群' + meta.groupId, '用户' + meta.userId)
     if (meta.userId === meta.selfId) {
-      sysLog('💌', '检测到加入群聊，发送自我介绍')
+      // sysLog('💌', '检测到加入群聊，发送自我介绍')
       // app.executeCommandLine('about', meta)
     }
   })
 
   // 群成员减少
   app.receiver.on('group-decrease', meta => {
-    console.log('💔', '检测到群成员减少', meta)
+    sysLog('💔', '检测到群成员减少', meta)
   })
 
   // 群管理变动

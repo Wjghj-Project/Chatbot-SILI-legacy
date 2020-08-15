@@ -1,13 +1,13 @@
 // 这些文件不会被push，保存着各种不可告人的秘密
-const botId = require('./models/secret_qqNumber') // 机器人的QQ
-const password = require('./models/secret_password') // password
+const qqNumber = require('./secret/qqNumber') // 机器人的QQ
+const password = require('./secret/password') // password
 // require('koishi-database-mysql')
 
 module.exports = {
   type: 'http',
   port: 3100,
   server: "http://localhost:5700",
-  selfId: botId.user.sili,
+  selfId: qqNumber.user.sili,
   nickname: "sili",
   commandPrefix: ['!', '！'],
   database: {
