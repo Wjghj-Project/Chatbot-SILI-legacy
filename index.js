@@ -42,8 +42,31 @@ app.plugin(require('koishi-plugin-image-search'))
 app.start().then(init)
 // startAll()
 
-
+/**
+ * @function init initialization main 
+ */
 function init() {
+
+  /**
+   * @module command-debug
+   */
+  app.command('debug', '运行诊断测试')
+    .option('--face [id]', '发送QQ表情')
+    .action(({ meta, options }) => {
+      // console.log(options)
+      // face
+      if (options.face) {
+        var faceId
+        if (options.face === true || isNaN(Number(options.face)) || options.face < 0) {
+          faceId = 0
+        } else {
+          faceId = options.face
+        }
+        console.log(faceId)
+        meta.$send(`[CQ:face,id=${faceId}]`)
+      }
+    })
+
   /**
    * @module util-qq-link
    * @description Fandom QQ群 → Discord
@@ -331,6 +354,14 @@ function init() {
       // 芜湖起飞~
       meta.$send(reply)
     }
+  })
+
+  /**
+   * @module command-damedane
+   */
+  app.command('damedane').action(({ meta }) => {
+    meta.$send('[CQ:music,type=qq,id=4982770]')
+    // meta.$send('[CQ:image,file=https://s1.ax1x.com/2020/08/16/dE6VTe.gif]')
   })
 
   /**
