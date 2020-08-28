@@ -18,60 +18,82 @@ const md5 = require('md5') // md5 生成哈希值
 const { random } = require('./utils/random') // random 从数组中随机抽取一个
 const { sysLog } = require('./utils/sysLog') // sysLog 保存日志
 
+const discordJS = require('discord.js')
+const discord = new discordJS.Client()
+
 // 以下文件不会被推送
 const qqNumber = require('./secret/qqNumber')
 
 /**
  * @instance app koishi实例
  */
-const app = new App(require('./koishi.config'))
+const koishi = new App(require('./koishi.config'))
 
 /**
  * @dependencies 添加 koishi 插件
  */
-app.plugin(require('koishi-plugin-common'))
+koishi.plugin(require('koishi-plugin-common'))
 // app.plugin(require('koishi-plugin-chess'))
-app.plugin(require('koishi-plugin-mcping'))
+koishi.plugin(require('koishi-plugin-mcping'))
 // app.plugin(require('koishi-plugin-mysql'))
-app.plugin(require('koishi-plugin-image-search'))
+koishi.plugin(require('koishi-plugin-image-search'))
 // app.plugin(require('koishi-plugin-status'))
 
 /**
- * @method app.start 启动实例
+ * @method koishi.start koishi启动完毕，登录discord
  */
-app.start().then(init)
-// startAll()
-
-/**
- * @function init initialization main 
- */
-function init() {
+koishi.start().then(() => {
+  discord.on('ready', () => {
+    sysLog('🌈', `Discord 成功登录 ${discord.user.tag}`)
+  })
 
   /**
-   * @module command-debug
+   * @module util-discord-to-qq
    */
-  app.command('debug', '运行诊断测试')
+  discord.on('message', msg => {
+    // console.log(msg)
+    var send = [
+      '[Discord] ' + msg.author.username + '#' + msg.author.discriminator,
+      msg.content
+    ].join('\n')
+    if (
+      msg.channel.id === '736880471891378246' && // #QQ互联
+      msg.author.id !== '714134302673207426' && // 自己
+      msg.author.id !== '736880520297971714' // QQ推送Hook
+    ) {
+      sysLog('⇿', 'Discord信息已推送到QQ', msg.author.username + '#' + msg.author.discriminator, msg.content)
+      koishi.sender.sendGroupMsg(qqNumber.group.fandom, send)
+    }
+  })
+
+  discord.login(require('./secret/discord').botToken.XiaoYuJunBot)
+
+  /**
+ * @module command-debug
+ */
+  koishi.command('debug', '运行诊断测试')
     .option('--face [id]', '发送QQ表情')
     .action(({ meta, options }) => {
-      // console.log(options)
+      console.log('!debug', options)
+
       // face
-      if (options.face) {
+      if (options.face || options.face === 0) {
         var faceId
         if (options.face === true || isNaN(Number(options.face)) || options.face < 0) {
           faceId = 0
         } else {
           faceId = options.face
         }
-        console.log(faceId)
+        // console.log(faceId)
         meta.$send(`[CQ:face,id=${faceId}]`)
       }
     })
 
   /**
-   * @module util-qq-link
+   * @module util-qq-to-discord
    * @description Fandom QQ群 → Discord
    */
-  app.group(qqNumber.group.fandom).receiver.on('message', meta => {
+  koishi.group(qqNumber.group.fandom).receiver.on('message', meta => {
     meta.message = meta.message.replace(new RegExp('&#91;', 'g'), '[')
     meta.message = meta.message.replace(new RegExp('&#93;', 'g'), ']')
     var send = ''
@@ -92,7 +114,7 @@ function init() {
     }
     axios.post(require('./secret/discord').fandom_zh.webhook, body)
       .then(res => {
-        sysLog('⇿', '消息已推送到Discord')
+        sysLog('⇿', 'QQ消息已推送到Discord')
       })
       .catch(err => {
         console.error(err)
@@ -103,7 +125,7 @@ function init() {
    * @module util-fandom-qq-group
    * @description Fandom QQ Group Extensions
    */
-  app.group(
+  koishi.group(
     qqNumber.group.fandom,
     qqNumber.group.dftest
   ).receiver.on('message', meta => {
@@ -132,17 +154,98 @@ function init() {
     }
     // 关键词触发指令
     if (/(联系官方|zendesk|发工单)/i.test(meta.message)) {
-      app.executeCommandLine('contact-fandom', meta)
+      koishi.executeCommandLine('contact-fandom', meta)
     }
     if (/(帮助中心)/i.test(meta.message)) {
-      app.executeCommandLine('fandom-help-center', meta)
+      koishi.executeCommandLine('fandom-help-center', meta)
     }
   })
 
   /**
+   * @module verifyFandomUser FandomQQ群验证QQ号
+   */
+  koishi
+    .group(
+      qqNumber.group.fandom,
+      qqNumber.group.dftest
+    )
+    .command('verify-qq', '验证保存在Fandom社区中心的QQ号信息')
+    .option('--user <user>', '指定Fandom用户名')
+    .option('--qq [qq]', '指定QQ号，预设为调用者的QQ')
+    .action(({ meta, options }) => {
+      if (!options.user) {
+        meta.$send('未指定用户名')
+        return
+      }
+      // 缓存变量
+      var userName = options.user,
+        qqNumber = options.qq || meta.sender.userId,
+        encodeNumber = require('./utils/md5')(qqNumber),
+        verifyNumber,
+        lastEditor;
+      // 修正用户名 User: 前缀
+      userName = userName.replace(/^user:/i, '')
+      // 修正用户名空格
+      userName = userName.replace(/_/g, ' ')
+      // 修正用户名首字母大写
+      userName = userName.split('')
+      var _userNameFirst = userName.shift().toUpperCase()
+      userName = _userNameFirst + userName.join('')
+      axios.get('https://community.fandom.com/zh/api.php', {
+        params: {
+          format: 'json',
+          action: 'parse',
+          page: 'User:' + userName + '/verify-qq',
+          prop: 'wikitext|revid'
+        }
+      }).then(res => {
+        var data = res.data
+        if (data.parse && data.parse.revid) {
+          verifyNumber = data.parse.wikitext['*']
+          if (verifyNumber !== encodeNumber) {
+            meta.$send([
+              '[CQ:at,qq=' + qqNumber + '] [' + userName + '] 验证失败，验证信息与QQ号不一致',
+              'Fandom: ' + verifyNumber,
+              'Yours: ' + encodeNumber
+            ].join('\n'))
+            return
+          } else {
+            axios.get('https://community.fandom.com/zh/api.php', {
+              params: {
+                format: 'json',
+                action: 'query',
+                prop: 'revisions',
+                revids: data.parse.revid,
+                rvprop: 'user'
+              }
+            }).then(res => {
+              var data = res.data
+              var pageId = Object.keys(data.query.pages)[0]
+              lastEditor = data.query.pages[pageId].revisions[0].user
+              if (lastEditor === userName) {
+                meta.$send('[CQ:at,qq=' + qqNumber + '] [' + userName + '] 验证通过！')
+              } else {
+                meta.$send('[CQ:at,qq=' + qqNumber + '] [' + userName + '] 验证失败，最后编辑者为' + lastEditor + '！')
+              }
+            })
+          }
+        } else {
+          meta.$send('[CQ:at,qq=' + qqNumber + '] [' + userName + '] 验证失败，' + encodeURI('https://community.fandom.com/zh/wiki/User:' + userName + '/verify-qq') + ' 不存在！')
+        }
+      })
+    })
+  // koishi
+  //   .group(
+  //     qqNumber.group.fandom,
+  //     qqNumber.group.dftest
+  //   ).receiver.on('request/group/add', meta => {
+  //     console.log('💭', 'Fandom群收到入群申请', meta)
+  //   })
+
+  /**
    * @module command-contactFandom
    */
-  app.command('contact-fandom', '回应Fandom的zendesk链接的快捷方式')
+  koishi.command('contact-fandom', '回应Fandom的zendesk链接的快捷方式')
     .alias('fandom-zendesk')
     .action(({ meta }) => {
       meta.$send([
@@ -154,7 +257,7 @@ function init() {
   /**
    * @module command-fandomHelpCenter
    */
-  app.command('fandom-help-center', '回应Fandom的帮助中心链接的快捷方式')
+  koishi.command('fandom-help-center', '回应Fandom的帮助中心链接的快捷方式')
     .alias('fandom-help')
     .action(({ meta }) => {
       meta.$send([
@@ -169,7 +272,7 @@ function init() {
   /**
    * @module command-fandomCommunitySearch
    */
-  app.command('fandom-community-search <wiki>', '通过名称搜索Fandom Wiki，预设搜索语言为en')
+  koishi.command('fandom-community-search <wiki>', '通过名称搜索Fandom Wiki，预设搜索语言为en')
     .alias('搜索fandom', 'fandom-wiki-search', 'search-fandom', 'fandoms', 'fms')
     .option('-l, --lang <lang>', '搜索的语言，例如zh，预设en', { default: 'en' })
     .option('-n, --nth <num>', '展示第几个结果', { default: 1 })
@@ -212,7 +315,7 @@ function init() {
   /**
    * @module command-ping
    */
-  app.command('ping', '应答测试')
+  koishi.command('ping', '应答测试')
     .alias('在吗', '测试', '!')
     .action(({ meta }) => {
       var now = new Date().getTime()
@@ -232,7 +335,7 @@ function init() {
   /**
    * @module command-say
    */
-  app.command('say <msg...>', '让SILI进行发言')
+  koishi.command('say <msg...>', '让SILI进行发言')
     .alias('说')
     .action(({ meta }, msg) => {
       if (
@@ -249,7 +352,7 @@ function init() {
   /**
    * @module command-inpageeditSearch
    */
-  app.command('inpageedit-search <sitename>', '通过Wiki名称查询InPageEdit的使用情况')
+  koishi.command('inpageedit-search <sitename>', '通过Wiki名称查询InPageEdit的使用情况')
     .alias('ipe-search', 'ipes')
     .action(({ meta }, sitename) => {
       var before = new Date().getTime()
@@ -299,7 +402,7 @@ function init() {
   /**
    * @module command-about
    */
-  app.command('about', '显示SILI的相关信息').alias('自我介绍', '关于', 'sili').action(({ meta }) => {
+  koishi.command('about', '显示SILI的相关信息').alias('自我介绍', '关于', 'sili').action(({ meta }) => {
     meta.$send([
       '✨ 自我介绍',
       '你好，我是Sara Lindery，你的人工智障助理，你也可以叫我SILI~',
@@ -314,7 +417,7 @@ function init() {
    * @module util-replyBaka
    * @description 监听消息，如果发现你在骂她，就卖萌
    */
-  app.receiver.on('message', meta => {
+  koishi.receiver.on('message', meta => {
     // SILI的称呼
     var siliName = [
       'sili',
@@ -359,7 +462,7 @@ function init() {
   /**
    * @module command-damedane
    */
-  app.command('damedane').action(({ meta }) => {
+  koishi.command('damedane').action(({ meta }) => {
     meta.$send('[CQ:music,type=qq,id=4982770]')
     // meta.$send('[CQ:image,file=https://s1.ax1x.com/2020/08/16/dE6VTe.gif]')
   })
@@ -368,7 +471,7 @@ function init() {
    * @methid 事件监听
    */
   // 收到消息
-  app.receiver.on('message', meta => {
+  koishi.receiver.on('message', meta => {
     // 保留记录
     switch (meta.messageType) {
       case 'private':
@@ -383,11 +486,11 @@ function init() {
     }
     // 判断用户是否存在
     if (meta.sender.userId) {
-      app.database.getUser(meta.sender.userId).then(res => {
+      koishi.database.getUser(meta.sender.userId).then(res => {
         // console.log('用户信息', res)
         if (res.authority < 1) {
           // 初始化用户数据
-          app.database.mysql.query("INSERT INTO `user` (`id`, `flag`, `authority`, `usage`) VALUES ('" + meta.sender.userId + "', '0', '1', '{}');").then(create => {
+          koishi.database.mysql.query("INSERT INTO `user` (`id`, `flag`, `authority`, `usage`) VALUES ('" + meta.sender.userId + "', '0', '1', '{}');").then(create => {
             console.log('新建用户数据', create)
           })
         }
@@ -395,17 +498,17 @@ function init() {
     }
     // 判断群是否存在
     if (meta.groupId) {
-      app.database.getGroup(meta.groupId).then(res => {
+      koishi.database.getGroup(meta.groupId).then(res => {
         // 初始化群数据
         if (res.flag === 3) {
-          app.database.mysql.query("INSERT INTO `group` (`id`, `flag`, `assignee`) VALUES ('" + meta.groupId + "', '0', '0');")
+          koishi.database.mysql.query("INSERT INTO `group` (`id`, `flag`, `assignee`) VALUES ('" + meta.groupId + "', '0', '0');")
         }
       })
     }
   })
 
   // 好友申请
-  app.receiver.on('request/friend', meta => {
+  koishi.receiver.on('request/friend', meta => {
     var answer = meta.comment.replace(/.*\n回答:(.+)\n.*/i, '$1')
     var user = meta.userId
     var approve = false
@@ -419,23 +522,23 @@ function init() {
   })
 
   // 添加好友
-  app.receiver.on('friend-add', meta => {
+  koishi.receiver.on('friend-add', meta => {
     sysLog('❤', '已添加好友', meta)
   })
 
   // 入群申请
-  app.receiver.on('request/group/add', meta => {
-    sysLog('💭', '收到入群申请', meta)
+  koishi.receiver.on('request/group/add', meta => {
+    console.log('💭', '收到入群申请', meta)
   })
 
   // 加群邀请
-  app.receiver.on('request/group/invite', meta => {
+  koishi.receiver.on('request/group/invite', meta => {
     sysLog('💌', '收到加群邀请', '群' + meta.groupId, '√通过')
     meta.$approve()
   })
 
   // 群成员增加
-  app.receiver.on('group-increase', meta => {
+  koishi.receiver.on('group-increase', meta => {
     sysLog('🔰', '检测到群成员增加', '群' + meta.groupId, '用户' + meta.userId)
     if (meta.userId === meta.selfId) {
       // sysLog('💌', '检测到加入群聊，发送自我介绍')
@@ -444,28 +547,28 @@ function init() {
   })
 
   // 群成员减少
-  app.receiver.on('group-decrease', meta => {
+  koishi.receiver.on('group-decrease', meta => {
     sysLog('💔', '检测到群成员减少', meta)
   })
 
   // 群管理变动
-  app.receiver.on('group-admin', meta => {
+  koishi.receiver.on('group-admin', meta => {
     sysLog('🔰', '发生群管理员变动', '群' + meta.groupId, '用户' + meta.userId, Boolean(meta.subType === 'set') ? '+上任' : '-撤销')
   })
 
   // 指令调用
-  app.receiver.on('command', (data) => {
+  koishi.receiver.on('command', (data) => {
     sysLog('🤖', '发生指令调用事件', data.meta.userId, '触发指令:' + data.command.name)
   })
 
   // 收到小鱼君私信
-  app.user(qqNumber.user.xiaoyujun).command('sudo')
+  koishi.user(qqNumber.user.xiaoyujun).command('sudo')
     .action(({ meta }) => {
       if (meta.$user.authority >= 4) {
         meta.$send('already')
         return
       } else {
-        app.database.mysql.query("UPDATE `user` SET `authority` = '4' WHERE `user`.`id` = " + qqNumber.user.xiaoyujun + ";").then(res => {
+        koishi.database.mysql.query("UPDATE `user` SET `authority` = '4' WHERE `user`.`id` = " + qqNumber.user.xiaoyujun + ";").then(res => {
           meta.$send('done')
         })
         sysLog('🤖', '小鱼君已将自己设置为4级权限')
@@ -474,4 +577,4 @@ function init() {
 
   /** @end */
   sysLog('🌈', 'koishi进程重新加载')
-}
+})
