@@ -11,7 +11,7 @@
     "koishi": "^1.12.0",
     "koishi-database-mysql": "^1.2.0",
     "koishi-plugin-chess": "^1.0.3",
-    "koishi-plugin-image-search": "^2.0.1",
+    "koishi-plugin-image-search": "1.3.14",
     "koishi-plugin-mcping": "^1.0.0",
     "koishi-plugin-mysql": "^2.0.0-alpha.40",
     "koishi-plugin-status": "^1.2.2",

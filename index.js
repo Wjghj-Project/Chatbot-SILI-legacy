@@ -37,7 +37,7 @@ koishi.plugin(require('koishi-plugin-common'))
 // koishi.plugin(require('koishi-plugin-chess'))
 koishi.plugin(require('koishi-plugin-mcping'))
 // koishi.plugin(require('koishi-plugin-mysql'))
-// koishi.plugin(require('koishi-plugin-image-search'))
+koishi.plugin(require('koishi-plugin-image-search'))
 // koishi.plugin(require('koishi-plugin-status'))
 
 /**
