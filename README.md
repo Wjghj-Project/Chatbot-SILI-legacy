@@ -9,7 +9,7 @@
 - QQ 群: https://community.fandom.com/zh/index.php?curid=3399
 - Discord: https://discord.gg/kK5Ttan
 
-由于服务器在国内，无法直连 Discord 的 API，因此目前只有 QQ 群 → Discord 的单边推送功能。~~互联功能有在考虑，但是没钱买服务器。~~
+能够实现 QQ 群 ↔ Discord 的双向消息推送。
 
 ## Fandom 相关指令
 
