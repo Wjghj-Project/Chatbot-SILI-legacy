@@ -81,7 +81,7 @@ module.exports = ({ koishi }) => {
           `主题：${theWiki.topic}`,
           `统计：共 ${theWiki.stats.articles} 个文章页面、${theWiki.stats.images} 个媒体文件`,
           '',
-          `(第${indexNth}/${data.total}个结果，耗时: ${ping}ms)`,
+          `(第${nth}/${data.total}个结果，耗时: ${ping}ms)`,
         ]
 
         // 合并数组为字符串
