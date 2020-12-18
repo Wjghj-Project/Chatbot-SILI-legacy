@@ -16,7 +16,7 @@ module.exports = {
       port: 3306,
       user: 'root',
       password: password.dbPassword.mysql.root,
-      database: 'wjghj-qqbot-koishi'
+      database: 'qqbot-sili'
     }
   },
   // 当数据库中不存在用户，以 1 级权限填充

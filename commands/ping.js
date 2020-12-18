@@ -1,3 +1,5 @@
+const random = require('../utils/random')
+
 /**
  * @module command-ping
  */

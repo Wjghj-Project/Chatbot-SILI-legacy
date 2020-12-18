@@ -13,7 +13,7 @@
 const { App } = require('koishi') // koishi 机器人库
 const koishiConfig = require('./koishi.config')
 require('koishi-database-mysql') // 数据库驱动
-const { sysLog } = require('./utils/sysLog') // sysLog 保存日志
+const sysLog = require('./utils/sysLog') // sysLog 保存日志
 
 const discordJS = require('discord.js')
 const discord = new discordJS.Client()

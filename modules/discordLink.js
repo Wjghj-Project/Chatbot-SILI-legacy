@@ -4,6 +4,7 @@ const parseDiscordEmoji = require('../utils/parseDiscordEmoji')
 const parseDiscordImages = require('../utils/parseDiscordImages')
 const resolveBrackets = require('../utils/resolveBrackets')
 const md5 = require('../utils/md5')
+const sysLog = require('../utils/sysLog')
 
 module.exports = ({ koishi, discord }) => {
   // QQ 收到消息
@@ -66,7 +67,7 @@ async function qqToDiscord({ meta }) {
     var replyMsg = '',
       replyMsgId = meta.message.match(/\[cq:reply,id=(.+?)\]/i)[1] || 0
     console.log('isReply', replyMsg)
-    var msgData = await axios.get(koishiConfig.server + '/get_msg', {
+    var msgData = await axios.get('http://localhost:5700/get_msg', {
       params: {
         message_id: replyMsgId,
       },

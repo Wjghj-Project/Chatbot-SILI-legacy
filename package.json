@@ -1,6 +1,6 @@
 {
   "name": "wjghj-qqbot-sili",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Wjghj Project QQ Bot, SILI - Sara Lindery",
   "main": "index.js",
   "private": true,
@@ -18,6 +18,7 @@
     "md5": "^2.2.1"
   },
   "devDependencies": {
+    "eslint": "^7.15.0",
     "nodemon": "^2.0.6",
     "pm2": "^4.5.1"
   },

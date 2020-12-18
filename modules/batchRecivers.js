@@ -1,3 +1,5 @@
+const sysLog = require('../utils/sysLog')
+
 module.exports = ({ koishi }) => {
   // 添加好友
   koishi.receiver.on('friend-add', meta => {

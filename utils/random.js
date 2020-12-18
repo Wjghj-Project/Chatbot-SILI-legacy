@@ -6,6 +6,4 @@ function random(arr = []) {
   }
 }
 
-module.exports = {
-  random
-}
+module.exports = random

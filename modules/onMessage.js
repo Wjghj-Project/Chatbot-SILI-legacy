@@ -1,3 +1,5 @@
+const sysLog = require('../utils/sysLog')
+
 module.exports = ({ koishi }) => {
   /**
    * @methid 任意消息事件监听

@@ -95,7 +95,7 @@ module.exports = ({ koishi }) => {
     })
 }
 
-function makeSearch({ wiki = '', lang = 'zh' }) {
+function makeSearch({ wiki = '', lang = 'zh' }, next) {
   console.log('Search Fandom wiki:', wiki + ' | Lang: ' + lang)
 
   // GET 网页内容

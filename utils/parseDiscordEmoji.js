@@ -3,4 +3,5 @@ module.exports = msg => {
     /<:.+?:(.+?)>/gi,
     '[CQ:image,file=https://discord-emoji.vercel.app/api/emojis/$1]'
   )
+  return msg
 }

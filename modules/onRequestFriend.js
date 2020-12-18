@@ -1,3 +1,5 @@
+const sysLog = require('../utils/sysLog')
+
 module.exports = ({ koishi }) => {
   koishi.receiver.on('request/friend', meta => {
     var answer = meta.comment.replace(/.*\n回答:(.+)\n.*/i, '$1')

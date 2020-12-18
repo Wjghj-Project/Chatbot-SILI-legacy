@@ -32,10 +32,10 @@ module.exports = ({ koishi }) => {
           .then(
             ({ data }) => {
               var query = data.query
-              if (query.hasOwnProperty('pages')) {
+              if (query.pages) {
                 var pages = query.pages
                 link = pages[Object.keys(pages)[0]].fullurl || link
-              } else if (query.hasOwnProperty('interwiki')) {
+              } else if (query.interwiki) {
                 link = query.interwiki[0].url || link
               } else {
                 link += ' (可能不准确)'

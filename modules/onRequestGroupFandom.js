@@ -16,6 +16,7 @@ module.exports = ({ koishi }) => {
 
       const { verifyQQ } = require('./utils/verifyQQ')
       verifyQQ(
+        meta,
         {
           qq: userId,
           user: answer,

@@ -42,7 +42,9 @@ function sysLog(...params) {
     } else if (typeof i === 'object') {
       try {
         text.push(JSON.stringify(i))
-      } catch (e) {}
+      } catch (e) {
+        // Do nothing
+      }
     } else {
       text.push(String(i))
     }
@@ -53,6 +55,4 @@ function sysLog(...params) {
   })
 }
 
-module.exports = {
-  sysLog,
-}
+module.exports = sysLog
