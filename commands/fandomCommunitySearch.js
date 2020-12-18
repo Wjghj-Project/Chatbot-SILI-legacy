@@ -100,7 +100,7 @@ function makeSearch({ wiki = '', lang = 'zh' }, next) {
     .get('https://community.fandom.com/api/v1/Search/CrossWiki', {
       params: {
         query: wiki,
-        uselang: 'zh',
+        lang: 'zh',
         limit: 25,
       },
     })
