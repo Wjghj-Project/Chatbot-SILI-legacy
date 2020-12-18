@@ -12,7 +12,7 @@ function verifyQQ(options, next) {
   // 缓存变量
   var userName = options.user,
     qqNumber = options.qq || meta.sender.userId,
-    encodeNumber = require('../utils/md5')(qqNumber),
+    encodeNumber = require('./md5')(qqNumber),
     verifyNumber,
     lastEditor;
   // 修正用户名 User: 前缀
@@ -75,6 +75,4 @@ function verifyQQ(options, next) {
   })
 }
 
-module.exports = {
-  verifyQQ
-}
+module.exports = verifyQQ

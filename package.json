@@ -1,14 +1,13 @@
 {
-  "name": "wjghj-qqbot-koishi",
-  "version": "1.0.0",
-  "description": "Wjghj Project QQ Bot",
+  "name": "wjghj-qqbot-sili",
+  "version": "2.0.0",
+  "description": "Wjghj Project QQ Bot, SILI - Sara Lindery",
   "main": "index.js",
   "private": true,
   "dependencies": {
     "@dragon-fish/words-filter": "^1.0.0",
+    "axios": "^0.21.0",
     "discord.js": "^12.4.1",
-    "jquery": "^3.5.1",
-    "jsdom": "^16.4.0",
     "koishi": "^1.12.0",
     "koishi-database-mysql": "^1.2.0",
     "koishi-plugin-chess": "^1.0.3",
@@ -18,9 +17,12 @@
     "koishi-plugin-status": "^1.2.2",
     "md5": "^2.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "pm2": "^4.5.1"
+  },
   "scripts": {
-    "start": "pm2 start index.js --name=\"koishi-bot\"",
+    "start": "pm2 start index.js --name=\"qq-bot-sili\"",
     "test": "nodemon --config nodemon.json index.js",
     "stop": "pm2 delete koishi-bot"
   },
