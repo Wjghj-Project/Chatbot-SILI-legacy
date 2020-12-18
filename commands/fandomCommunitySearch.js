@@ -8,7 +8,7 @@ module.exports = ({ koishi }) => {
   koishi
     .command(
       'fandom-community-search <wiki>',
-      '通过名称搜索Fandom Wiki，预设搜索语言为en'
+      '通过名称搜索Fandom Wiki，预设搜索语言为zh'
     )
     .alias(
       '搜索fandom',
@@ -73,18 +73,15 @@ module.exports = ({ koishi }) => {
 
         // 创建空数组
         var text = [
-          `通过关键词“${data.searchText}”共找到大约${data.total}个wiki`,
-          '* 展示第' + nth + '个结果',
-          '',
           `[CQ:image,file=${theWiki.image}]`,
           theWiki.title,
           theWiki.url,
           '',
-          `简介：theWiki.desc`,
+          `简介：${theWiki.desc}`,
+          `主题：${theWiki.topic}`,
+          `统计：共 ${theWiki.stats.articles} 个文章页面、${theWiki.stats.images} 个媒体文件`,
           '',
-          `主题：${theWiki.topic} | 统计：共 ${theWiki.stats.articles} 个文章页面、${theWiki.stats.images} 个媒体文件`,
-          '',
-          `(搜寻耗时: ${ping}ms)`,
+          `(第${indexNth}/${data.total}个结果，耗时: ${ping}ms)`,
         ]
 
         // 合并数组为字符串
@@ -108,10 +105,11 @@ function makeSearch({ wiki = '', lang = 'zh' }, next) {
       },
     })
     .then(({ data }) => {
+      console.log('Wiki found', data)
       next(null, data)
     })
     .catch(error => {
-      console.error('[ERROR]', 'communitySearch', error)
+      console.error('Error when found wiki')
       next(error, null)
     })
 }
