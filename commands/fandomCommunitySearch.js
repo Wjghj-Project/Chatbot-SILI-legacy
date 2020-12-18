@@ -100,16 +100,16 @@ function makeSearch({ wiki = '', lang = 'zh' }, next) {
     .get('https://community.fandom.com/api/v1/Search/CrossWiki', {
       params: {
         query: wiki,
-        lang: 'zh',
+        lang,
         limit: 25,
       },
     })
     .then(({ data }) => {
-      console.log('Wiki found', data)
+      console.log('Done search wiki')
       next(null, data)
     })
     .catch(error => {
-      console.error('Error when found wiki')
+      console.error('Error when search wiki')
       next(error, null)
     })
 }
