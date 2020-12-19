@@ -5,8 +5,9 @@ module.exports = ({ msg, content }) => {
       atc = JSON.parse(atc)
       if (atc[0]) {
         var img = atc[0].attachment
-        // content += '[CQ:image,file=https://pd.zwc365.com/cfworker/' + img + ']'
-        content += '\n附图：' + img
+        // content += '[CQ:image,file=' + img + ']'
+        // content += img
+        content += '(附图：图片请前往 Discord 查看)'
       }
     } catch (e) {
       console.error('转换图片出错', e)
