@@ -1,4 +1,5 @@
 const qqNumber = require('../secret/qqNumber')
+const verifyQQ = require('../utils/verifyQQ')
 
 /**
  * @module Fandom群入群申请
@@ -14,7 +15,6 @@ module.exports = ({ koishi }) => {
       var command = `!verify-qq --qq ${userId} --user ${answer}`
       koishi.sender.sendGroupMsg(groupId, command)
 
-      const { verifyQQ } = require('./utils/verifyQQ')
       verifyQQ(
         meta,
         {

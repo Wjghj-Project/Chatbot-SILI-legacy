@@ -49,17 +49,17 @@ module.exports = ({ koishi }) => {
       })
     }
     // 判断群是否存在
-    if (meta.groupId) {
-      koishi.database.getGroup(meta.groupId).then(res => {
-        // 初始化群数据
-        if (res.flag === 3) {
-          koishi.database.mysql.query(
-            "INSERT INTO `group` (`id`, `flag`, `assignee`) VALUES ('" +
-              meta.groupId +
-              "', '0', '0');"
-          )
-        }
-      })
-    }
+    // if (meta.groupId) {
+    //   koishi.database.getGroup(meta.groupId).then(res => {
+    //     // 初始化群数据
+    //     if (res.flag === 3) {
+    //       koishi.database.mysql.query(
+    //         "INSERT INTO `group` (`id`, `flag`, `assignee`) VALUES ('" +
+    //           meta.groupId +
+    //           "', '0', '0');"
+    //       )
+    //     }
+    //   })
+    // }
   })
 }

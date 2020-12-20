@@ -40,7 +40,7 @@ module.exports = ({ koishi }) => {
         // https://discord-emoji.vercel.app/api/get/?id=
         // https://pd.zwc365.com/cfworker/https://cdn.discordapp.com/emojis/
         meta.$send(
-          '[CQ:image,file=https://discord-emoji.vercel.app/api/get/?id=' +
+          '[CQ:image,file=https://discord-emoji.vercel.app/api/emojis/' +
             options.discordEmoji +
             ']'
         )
