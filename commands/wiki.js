@@ -1,15 +1,19 @@
 const axios = require('axios').default
+const resolveBrackets = require('../utils/resolveBrackets')
 
 module.exports = ({ koishi }) => {
   koishi
     .command(
-      'wiki <pagename>',
+      'wiki <pagename...>',
       '发送 wiki 链接（本功能需要 QQ 群申请链接到某个 MediaWiki 网站）'
     )
     // .alias('')
-    .option('--debug', 'Debug')
+    .option('--info', 'MediaWiki link info')
     .option('--set <api>', 'Set MediaWiki API', {
       authority: 3,
+    })
+    .option('--silent', null, {
+      type: 'boolean',
     })
     .action(({ meta, options }, pagename) => {
       if (options.set) {
@@ -28,19 +32,20 @@ module.exports = ({ koishi }) => {
         return
       }
       if (!meta.groupId) {
-        meta.$send('本功能仅限QQ群使用。')
+        if (!options.silent) meta.$send('本功能仅限QQ群使用。')
         return
       }
       koishi.database.getGroup(meta.groupId, ['mwApi']).then(({ mwApi }) => {
-        if (!mwApi) {
-          meta.$send('本功能需要 QQ 群申请链接到某个 MediaWiki 网站')
+        if (options.info) {
+          meta.$send(
+            `{\n  "groupId": ${meta.groupId},\n  "mwApi": "${mwApi}"\n}`
+          )
           return
         }
 
-        if (options.debug) {
-          meta.$send(
-            `Debug: { "groupId": ${meta.groupId}, "mwApi": "${mwApi}" }`
-          )
+        if (!mwApi) {
+          if (!options.silent)
+            meta.$send('本功能需要 QQ 群申请链接到某个 MediaWiki 网站')
           return
         }
 
@@ -60,7 +65,7 @@ module.exports = ({ koishi }) => {
               prop: 'info',
               inprop: 'url',
               iwurl: true,
-              titles: encodeURI(pagename),
+              titles: pagename,
             },
           })
           .then(
@@ -68,7 +73,9 @@ module.exports = ({ koishi }) => {
               var query = data.query
               if (query && query.pages) {
                 var pages = query.pages
-                link = pages[Object.keys(pages)[0]].fullurl || link
+                link =
+                  pages[Object.keys(pages)[0]].fullurl ||
+                  link + ' (似乎出现问题)'
                 console.log('找到链接')
               } else if (query && query.interwiki) {
                 link = query.interwiki[0].url || link
@@ -85,4 +92,15 @@ module.exports = ({ koishi }) => {
           )
       })
     })
+
+  koishi.receiver.on('message', meta => {
+    // wikiUrl
+    meta.message = resolveBrackets(meta.message)
+    if (/\[\[.+\]\]/g.test(meta.message)) {
+      var pageName = meta.message.replace(/.*\[\[(.+)\]\].*/g, '$1')
+      pageName = pageName.trim()
+
+      koishi.executeCommandLine(`wiki --silent ${pageName}`, meta)
+    }
+  })
 }

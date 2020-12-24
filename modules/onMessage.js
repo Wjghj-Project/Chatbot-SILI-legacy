@@ -36,15 +36,15 @@ module.exports = ({ koishi }) => {
         // console.log('用户信息', res)
         if (res.authority < 1) {
           // 初始化用户数据
-          koishi.database.mysql
-            .query(
-              "INSERT INTO `user` (`id`, `flag`, `authority`, `usage`) VALUES ('" +
-                meta.sender.userId +
-                "', '0', '1', '{}');"
-            )
-            .then(create => {
-              console.log('新建用户数据', create)
-            })
+          // koishi.database.mysql
+          //   .query(
+          //     "INSERT INTO `user` (`id`, `flag`, `authority`, `usage`) VALUES ('" +
+          //       meta.sender.userId +
+          //       "', '0', '1', '{}');"
+          //   )
+          //   .then(create => {
+          //     console.log('新建用户数据', create)
+          //   })
         }
       })
     }

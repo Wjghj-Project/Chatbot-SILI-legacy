@@ -9,7 +9,7 @@ module.exports = ({ koishi }) => {
     .alias('在吗', '测试', '!')
     .action(({ meta }) => {
       var now = new Date().getTime()
-      var ping = ((now - meta.time) / 1000).toFixed(2)
+      var ping = now - meta.time * 1000
       console.log('now', now, 'meta', meta.time)
       var randomReply = random([
         'pong~',
@@ -19,6 +19,6 @@ module.exports = ({ koishi }) => {
         'Aye Aye Captain~',
         "I'm still alive~",
       ])
-      meta.$send(randomReply + ' (' + ping + 'ms)')
+      meta.$send(randomReply)
     })
 }
