@@ -4,7 +4,7 @@ const fs = require('fs')
 module.exports = ctx => {
   fs.readdir(path.resolve('./modules'), (err, files) => {
     files.forEach(file => {
-      if (/^_/.test(file)) return
+      if (/^_/.test(file) || !/\.js$/.test(file)) return
       console.log('Load auto module:', file)
       require('./' + file)(ctx)
     })
