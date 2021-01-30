@@ -25,7 +25,7 @@
   "scripts": {
     "start": "pm2 start index.js --name=\"qq-bot-sili\"",
     "test": "nodemon --config nodemon.json index.js",
-    "stop": "pm2 delete koishi-bot"
+    "stop": "pm2 delete qq-bot-sili"
   },
   "author": "Dragon-Fish",
   "license": "MIT",

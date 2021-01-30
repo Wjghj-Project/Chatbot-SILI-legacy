@@ -34,6 +34,7 @@ module.exports = ({ koishi }) => {
   // 群成员减少
   koishi.receiver.on('group-decrease', meta => {
     sysLog('💔', '检测到群成员减少', meta)
+    meta.$send('💔检测到群成员减少，sayonara。')
   })
 
   // 群管理变动
@@ -43,7 +44,7 @@ module.exports = ({ koishi }) => {
       '发生群管理员变动',
       '群' + meta.groupId,
       '用户' + meta.userId,
-      Boolean(meta.subType === 'set') ? '+上任' : '-撤销'
+      meta.subType === 'set' ? '+上任' : '-撤销'
     )
   })
 

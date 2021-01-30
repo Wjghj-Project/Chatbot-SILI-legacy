@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = ({ koishi }) => {
   /**
    * @module command-debug
@@ -5,9 +7,10 @@ module.exports = ({ koishi }) => {
   koishi
     .command('debug', '运行诊断测试')
     .option('--face [id]', '发送QQ表情')
-    .option('--localimg')
-    .option('--urlimg <url>')
-    .option('--discord-emoji <id>', { isString: true })
+    .option('--localimg', '本地图片')
+    .option('--reply [content]', '回复消息')
+    .option('--urlimg <url>', '网络图片')
+    .option('--discord-emoji <id>', 'Discord 表情包', { isString: true })
     .action(async ({ meta, options }) => {
       console.log('!debug', options)
 
@@ -28,7 +31,9 @@ module.exports = ({ koishi }) => {
       }
 
       if (options.localimg) {
-        meta.$send('[CQ:image,file=file:////opt/gobot/test.png]')
+        meta.$send(
+          `[CQ:image,file=file:///${path.resolve('./images/test.png')}]`
+        )
       }
 
       if (options.urlimg) {
@@ -36,9 +41,15 @@ module.exports = ({ koishi }) => {
         meta.$send('[CQ:image,file=' + options.urlimg + ']')
       }
 
+      if (options.reply) {
+        meta.$send(
+          `[CQ:reply,id=${meta.messageId}] ${
+            options.reply === true ? 'Hello, world' : options.reply
+          }`
+        )
+      }
+
       if (options.discordEmoji) {
-        // https://discord-emoji.vercel.app/api/get/?id=
-        // https://pd.zwc365.com/cfworker/https://cdn.discordapp.com/emojis/
         meta.$send(
           '[CQ:image,file=https://discord-emoji.vercel.app/api/emojis/' +
             options.discordEmoji +

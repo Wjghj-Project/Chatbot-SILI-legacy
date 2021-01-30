@@ -74,8 +74,7 @@ module.exports = ({ koishi }) => {
               if (query && query.pages) {
                 var pages = query.pages
                 link =
-                  pages[Object.keys(pages)[0]].fullurl ||
-                  link + ' (似乎出现问题)'
+                  pages[Object.keys(pages)[0]].fullurl || link + ' (可能不准确)'
                 console.log('找到链接')
               } else if (query && query.interwiki) {
                 link = query.interwiki[0].url || link
@@ -93,14 +92,18 @@ module.exports = ({ koishi }) => {
       })
     })
 
-  koishi.receiver.on('message', meta => {
-    // wikiUrl
-    meta.message = resolveBrackets(meta.message)
-    if (/\[\[.+\]\]/g.test(meta.message)) {
-      var pageName = meta.message.replace(/.*\[\[(.+)\]\].*/g, '$1')
-      pageName = pageName.trim()
+  // koishi.receiver.on('message', meta => {
+  //   // wikiUrl
+  //   meta.message = resolveBrackets(meta.message)
+  //   if (/\[\[.+\]\]/g.test(meta.message)) {
+  //     var pageName = meta.message.replace(/.*\[\[(.+)\]\].*/g, '$1')
+  //     pageName = pageName.trim()
 
-      koishi.executeCommandLine(`wiki --silent ${pageName}`, meta)
-    }
-  })
+  //     koishi.database.getGroup(meta.groupId, []).then(({ mwApi }) => {
+  //       console.log(mwApi)
+  //     })
+
+  //     koishi.executeCommandLine(`wiki ${pageName} --silent`, meta)
+  //   }
+  // })
 }

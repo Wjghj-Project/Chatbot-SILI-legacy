@@ -8,6 +8,7 @@ public/
 
 # This part is for development, ignore
 /dev
+dist
 
 # Hidden routing rules for Wjghj Server
 @*.*
