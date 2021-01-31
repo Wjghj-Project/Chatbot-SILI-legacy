@@ -21,12 +21,12 @@ module.exports = ({ koishi }) => {
   koishi.receiver.on('group-increase/approve', meta => {
     sysLog('🔰', '检测到群成员增加', '群' + meta.groupId, '用户' + meta.userId)
     if (meta.userId === meta.selfId) {
-      // sysLog('💌', '检测到加入群聊，发送自我介绍')
-      // app.executeCommandLine('about', meta)
+      sysLog('💌', '检测到加入群聊，发送自我介绍')
+      koishi.executeCommandLine('about', meta)
     } else {
       koishi.sender.sendGroupMsg(
         meta.groupId,
-        '[CQ:at,qq=' + meta.userId + ']欢迎新大佬！'
+        '❤群成员增加了，[CQ:at,qq=' + meta.userId + ']欢迎新大佬！'
       )
     }
   })

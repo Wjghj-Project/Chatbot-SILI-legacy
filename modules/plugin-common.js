@@ -6,7 +6,9 @@ const path = require('path')
 module.exports = ({ koishi }) => {
   koishi.plugin(require('koishi-plugin-common'), {
     // 欢迎信息
-    welcomeMessage: '',
+    // welcomeMessage({ userId }) {
+    //   return '❤群成员增加了，[CQ:at,qq=' + userId + ']欢迎新大佬！'
+    // },
     // 复读机
     repeater: {
       // 3次自动复读
