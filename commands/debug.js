@@ -1,3 +1,4 @@
+const axios = require('axios').default
 const path = require('path')
 
 module.exports = ({ koishi }) => {
@@ -10,7 +11,7 @@ module.exports = ({ koishi }) => {
     .option('--localimg', '本地图片')
     .option('--reply [content]', '回复消息')
     .option('--urlimg <url>', '网络图片')
-    .option('--discord-emoji <id>', 'Discord 表情包', { isString: true })
+    .option('--version, -v', '显示SILI的版本信息', { type: 'boolean' })
     .action(async ({ meta, options }) => {
       console.log('!debug', options)
 
@@ -44,17 +45,22 @@ module.exports = ({ koishi }) => {
       if (options.reply) {
         meta.$send(
           `[CQ:reply,id=${meta.messageId}] ${
-            options.reply === true ? 'Hello, world' : options.reply
+            options.reply === true ? 'hello, world' : options.reply
           }`
         )
       }
 
-      if (options.discordEmoji) {
-        meta.$send(
-          '[CQ:image,file=https://discord-emoji.vercel.app/api/emojis/' +
-            options.discordEmoji +
-            ']'
+      if (options.version) {
+        const { data: onebotInfo } = await axios.get(
+          'http://127.0.0.1:5700/get_version_info'
         )
+        const packageInfo = require('../package.json')
+        const versionMsg = [
+          `- SILI  : ${packageInfo.version}`,
+          `- Koishi: ${packageInfo.dependencies.koishi}`,
+          `- OneBot: ${onebotInfo.data.version}`,
+        ].join('\n')
+        meta.$send(`[CQ:reply,id=${meta.messageId}]${versionMsg}`)
       }
     })
 }

@@ -1,4 +1,5 @@
 const axios = require('axios').default
+const reply = require('../utils/reply')
 const resolveBrackets = require('../utils/resolveBrackets')
 
 module.exports = ({ koishi }) => {
@@ -23,21 +24,22 @@ module.exports = ({ koishi }) => {
           })
           .then(
             () => {
-              meta.$send('成功将QQ群与wiki连接')
+              reply(meta, '成功将QQ群与wiki连接')
             },
             () => {
-              meta.$send('将QQ群与wiki连接时发生错误')
+              reply(meta, '将QQ群与wiki连接时发生错误')
             }
           )
         return
       }
       if (!meta.groupId) {
-        if (!options.silent) meta.$send('本功能仅限QQ群使用。')
+        if (!options.silent) reply(meta, '本功能仅限QQ群使用。')
         return
       }
       koishi.database.getGroup(meta.groupId, ['mwApi']).then(({ mwApi }) => {
         if (options.info) {
-          meta.$send(
+          reply(
+            meta,
             `{\n  "groupId": ${meta.groupId},\n  "mwApi": "${mwApi}"\n}`
           )
           return
@@ -45,7 +47,7 @@ module.exports = ({ koishi }) => {
 
         if (!mwApi) {
           if (!options.silent)
-            meta.$send('本功能需要 QQ 群申请链接到某个 MediaWiki 网站')
+            reply(meta, '本功能需要 QQ 群申请链接到某个 MediaWiki 网站')
           return
         }
 
@@ -53,7 +55,7 @@ module.exports = ({ koishi }) => {
           mwApi.replace('api.php', 'index.php?title=') + encodeURI(pagename)
 
         if (!pagename) {
-          meta.$send(mwApi.replace('api.php', 'index.php'))
+          reply(meta, mwApi.replace('api.php', 'index.php'))
           return
         }
 
@@ -82,11 +84,11 @@ module.exports = ({ koishi }) => {
               } else {
                 console.log('页面不存在？')
               }
-              meta.$send(link)
+              reply(meta, link)
             },
             err => {
               console.error('Axios 错误', err)
-              meta.$send(link + ' (似乎出现错误)')
+              reply(meta, link + ' (似乎出现错误)')
             }
           )
       })

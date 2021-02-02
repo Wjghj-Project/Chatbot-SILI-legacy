@@ -26,13 +26,11 @@ const koishi = new App(koishiConfig)
 /**
  * @dependencies 添加 koishi 插件
  */
-// koishi.plugin(require('koishi-plugin-chess'))
 koishi.plugin(require('koishi-plugin-mcping'))
 // koishi.plugin(require('koishi-plugin-teach'), {
 //   prefix: '%teach',
 // })
 koishi.plugin(require('koishi-plugin-image-search'))
-// koishi.plugin(require('koishi-plugin-status'))
 
 /**
  * @module autoLoads

@@ -10,7 +10,6 @@
     "discord.js": "^12.4.1",
     "koishi": "^1.12.0",
     "koishi-database-mysql": "^1.2.0",
-    "koishi-plugin-chess": "^1.0.3",
     "koishi-plugin-image-search": "1.3.14",
     "koishi-plugin-mcping": "^1.0.0",
     "koishi-plugin-mysql": "^2.0.0-alpha.40",
@@ -24,7 +23,7 @@
   },
   "scripts": {
     "start": "pm2 start index.js --name=\"qq-bot-sili\"",
-    "test": "nodemon --config nodemon.json index.js",
+    "dev": "nodemon --config nodemon.json index.js",
     "stop": "pm2 delete qq-bot-sili"
   },
   "author": "Dragon-Fish",

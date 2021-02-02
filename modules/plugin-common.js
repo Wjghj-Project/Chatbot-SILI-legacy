@@ -11,10 +11,20 @@ module.exports = ({ koishi }) => {
     // },
     // 复读机
     repeater: {
-      // 3次自动复读
-      repeat: (repeated, times) => times === 3,
+      // 3次自动复读，并设置30秒cd
+      repeat: (repeated, times) => {
+        let repeatCD = 30
+        globalThis.repeaterLast = globalThis.repeaterLast || 0
+        let now = new Date().getTime()
+        if (times === 3 && now - globalThis.repeaterLast > repeatCD * 1000) {
+          globalThis.repeaterLast = now
+          return true
+        } else if (times === 3) {
+          console.log('距离上次复读不足' + repeatCD + '秒')
+        }
+      },
       // 复读大于5次打断
-      interrupt: (_, times /*, message*/) => times >= 5,
+      interrupt: (_, times /*, message*/) => times > 5,
       interruptText: `[CQ:image,file=file:///${path.resolve(
         './images/no_repeat.jpg'
       )}]`,
