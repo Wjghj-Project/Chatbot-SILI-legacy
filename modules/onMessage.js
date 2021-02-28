@@ -16,7 +16,7 @@ module.exports = ({ koishi }) => {
           '✉',
           '收到群消息',
           '群' + session.groupId,
-          '用户' + session.userId,
+          `${session.sender.nickname}(${session.sender.userId})`,
           session.message
         )
         break

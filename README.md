@@ -1,6 +1,6 @@
-# Wjghj QQbot SILI
+# Wjghj Chatbot SILI
 
-万界规划局 QQ 机器人，主要用于处理 Fandom 官方 QQ 群 → Discord 的消息推送，也附带一些为了作者为了自己方便写的指令。
+万界规划局聊天机器人，主要用于处理 Fandom 官方 QQ 群 → Discord 的消息推送，也附带一些为了作者为了自己方便写的指令。
 
 名字 SILI，来自作者的原创角色 [苏凛栎](https://epbureau.fandom.com/wiki/苏凛栎)，是一个人工智能少女、一个笨蛋。
 
