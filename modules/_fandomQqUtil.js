@@ -7,13 +7,13 @@ const qqNumber = require('../secret/qqNumber')
 module.exports = ({ koishi }) => {
   koishi
     .group(qqNumber.group.fandom, qqNumber.group.dftest)
-    .receiver.on('message', meta => {
+    .on('message', session => {
       // 关键词触发指令
-      if (/(联系官方|zendesk|发工单)/i.test(meta.message)) {
-        koishi.executeCommandLine('contact-fandom', meta)
+      if (/(联系官方|zendesk|发工单)/i.test(session.message)) {
+        koishi.executeCommandLine('contact-fandom', session)
       }
-      if (/(帮助中心)/i.test(meta.message)) {
-        koishi.executeCommandLine('fandom-help-center', meta)
+      if (/(帮助中心)/i.test(session.message)) {
+        koishi.executeCommandLine('fandom-help-center', session)
       }
     })
 }

@@ -10,7 +10,7 @@ module.exports = ({ koishi }) => {
       '通过Wiki名称查询InPageEdit的使用情况'
     )
     .alias('ipe-search', 'ipes')
-    .action(({ meta }, sitename) => {
+    .action(({ session }, sitename) => {
       var before = new Date().getTime()
       if (!sitename) sitename = ''
       axios
@@ -23,6 +23,10 @@ module.exports = ({ koishi }) => {
           },
         })
         .then(res => {
+          if (!res.data.query) {
+            session.send('查询数据时出现错误。')
+            return
+          }
           var wikis = res.data.query
           var msg = []
           if (wikis.length > 0) {
@@ -53,7 +57,7 @@ module.exports = ({ koishi }) => {
               '试试别的关键词吧！',
             ]
           }
-          meta.$send(msg.join('\n'))
+          session.send(msg.join('\n'))
         })
     })
 }

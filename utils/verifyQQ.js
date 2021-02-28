@@ -1,17 +1,17 @@
 const axios = require('axios').default
 
-function verifyQQ(meta, options, next) {
+function verifyQQ(session, options, next) {
   var msg = '',
     status = false
   if (!options.user) {
-    // meta.$send('未指定用户名')
+    // session.$send('未指定用户名')
     msg = '未指定用户名'
     next && next({ msg, status })
     return
   }
   // 缓存变量
   var userName = options.user,
-    qqNumber = options.qq || meta.sender.userId,
+    qqNumber = options.qq || session.userId.replace('onebot:', ''),
     encodeNumber = require('./md5')(qqNumber),
     verifyNumber,
     lastEditor
@@ -39,7 +39,7 @@ function verifyQQ(meta, options, next) {
         if (verifyNumber !== encodeNumber) {
           status = false
           msg = [
-            '[CQ:at,qq=' +
+            '[CQ:at,id=' +
               qqNumber +
               '] [' +
               userName +
@@ -47,7 +47,7 @@ function verifyQQ(meta, options, next) {
             'Fandom: ' + verifyNumber,
             'Yours: ' + encodeNumber,
           ].join('\n')
-          // meta.$send(ret)
+          // session.$send(ret)
           next && next({ msg, status })
           return
         } else {
@@ -68,11 +68,12 @@ function verifyQQ(meta, options, next) {
               if (lastEditor === userName) {
                 status = true
                 msg =
-                  '[CQ:at,qq=' + qqNumber + '] [' + userName + '] 验证通过！'
+                //
+                  `[CQ:at,id=${qqNumber}] [${userName}] 验证通过！`
               } else {
                 status = false
                 msg =
-                  '[CQ:at,qq=' +
+                  '[CQ:at,id=' +
                   qqNumber +
                   '] [' +
                   userName +
@@ -86,7 +87,7 @@ function verifyQQ(meta, options, next) {
       } else {
         status = false
         msg =
-          '[CQ:at,qq=' +
+          '[CQ:at,id=' +
           qqNumber +
           '] [' +
           userName +

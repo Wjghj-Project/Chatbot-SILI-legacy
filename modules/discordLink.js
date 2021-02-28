@@ -8,10 +8,10 @@ const sysLog = require('../utils/sysLog')
 
 module.exports = ({ koishi, discord }) => {
   // QQ 收到消息
-  koishi.receiver.on('message/normal', meta => {
-    // koishi.database.getGroup(meta.groupId, ['discordWebhook'])
-    if (meta.groupId === qqNumber.group.fandom) {
-      qqToDiscord({ meta, discord })
+  koishi.on('message', session => {
+    // koishi.database.getGroup(session.groupId, ['discordWebhook'])
+    if (session.groupId === qqNumber.group.fandom) {
+      qqToDiscord({ session, discord })
     }
   })
   // Discord 收到消息
@@ -45,27 +45,30 @@ function discordToQQ({ koishi, msg }) {
       msg.author.username + '#' + msg.author.discriminator,
       msg.content
     )
-    koishi.sender.sendGroupMsg(qqNumber.group.fandom, send)
+    koishi.bots['onebot:' + require('../secret/qqNumber').user.mySelf].sendMessage(
+      qqNumber.group.fandom,
+      send
+    )
   }
 }
 
-async function qqToDiscord({ meta }) {
-  meta.message = resolveBrackets(meta.message)
+async function qqToDiscord({ session }) {
+  session.message = resolveBrackets(session.message)
   var send = ''
-  if (/\[cq:image,.+\]/gi.test(meta.message)) {
-    var image = meta.message.replace(
+  if (/\[cq:image,.+\]/gi.test(session.message)) {
+    var image = session.message.replace(
       /(.*?)\[cq:image.+,url=(.+?)\](.*?)/gi,
       '$1 $2 $3'
     )
     send += image
   } else {
-    send += meta.message
+    send += session.message
   }
   send = send.replace(/\[cq:at,qq=(.+?)\]/gi, '`@$1`')
 
-  if (/\[cq:reply,id=.+\]/i.test(meta.message)) {
+  if (/\[cq:reply,id=.+\]/i.test(session.message)) {
     var replyMsg = '',
-      replyMsgId = meta.message.match(/\[cq:reply,id=(.+?)\]/i)[1] || 0
+      replyMsgId = session.message.match(/\[cq:reply,id=(.+?)\]/i)[1] || 0
     console.log('isReply', replyMsg)
     var msgData = await axios.get('http://localhost:5700/get_msg', {
       params: {
@@ -106,13 +109,14 @@ async function qqToDiscord({ meta }) {
   // console.log('send to discord', send)
 
   var nickname = ''
-  nickname += meta.sender.card || meta.sender.nickname
-  nickname += ' (' + meta.sender.userId + ')'
+  nickname += session.sender.card || session.sender.nickname
+  nickname += ' (' + session.sender.userId + ')'
   var body = {
     username: nickname,
     content: send,
     avatar_url:
-      'https://www.gravatar.com/avatar/' + md5(meta.sender.userId + '@qq.com'),
+      'https://www.gravatar.com/avatar/' +
+      md5(session.sender.userId + '@qq.com'),
   }
   axios
     .post(require('../secret/discord').fandom_zh.webhook, body)

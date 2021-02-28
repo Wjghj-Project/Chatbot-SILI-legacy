@@ -7,8 +7,7 @@ module.exports = ({ koishi }) => {
   // koishi
   koishi
     .command(
-      'fandom-community-search <wiki>',
-      '通过名称搜索Fandom Wiki，预设搜索语言为zh'
+      'fandom-community-search <wiki> 通过名称搜索Fandom Wiki，预设搜索语言为zh'
     )
     .alias(
       '搜索fandom',
@@ -17,12 +16,12 @@ module.exports = ({ koishi }) => {
       'fandoms',
       'fms'
     )
-    .option('-l, --lang <lang>', '搜索的语言，例如en，预设zh', {
-      default: 'zh',
+    .option('lang', '-l <lang> 搜索的语言，例如en，预设zh', {
+      fallback: 'zh',
     })
-    .option('-n, --nth <num>', '展示第几个结果', { default: 1 })
-    .shortcut('搜索fandom', { prefix: true, fuzzy: true })
-    .action(({ meta, options }, wiki) => {
+    .option('nth', '-n <num> 展示第几个结果', { fallback: 1 })
+    // .shortcut('搜索fandom', { prefix: true, fuzzy: true })
+    .action(({ session, options }, wiki) => {
       var timeBefore = new Date().getTime()
       var lang = options.lang || 'zh'
 
@@ -54,13 +53,13 @@ module.exports = ({ koishi }) => {
 
         // if error
         if (err) {
-          meta.$send('搜索 wiki 时出现问题 TAT')
+          session.send('搜索 wiki 时出现问题 TAT')
           return
         }
 
         // if no wiki
         if (data.items.length < 1) {
-          meta.$send(
+          session.send(
             `喵，关键词“${wiki}”未能匹配到 wiki，请尝试更改语言或者关键词~`
           )
           return
@@ -87,7 +86,7 @@ module.exports = ({ koishi }) => {
         // 合并数组为字符串
         text = text.join('\n')
         // 起飞
-        meta.$send(text)
+        session.send(text)
       })
     })
 }

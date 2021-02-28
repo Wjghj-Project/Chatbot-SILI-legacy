@@ -5,8 +5,8 @@ module.exports = ({ koishi }) => {
   koishi
     .command('about', '显示SILI的相关信息')
     .alias('自我介绍', '关于', 'sili')
-    .action(({ meta }) => {
-      meta.$send(
+    .action(({ session }) => {
+      session.send(
         [
           '✨ 自我介绍',
           '你好，我是Sara Lindery，你的人工智障助理，你也可以叫我SILI~',

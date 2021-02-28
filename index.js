@@ -1,5 +1,5 @@
 /**
- * @name wjghj-qqbot-koishi 万界规划局QQ机器人
+ * @name Chatbot-SILI 万界规划局QQ机器人
  * @author 机智的小鱼君 dragon-fish[at]qq.com
  *
  * @description Wjghj Project QQ机器人
@@ -12,8 +12,8 @@
  */
 const { App } = require('koishi') // koishi 机器人库
 const koishiConfig = require('./koishi.config')
-require('koishi-database-mysql') // 数据库驱动
 const sysLog = require('./utils/sysLog') // sysLog 保存日志
+const password = require('./secret/password')
 
 const discordJS = require('discord.js')
 const discord = new discordJS.Client()
@@ -21,16 +21,24 @@ const discord = new discordJS.Client()
 /**
  * @instance app koishi实例
  */
+require('koishi-adapter-onebot') // adapter
 const koishi = new App(koishiConfig)
 
-/**
- * @dependencies 添加 koishi 插件
- */
-koishi.plugin(require('koishi-plugin-mcping'))
-// koishi.plugin(require('koishi-plugin-teach'), {
-//   prefix: '%teach',
-// })
-koishi.plugin(require('koishi-plugin-image-search'))
+// plugins
+koishi.plugin(require('koishi-plugin-common'))
+koishi.plugin(require('koishi-plugin-mysql'), {
+  host: '127.0.0.1',
+  port: 3306,
+  user: 'root',
+  password: password.dbPassword.mysql.root,
+  database: 'chatbot-sili',
+})
+koishi.plugin(require('koishi-plugin-teach'), {
+  prefix: '?!',
+})
+koishi.plugin(require('koishi-plugin-genshin'), {
+  cookie: password.mhyCookie,
+})
 
 /**
  * @module autoLoads

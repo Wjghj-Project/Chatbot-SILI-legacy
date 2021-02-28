@@ -1,5 +1,6 @@
 const axios = require('axios').default
 const path = require('path')
+const { segment } = require('koishi')
 
 module.exports = ({ koishi }) => {
   /**
@@ -7,12 +8,13 @@ module.exports = ({ koishi }) => {
    */
   koishi
     .command('debug', '运行诊断测试')
-    .option('--face [id]', '发送QQ表情')
-    .option('--localimg', '本地图片')
-    .option('--reply [content]', '回复消息')
-    .option('--urlimg <url>', '网络图片')
-    .option('--version, -v', '显示SILI的版本信息', { type: 'boolean' })
-    .action(async ({ meta, options }) => {
+    .option('face', '[id] 发送QQ表情')
+    .option('localimg', '本地图片')
+    .option('reply', '[content] 回复消息')
+    .option('tts', '[text] 基于文字发送tts语音消息')
+    .option('urlimg', '<url> 网络图片')
+    .option('version', '-v 显示SILI的版本信息', { type: 'boolean' })
+    .action(async ({ session, options }) => {
       console.log('!debug', options)
 
       // face
@@ -28,23 +30,27 @@ module.exports = ({ koishi }) => {
           faceId = options.face
         }
         // console.log(faceId)
-        meta.$send(`[CQ:face,id=${faceId}]`)
+        session.send(`[CQ:face,id=${faceId}]`)
       }
 
       if (options.localimg) {
-        meta.$send(
+        session.send(
           `[CQ:image,file=file:///${path.resolve('./images/test.png')}]`
         )
       }
 
+      if (options.tts) {
+        session.send(`[CQ:tts,text=${options.tts || '这是一条测试消息'}]`)
+      }
+
       if (options.urlimg) {
-        meta.$send('wait...')
-        meta.$send('[CQ:image,file=' + options.urlimg + ']')
+        session.send('wait...')
+        session.send('[CQ:image,file=' + options.urlimg + ']')
       }
 
       if (options.reply) {
-        meta.$send(
-          `[CQ:reply,id=${meta.messageId}] ${
+        session.send(
+          `${segment('quote', { id: session.messageId })} ${
             options.reply === true ? 'hello, world' : options.reply
           }`
         )
@@ -60,7 +66,7 @@ module.exports = ({ koishi }) => {
           `- Koishi: ${packageInfo.dependencies.koishi}`,
           `- OneBot: ${onebotInfo.data.version}`,
         ].join('\n')
-        meta.$send(`[CQ:reply,id=${meta.messageId}]${versionMsg}`)
+        session.send(versionMsg)
       }
     })
 }

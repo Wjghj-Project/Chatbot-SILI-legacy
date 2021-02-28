@@ -2,58 +2,61 @@ const sysLog = require('../utils/sysLog')
 
 module.exports = ({ koishi }) => {
   // 添加好友
-  koishi.receiver.on('friend-add', meta => {
-    sysLog('❤', '已添加好友', meta)
+  koishi.on('friend-added', session => {
+    sysLog('❤', '已添加好友', session)
   })
 
   // 入群申请
-  koishi.receiver.on('request/group/add', meta => {
-    sysLog('💭', '收到入群申请', meta)
+  koishi.on('group-member-request', session => {
+    sysLog('💭', '收到入群申请', session)
   })
 
   // 加群邀请
-  koishi.receiver.on('request/group/invite', meta => {
-    sysLog('💌', '收到加群邀请', '群' + meta.groupId, '√通过')
-    meta.$approve()
+  koishi.on('group-request', session => {
+    sysLog('💌', '收到加群邀请', '群' + session.groupId, '√通过')
+    session.$approve()
   })
 
   // 群成员增加
-  koishi.receiver.on('group-increase/approve', meta => {
-    sysLog('🔰', '检测到群成员增加', '群' + meta.groupId, '用户' + meta.userId)
-    if (meta.userId === meta.selfId) {
-      sysLog('💌', '检测到加入群聊，发送自我介绍')
-      koishi.executeCommandLine('about', meta)
+  koishi.on('group-member-added', session => {
+    sysLog('🔰', '检测到群成员增加', '群' + session.groupId, '用户' + session.userId)
+    if (session.userId === session.selfId) {
+      // sysLog('💌', '检测到加入群聊，发送自我介绍')
+      // koishi.executeCommandLine('about', session)
     } else {
       koishi.sender.sendGroupMsg(
-        meta.groupId,
-        '❤群成员增加了，[CQ:at,qq=' + meta.userId + ']欢迎新大佬！'
+        session.groupId,
+        '❤群成员增加了，[CQ:at,qq=' + session.userId + ']欢迎新大佬！'
       )
     }
   })
 
   // 群成员减少
-  koishi.receiver.on('group-decrease', meta => {
-    sysLog('💔', '检测到群成员减少', meta)
-    meta.$send('💔检测到群成员减少，sayonara。')
+  koishi.on('group-deleted', session => {
+    sysLog('💔', '检测到群成员减少', session)
+    koishi.sender.sendGroupMsg(
+      session.groupId,
+      '💔成员 ' + session.userId + ' 离开了我们，sayonara。'
+    )
   })
 
   // 群管理变动
-  koishi.receiver.on('group-admin', meta => {
+  koishi.on('group-member/role', session => {
     sysLog(
       '🔰',
       '发生群管理员变动',
-      '群' + meta.groupId,
-      '用户' + meta.userId,
-      meta.subType === 'set' ? '+上任' : '-撤销'
+      '群' + session.groupId,
+      '用户' + session.userId,
+      session.subType === 'set' ? '+上任' : '-撤销'
     )
   })
 
   // 指令调用
-  koishi.receiver.on('command', data => {
+  koishi.on('command', data => {
     sysLog(
       '🤖',
       '发生指令调用事件',
-      data.meta.userId,
+      data.session.userId,
       '触发指令:' + data.command.name
     )
   })

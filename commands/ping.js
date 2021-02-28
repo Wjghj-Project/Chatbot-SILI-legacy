@@ -6,11 +6,11 @@ const random = require('../utils/random')
 module.exports = ({ koishi }) => {
   koishi
     .command('ping', '应答测试')
-    .alias('在吗', '测试', '!')
-    .action(({ meta }) => {
+    .alias('在吗', '!')
+    .action(({ session }) => {
       var now = new Date().getTime()
-      var ping = now - meta.time * 1000
-      console.log('now', now, 'meta', meta.time)
+      var ping = now - session.time * 1000
+      console.log('now', now, 'session', session.time)
       var randomReply = random([
         'pong~',
         '诶，我在~',
@@ -19,6 +19,6 @@ module.exports = ({ koishi }) => {
         'Aye Aye Captain~',
         "I'm still alive~",
       ])
-      meta.$send(randomReply)
+      session.send(randomReply)
     })
 }

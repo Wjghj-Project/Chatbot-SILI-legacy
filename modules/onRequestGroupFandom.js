@@ -7,25 +7,25 @@ const verifyQQ = require('../utils/verifyQQ')
 module.exports = ({ koishi }) => {
   koishi
     .group(qqNumber.group.fandom, qqNumber.group.dftest)
-    .receiver.on('request/group/add', meta => {
-      // sysLog('💭', '收到入群申请', meta)
-      const { userId, groupId, comment } = meta
+    .on('group-member-request', session => {
+      // sysLog('💭', '收到入群申请', session)
+      const { userId, groupId, comment } = session
       const answer = comment.split('答案：')[1] || ''
 
       var command = `!verify-qq --qq ${userId} --user ${answer}`
-      koishi.sender.sendGroupMsg(groupId, command)
+      koishi.bot.sendMsg(groupId, command)
 
       verifyQQ(
-        meta,
+        session,
         {
           qq: userId,
           user: answer,
         },
         ({ msg, status }) => {
-          koishi.sender.sendGroupMsg(groupId, msg)
+          koishi.bot.sendMsg(groupId, msg)
           if (status === true) {
-            meta.$approve()
-            koishi.sender.sendGroupMsg(groupId, '已自动通过入群申请')
+            koishi.bot.handleGroupRequest(session.messageId, true)
+            koishi.bot.sendMsg(groupId, '已自动通过入群申请')
           } else {
             // 修正用户名
             var userName = answer.trim()
@@ -35,7 +35,7 @@ module.exports = ({ koishi }) => {
             var _userNameFirst = userName.shift().toUpperCase()
             userName = _userNameFirst + userName.join('')
 
-            koishi.sender.sendGroupMsg(
+            koishi.bot.sendMsg(
               groupId,
               [
                 '请手动检查该用户信息:',
@@ -44,7 +44,7 @@ module.exports = ({ koishi }) => {
                 '复制拒绝理由: QQ号验证失败，请参阅群说明',
               ].join('\n')
             )
-            // meta.$reject('QQ号验证失败，请参阅群说明')
+            // session.$reject('QQ号验证失败，请参阅群说明')
           }
         }
       )
