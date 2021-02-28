@@ -37,6 +37,8 @@ module.exports = ({ koishi }) => {
         return
       }
 
+      let mwApi = session.channel.mwApi
+
       if (options.info) {
         reply(
           session,
@@ -44,8 +46,6 @@ module.exports = ({ koishi }) => {
         )
         return
       }
-
-      let mwApi = session.channel.mwApi
 
       if (!mwApi) {
         if (!options.silent)

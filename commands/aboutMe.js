@@ -4,7 +4,6 @@
 module.exports = ({ koishi }) => {
   koishi
     .command('about', '显示SILI的相关信息')
-    .alias('自我介绍', '关于', 'sili')
     .action(({ session }) => {
       session.send(
         [

@@ -1,7 +1,7 @@
 const sysLog = require('../utils/sysLog')
 
 module.exports = ({ koishi }) => {
-  koishi.receiver.on('friend-request', session => {
+  koishi.on('friend-request', session => {
     var answer = session.comment.replace(/.*\n回答:(.+)\n.*/i, '$1')
     var user = session.userId
     var approve = false

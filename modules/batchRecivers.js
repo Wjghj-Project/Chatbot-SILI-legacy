@@ -1,6 +1,9 @@
 const sysLog = require('../utils/sysLog')
+const { mySelf } = require('../secret/qqNumber').user
 
 module.exports = ({ koishi }) => {
+  const bot = require('../utils/bot')(koishi)
+
   // 添加好友
   koishi.on('friend-added', session => {
     sysLog('❤', '已添加好友', session)
@@ -14,19 +17,24 @@ module.exports = ({ koishi }) => {
   // 加群邀请
   koishi.on('group-request', session => {
     sysLog('💌', '收到加群邀请', '群' + session.groupId, '√通过')
-    session.$approve()
+    bot.handelReauest()
   })
 
   // 群成员增加
   koishi.on('group-member-added', session => {
-    sysLog('🔰', '检测到群成员增加', '群' + session.groupId, '用户' + session.userId)
+    sysLog(
+      '🔰',
+      '检测到群成员增加',
+      '群' + session.groupId,
+      '用户' + session.userId
+    )
     if (session.userId === session.selfId) {
       // sysLog('💌', '检测到加入群聊，发送自我介绍')
       // koishi.executeCommandLine('about', session)
     } else {
-      koishi.sender.sendGroupMsg(
+      bot.sendMsg(
         session.groupId,
-        '❤群成员增加了，[CQ:at,qq=' + session.userId + ']欢迎新大佬！'
+        '❤群成员增加了，[CQ:at,id=' + session.userId + ']欢迎新大佬！'
       )
     }
   })
@@ -34,7 +42,7 @@ module.exports = ({ koishi }) => {
   // 群成员减少
   koishi.on('group-deleted', session => {
     sysLog('💔', '检测到群成员减少', session)
-    koishi.sender.sendGroupMsg(
+    bot.sendMsg(
       session.groupId,
       '💔成员 ' + session.userId + ' 离开了我们，sayonara。'
     )
@@ -52,12 +60,7 @@ module.exports = ({ koishi }) => {
   })
 
   // 指令调用
-  koishi.on('command', data => {
-    sysLog(
-      '🤖',
-      '发生指令调用事件',
-      data.session.userId,
-      '触发指令:' + data.command.name
-    )
+  koishi.on('command', ({ session }) => {
+    sysLog('🤖', '指令调用', session.userId, session.message)
   })
 }

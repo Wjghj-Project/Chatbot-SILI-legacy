@@ -1,13 +1,16 @@
 const axios = require('axios').default
 const path = require('path')
-const { segment } = require('koishi')
+const reply = require('../utils/reply')
 
 module.exports = ({ koishi }) => {
+  const bot = require('../utils/bot')(koishi)
+
   /**
    * @module command-debug
    */
   koishi
-    .command('debug', '运行诊断测试')
+    .command('debug', '运行诊断测试', { authority: 2 })
+    .option('bot', '')
     .option('face', '[id] 发送QQ表情')
     .option('localimg', '本地图片')
     .option('reply', '[content] 回复消息')
@@ -16,6 +19,10 @@ module.exports = ({ koishi }) => {
     .option('version', '-v 显示SILI的版本信息', { type: 'boolean' })
     .action(async ({ session, options }) => {
       console.log('!debug', options)
+
+      if (options.bot) {
+        bot.sendMessage(session.channelId, 'bot test')
+      }
 
       // face
       if (options.face || options.face === 0) {
@@ -49,11 +56,7 @@ module.exports = ({ koishi }) => {
       }
 
       if (options.reply) {
-        session.send(
-          `${segment('quote', { id: session.messageId })} ${
-            options.reply === true ? 'hello, world' : options.reply
-          }`
-        )
+        reply(session, options.reply === true ? 'hello, world' : options.reply)
       }
 
       if (options.version) {

@@ -6,40 +6,6 @@ module.exports = ({ koishi }) => {
    */
   // 收到消息
   koishi.on('message', session => {
-    // {
-    //   anonymous: null,
-    //   font: 0,
-    //   groupId: '254794102',
-    //   message: 'test',
-    //   messageId: '426354350',
-    //   rawMessage: 'test',
-    //   selfId: '3338556752',
-    //   sender: {
-    //     age: 0,
-    //     area: '',
-    //     card: '',
-    //     level: '',
-    //     nickname: '机智的小鱼君⚡️',
-    //     role: 'owner',
-    //     sex: 'unknown',
-    //     title: '',
-    //     userId: 824399619
-    //   },
-    //   time: 1614527969,
-    //   userId: '824399619',
-    //   type: 'message',
-    //   subtype: 'group',
-    //   platform: 'onebot',
-    //   channelId: '254794102',
-    //   timestamp: 1614527969000,
-    //   content: 'test',
-    //   author: {
-    //     userId: '824399619',
-    //     username: '机智的小鱼君⚡️',
-    //     nickname: '',
-    //     anonymous: undefined
-    //   }
-    // }
     // 保留记录
     switch (session.subtype) {
       case 'private':
