@@ -5,6 +5,13 @@ const password = require('../secret/password')
  * @module loadPlugins 插件配置
  */
 module.exports = ({ koishi }) => {
+  // koishi.plugin(require('koishi-plugin-mysql'), {
+  //   host: '127.0.0.1',
+  //   port: 3306,
+  //   user: 'root',
+  //   password: password.dbPassword.mysql.root,
+  //   database: 'chatbot-sili',
+  // })
   koishi.plugin(require('koishi-plugin-common'), {
     // 欢迎信息
     // welcomeMessage({ userId }) {
@@ -31,31 +38,15 @@ module.exports = ({ koishi }) => {
       )}]`,
     },
   })
-  // koishi.plugin(require('koishi-plugin-mysql'), {
-  //   host: '127.0.0.1',
-  //   port: 3306,
-  //   user: 'root',
-  //   password: password.dbPassword.mysql.root,
-  //   database: 'chatbot-sili',
-  // })
-  koishi.plugin(require('koishi-plugin-mongo'), {
-    host: '127.0.0.1',
-    port: 27017,
-    username: 'koishi',
-    password: password.dbPassword.mongo.koishi,
-    name: 'koishi',
-  })
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
   })
   koishi.plugin(require('koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
   })
-  koishi.plugin(
-    require('koishi-plugin-iqdb', {
-      alias: ['搜图'],
-      unsafeAuthority: 2,
-    })
-  )
+  koishi.plugin(require('koishi-plugin-iqdb'), {
+    alias: ['搜图'],
+    unsafeAuthority: 2,
+  })
   koishi.plugin(require('../plugins/dbadmin'))
 }

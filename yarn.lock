@@ -557,11 +557,6 @@ base64-js@^1.3.1:
   resolved "https://registry.npm.taobao.org/base64-js/download/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha1-GxtEAWClv3rUC2UPCVljSBkDkwo=
 
-bignumber.js@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.0.tgz"
-  integrity sha512-t/OYhhJ2SD+YGBQcjY8GzzDHEk9f3nerxjtfa6tlMXfe7frs/WozhvCNoGvpM0P3bNf3Gq5ZRMlGr5f3r4/N8A==
-
 binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npm.taobao.org/binary-extensions/download/binary-extensions-2.2.0.tgz?cache=0&sync_timestamp=1610299293319&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbinary-extensions%2Fdownload%2Fbinary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
@@ -2129,18 +2124,6 @@ koishi-plugin-mongo@^2.0.0-beta.7:
   dependencies:
     mongodb "^3.6.4"
 
-koishi-plugin-mysql@^3.0.0-beta.13:
-  version "3.0.0-beta.13"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-mysql/download/koishi-plugin-mysql-3.0.0-beta.13.tgz#04bee987c462b304abd7eb542591312eebb571e1"
-  integrity sha1-BL7ph8RiswSr1+tUJZExLuu1ceE=
-  dependencies:
-    mysql "^2.18.1"
-
-koishi-plugin-status@^3.0.0-beta.9:
-  version "3.0.0-beta.9"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-status/download/koishi-plugin-status-3.0.0-beta.9.tgz#d6159ad7449efbd6b573c18e60741bc694b3768a"
-  integrity sha1-1hWa10Se+9a1c8GOYHQbxpSzdoo=
-
 koishi-plugin-teach@^2.0.0-beta.12:
   version "2.0.0-beta.12"
   resolved "https://registry.npm.taobao.org/koishi-plugin-teach/download/koishi-plugin-teach-2.0.0-beta.12.tgz#628ac53ef0e936b3468ca619aa4b282463dc9a10"
@@ -2157,7 +2140,7 @@ koishi-utils@^4.0.1:
   dependencies:
     supports-color "^8.1.1"
 
-koishi@^3.0.0-rc.0:
+koishi@^3.0.0-rc.1:
   version "3.0.0-rc.1"
   resolved "https://registry.npm.taobao.org/koishi/download/koishi-3.0.0-rc.1.tgz#d43f4ea29f3eeabdd2a59b1e3678142fd26001ac"
   integrity sha1-1D9Oop8+6r3SpZseNngUL9JgAaw=
@@ -2396,16 +2379,6 @@ mute-stream@~0.0.4:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
-
-mysql@^2.18.1:
-  version "2.18.1"
-  resolved "https://registry.yarnpkg.com/mysql/-/mysql-2.18.1.tgz"
-  integrity sha512-Bca+gk2YWmqp2Uf6k5NFEurwY/0td0cpebAucFpY/3jhrwrVGuxU2uQFCHjU19SJfje0yQvi+rVWdq78hR5lig==
-  dependencies:
-    bignumber.js "9.0.0"
-    readable-stream "2.3.7"
-    safe-buffer "5.1.2"
-    sqlstring "2.3.1"
 
 nan@^2.14.0:
   version "2.14.2"
@@ -2997,7 +2970,7 @@ readable-stream@1.1.x:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@2, readable-stream@2.3.7, readable-stream@^2.0.6, readable-stream@^2.3.5:
+readable-stream@2, readable-stream@^2.0.6, readable-stream@^2.3.5:
   version "2.3.7"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.7.tgz"
   integrity sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==
@@ -3282,11 +3255,6 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
-
-sqlstring@2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/sqlstring/-/sqlstring-2.3.1.tgz"
-  integrity sha1-R1OT/56RR5rqYtyvDKPRSYOn+0A=
 
 "statuses@>= 1.5.0 < 2", statuses@^1.5.0:
   version "1.5.0"

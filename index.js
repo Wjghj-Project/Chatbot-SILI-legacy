@@ -12,6 +12,7 @@
  */
 const { App } = require('koishi') // koishi 机器人库
 const koishiConfig = require('./koishi.config')
+const password = require('./secret/password')
 const sysLog = require('./utils/sysLog') // sysLog 保存日志
 const discordJS = require('discord.js')
 const discord = new discordJS.Client()
@@ -21,6 +22,14 @@ const discord = new discordJS.Client()
  */
 require('koishi-adapter-onebot') // adapter
 const koishi = new App(koishiConfig)
+
+koishi.plugin(require('koishi-plugin-mongo'), {
+  host: '127.0.0.1',
+  port: 27017,
+  username: 'koishi',
+  password: password.dbPassword.mongo.koishi,
+  name: 'koishi',
+})
 
 /**
  * @module autoLoads
