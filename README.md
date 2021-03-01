@@ -1,4 +1,10 @@
+<div align="center">
+
+<img src="https://i.loli.net/2021/02/19/nPzM8qvmyGBI2aL.jpg" alt="SILI t2020 avatar.jpg" title="SILI t2020 avatar.jpg" width="200"/>
+
 # Wjghj Chatbot SILI
+
+</div>
 
 万界规划局聊天机器人，主要用于处理 Fandom 官方 QQ 群 → Discord 的消息推送，也附带一些为了作者为了自己方便写的指令。
 
