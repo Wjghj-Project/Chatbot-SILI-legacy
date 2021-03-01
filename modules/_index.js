@@ -7,9 +7,9 @@ module.exports = ctx => {
       if (/^_/.test(file) || !/\.js$/.test(file)) return
       try {
         require('./' + file)(ctx)
-        console.log('Load auto module:', file)
+        console.log('√ Load auto module:', file)
       } catch (e) {
-        console.warn('Faild to load module:', file)
+        console.warn('× Faild to load module:', file)
       }
     })
   })

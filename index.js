@@ -13,8 +13,6 @@
 const { App } = require('koishi') // koishi 机器人库
 const koishiConfig = require('./koishi.config')
 const sysLog = require('./utils/sysLog') // sysLog 保存日志
-const password = require('./secret/password')
-
 const discordJS = require('discord.js')
 const discord = new discordJS.Client()
 
@@ -23,22 +21,6 @@ const discord = new discordJS.Client()
  */
 require('koishi-adapter-onebot') // adapter
 const koishi = new App(koishiConfig)
-
-// plugins
-koishi.plugin(require('koishi-plugin-common'))
-koishi.plugin(require('koishi-plugin-mysql'), {
-  host: '127.0.0.1',
-  port: 3306,
-  user: 'root',
-  password: password.dbPassword.mysql.root,
-  database: 'chatbot-sili',
-})
-koishi.plugin(require('koishi-plugin-teach'), {
-  prefix: '?!',
-})
-koishi.plugin(require('koishi-plugin-genshin'), {
-  cookie: password.mhyCookie,
-})
 
 /**
  * @module autoLoads
