@@ -12,6 +12,7 @@ module.exports = ({ koishi, discord }) => {
     // koishi.database.getGroup(session.groupId, ['discordWebhook'])
     if (session.groupId === qqNumber.group.fandom) {
       qqToDiscord({ session, discord })
+      // console.log('message', session)
     }
   })
   // Discord 收到消息
@@ -24,9 +25,15 @@ module.exports = ({ koishi, discord }) => {
       discordToQQ({ koishi, msg })
     }
   })
+  koishi.group(qqNumber.group.fandom).on('send', session => {
+    if (/^\[discord\]/i.test(session.content)) return
+    qqToDiscord({ session, discord })
+    // console.log('send', session)
+  })
 }
 
 function discordToQQ({ koishi, msg }) {
+  const bot = require('../utils/bot')(koishi)
   var content = msg.content
   content = parseDiscordEmoji(content)
   content = parseDiscordImages({ msg, content })
@@ -45,30 +52,28 @@ function discordToQQ({ koishi, msg }) {
       msg.author.username + '#' + msg.author.discriminator,
       msg.content
     )
-    koishi.bots['onebot:' + require('../secret/qqNumber').user.mySelf].sendMessage(
-      qqNumber.group.fandom,
-      send
-    )
+    bot.sendMessage(qqNumber.group.fandom, send)
   }
 }
 
 async function qqToDiscord({ session }) {
-  session.message = resolveBrackets(session.message)
+  let message = session.message || session.content
+  message = resolveBrackets(message)
   var send = ''
-  if (/\[cq:image,.+\]/gi.test(session.message)) {
-    var image = session.message.replace(
+  if (/\[cq:image,.+\]/gi.test(message)) {
+    var image = message.replace(
       /(.*?)\[cq:image.+,url=(.+?)\](.*?)/gi,
       '$1 $2 $3'
     )
     send += image
   } else {
-    send += session.message
+    send += message
   }
   send = send.replace(/\[cq:at,qq=(.+?)\]/gi, '`@$1`')
 
-  if (/\[cq:reply,id=.+\]/i.test(session.message)) {
+  if (/\[cq:reply,id=.+\]/i.test(message)) {
     var replyMsg = '',
-      replyMsgId = session.message.match(/\[cq:reply,id=(.+?)\]/i)[1] || 0
+      replyMsgId = message.match(/\[cq:reply,id=(.+?)\]/i)[1] || 0
     console.log('isReply', replyMsg)
     var msgData = await axios.get('http://localhost:5700/get_msg', {
       params: {
@@ -108,15 +113,20 @@ async function qqToDiscord({ session }) {
 
   // console.log('send to discord', send)
 
-  var nickname = ''
-  nickname += session.sender.card || session.sender.nickname
-  nickname += ' (' + session.sender.userId + ')'
+  let nickname = ''
+  let id = session.author.userId
+  nickname +=
+    session?.sender?.card ||
+    session?.sender?.nickname ||
+    session?.author?.username ||
+    '[UNKNOWN_USER_NAME]'
+  nickname += ' (' + id + ')'
   var body = {
     username: nickname,
     content: send,
     avatar_url:
       'https://www.gravatar.com/avatar/' +
-      md5(session.sender.userId + '@qq.com'),
+      md5(id + '@qq.com'),
   }
   axios
     .post(require('../secret/discord').fandom_zh.webhook, body)

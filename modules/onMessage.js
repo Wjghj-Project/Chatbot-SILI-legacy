@@ -1,4 +1,5 @@
 const sysLog = require('../utils/sysLog')
+const { segment } = require('koishi-utils')
 
 module.exports = ({ koishi }) => {
   /**
