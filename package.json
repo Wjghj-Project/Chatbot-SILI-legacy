@@ -15,6 +15,7 @@
     "koishi-plugin-genshin": "^1.0.6",
     "koishi-plugin-iqdb": "^1.0.1",
     "koishi-plugin-mongo": "^2.0.0-beta.8",
+    "koishi-plugin-schedule": "^3.0.0-beta.10",
     "koishi-plugin-teach": "^2.0.0-beta.12",
     "md5": "^2.2.1",
     "puppeteer": "^7.0.1"

@@ -6,13 +6,6 @@ const { koishi } = require('../index')
  * @module loadPlugins 插件配置
  */
 module.exports = () => {
-  // koishi.plugin(require('koishi-plugin-mysql'), {
-  //   host: '127.0.0.1',
-  //   port: 3306,
-  //   user: 'root',
-  //   password: password.dbPassword.mysql.root,
-  //   database: 'chatbot-sili',
-  // })
   koishi.plugin(require('koishi-plugin-common'), {
     // 欢迎信息
     // welcomeMessage({ userId }) {
@@ -42,6 +35,7 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
   })
+  // koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
   })

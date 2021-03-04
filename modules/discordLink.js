@@ -75,44 +75,34 @@ async function qqToDiscord({ session }) {
   if (/\[cq:reply,id=.+\]/i.test(message)) {
     var replyMsg = '',
       replyMsgId = message.match(/\[cq:reply,id=(.+?)\]/i)[1] || 0
-    console.log('isReply', replyMsg)
-    var msgData = await axios.get('http://localhost:5700/get_msg', {
-      params: {
-        message_id: replyMsgId,
-      },
-    })
-    msgData = msgData.data
-    // {
-    //   "data": {
-    //     "group": true,
-    //     "message": "第一行\r\n第二行",
-    //     "message_id": 633423692,
-    //     "real_id": 45531,
-    //     "sender": {
-    //       "nickname": "机智的小鱼君⚡️",
-    //       "user_id": 824399619
-    //     },
-    //     "time": 1604663086
-    //   },
-    //   "retcode": 0,
-    //   "status": "ok"
-    // }
-    if (msgData.status === 'ok') {
-      var replyTime = new Date(msgData.data.time * 1000),
-        replyDate = `${replyTime.getHours()}:${replyTime.getMinutes()}:${replyTime.getSeconds()}`
 
-      replyMsg = msgData.data.message
-      replyMsg = resolveBrackets(replyMsg)
-      replyMsg = replyMsg.split('\n').join('\n> ')
-      replyMsg = '> ' + replyMsg + '\n'
-      replyMsg =
-        `> **__回复 ${msgData.data.sender.nickname} 在 ${replyDate} 的消息__**\n` +
-        replyMsg
-      send = send.replace(/\[cq:reply,id=.+?\]/i, replyMsg)
-    }
+    let replyMeta = await session.bot.getMessage(session.channelId, replyMsgId)
+
+    // {
+    //   messageId: '-2059103050',
+    //   timestamp: 1614868765000,
+    //   content: '挂的真快啊',
+    //   author: {
+    //     userId: '123456',
+    //     username: '机智的小鱼君⚡️',
+    //     nickname: undefined,
+    //     anonymous: undefined
+    //   }
+    // }
+    var replyTime = new Date(replyMeta.timestamp),
+      replyDate = `${replyTime.getHours()}:${replyTime.getMinutes()}:${replyTime.getSeconds()}`
+
+    replyMsg = replyMeta.content
+    replyMsg = resolveBrackets(replyMsg)
+    replyMsg = replyMsg.split('\n').join('\n> ')
+    replyMsg = '> ' + replyMsg + '\n'
+    replyMsg =
+      `> **__回复 ${replyMeta.author.nickname ||
+        replyMeta.author.username} 在 ${replyDate} 的消息__**\n` + replyMsg
+    send = send.replace(/\[cq:reply,id=.+?\]/i, replyMsg)
   }
 
-  // console.log('send to discord', send)
+  // console.log('isReply', send)
 
   let nickname = ''
   let id = session.author.userId
@@ -125,7 +115,7 @@ async function qqToDiscord({ session }) {
   var body = {
     username: nickname,
     content: send,
-    avatar_url: 'https://www.gravatar.com/avatar/' + md5(id + '@qq.com'),
+    avatar_url: 'http://q1.qlogo.cn/g?b=qq&nk=' + id + '&s=640',
   }
   axios
     .post(require('../secret/discord').fandom_zh.webhook, body)

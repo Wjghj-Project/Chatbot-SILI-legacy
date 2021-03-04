@@ -2124,6 +2124,11 @@ koishi-plugin-mongo@^2.0.0-beta.8:
   dependencies:
     mongodb "^3.6.4"
 
+koishi-plugin-schedule@^3.0.0-beta.10:
+  version "3.0.0-beta.10"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-schedule/download/koishi-plugin-schedule-3.0.0-beta.10.tgz#389803bd833ff727a65208351acfcb7a76968fe8"
+  integrity sha1-OJgDvYM/9yemUgg1Gs/LenaWj+g=
+
 koishi-plugin-teach@^2.0.0-beta.12:
   version "2.0.0-beta.15"
   resolved "https://registry.npm.taobao.org/koishi-plugin-teach/download/koishi-plugin-teach-2.0.0-beta.15.tgz#bad0dacdf2394292655d90c63f545763ea545560"
