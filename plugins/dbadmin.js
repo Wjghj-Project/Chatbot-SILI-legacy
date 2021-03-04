@@ -2,7 +2,7 @@ const { segment } = require('koishi-utils')
 
 function apply(koishi, pluginOpt) {
   koishi
-    .command('dbadmin 数据库管理', { authority: 4 })
+    .command('dbadmin', '数据库管理', { authority: 4 })
     .example('dbadmin.set 更新值\ndbadmin.get 获取值')
     .action(({ session }) => {
       session.execute('dbadmin -h')

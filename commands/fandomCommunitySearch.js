@@ -7,7 +7,8 @@ module.exports = ({ koishi }) => {
   // koishi
   koishi
     .command(
-      'fandom-community-search <wiki> 通过名称搜索Fandom Wiki，预设搜索语言为zh'
+      'fandom-community-search <wiki>',
+      '通过名称搜索Fandom Wiki，预设搜索语言为zh'
     )
     .alias(
       '搜索fandom',

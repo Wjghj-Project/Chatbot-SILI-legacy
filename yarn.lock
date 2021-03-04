@@ -2069,19 +2069,19 @@ koa@^2.13.1:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-koishi-adapter-onebot@^3.0.0-rc.0:
-  version "3.0.0-rc.0"
-  resolved "https://registry.npm.taobao.org/koishi-adapter-onebot/download/koishi-adapter-onebot-3.0.0-rc.0.tgz#c1cff6395da4048a044f961fa2563efe963153b6"
-  integrity sha1-wc/2OV2kBIoET5YfolY+/pYxU7Y=
+koishi-adapter-onebot@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/koishi-adapter-onebot/download/koishi-adapter-onebot-3.0.0.tgz#d5431fe3949b5ae9980ad9ee6e9d5175dd0290fd"
+  integrity sha1-1UMf45SbWumYCtnubp1Rdd0CkP0=
   dependencies:
     axios "^0.21.1"
     koishi-utils "^4.0.1"
     ws "^7.4.3"
 
-koishi-core@^3.0.0-rc.1:
-  version "3.0.0-rc.1"
-  resolved "https://registry.npm.taobao.org/koishi-core/download/koishi-core-3.0.0-rc.1.tgz#a34a230cdc6c145d8d5181af3824f39068615e41"
-  integrity sha1-o0ojDNxsFF2NUYGvOCTzkGhhXkE=
+koishi-core@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/koishi-core/download/koishi-core-3.0.0.tgz#44a0845c3b455f07ef2d6fe15ba84609d6f7c34c"
+  integrity sha1-RKCEXDtFXwfvLW/hW6hGCdb3w0w=
   dependencies:
     "@koa/router" "^10.0.0"
     "@types/koa-bodyparser" "^4.3.0"
@@ -2095,10 +2095,10 @@ koishi-core@^3.0.0-rc.1:
     koishi-utils "^4.0.1"
     lru-cache "^6.0.0"
 
-koishi-plugin-common@^4.0.0-beta.17:
-  version "4.0.0-beta.17"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-common/download/koishi-plugin-common-4.0.0-beta.17.tgz#f01bf4bc88c13ab5b6af243c4ace44ec1f9a69e8"
-  integrity sha1-8Bv0vIjBOrW2ryQ8Ss5E7B+aaeg=
+koishi-plugin-common@^4.0.0-beta.19:
+  version "4.0.0-beta.19"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-common/download/koishi-plugin-common-4.0.0-beta.19.tgz#6d825986bcd017ec57075ba6be5b1030a38d57d5"
+  integrity sha1-bYJZhrzQF+xXB1umvlsQMKONV9U=
 
 koishi-plugin-genshin@^1.0.6:
   version "1.1.0"
@@ -2117,17 +2117,17 @@ koishi-plugin-iqdb@^1.0.1:
     iqdb-client "^1.0.3"
     koishi-utils "^4.0.1"
 
-koishi-plugin-mongo@^2.0.0-beta.7:
-  version "2.0.0-beta.7"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-mongo/download/koishi-plugin-mongo-2.0.0-beta.7.tgz#f0d4ddd123f001d1b57bc8de0ef140a8994580ca"
-  integrity sha1-8NTd0SPwAdG1e8jeDvFAqJlFgMo=
+koishi-plugin-mongo@^2.0.0-beta.8:
+  version "2.0.0-beta.8"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-mongo/download/koishi-plugin-mongo-2.0.0-beta.8.tgz#0656a1c0d68560c92d2a04eac1628a644e647aab"
+  integrity sha1-BlahwNaFYMktKgTqwWKKZE5keqs=
   dependencies:
     mongodb "^3.6.4"
 
 koishi-plugin-teach@^2.0.0-beta.12:
-  version "2.0.0-beta.12"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-teach/download/koishi-plugin-teach-2.0.0-beta.12.tgz#628ac53ef0e936b3468ca619aa4b282463dc9a10"
-  integrity sha1-YorFPvDpNrNGjKYZqksoJGPcmhA=
+  version "2.0.0-beta.15"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-teach/download/koishi-plugin-teach-2.0.0-beta.15.tgz#bad0dacdf2394292655d90c63f545763ea545560"
+  integrity sha1-utDazfI5QpJlXZDGP1RXY+pUVWA=
   dependencies:
     axios "^0.21.1"
     fastest-levenshtein "^1.0.12"
@@ -2140,15 +2140,15 @@ koishi-utils@^4.0.1:
   dependencies:
     supports-color "^8.1.1"
 
-koishi@^3.0.0-rc.1:
-  version "3.0.0-rc.1"
-  resolved "https://registry.npm.taobao.org/koishi/download/koishi-3.0.0-rc.1.tgz#d43f4ea29f3eeabdd2a59b1e3678142fd26001ac"
-  integrity sha1-1D9Oop8+6r3SpZseNngUL9JgAaw=
+koishi@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/koishi/download/koishi-3.0.0.tgz#9bc486dda90ed7f3d3b59a1b60ab28935b004301"
+  integrity sha1-m8SG3akO1/PTtZobYKsok1sAQwE=
   dependencies:
     cac "^6.7.2"
     chokidar "^3.5.1"
     kleur "^4.1.4"
-    koishi-core "^3.0.0-rc.1"
+    koishi-core "^3.0.0"
     koishi-utils "^4.0.1"
     prompts "^2.4.0"
 
@@ -3001,7 +3001,7 @@ readdirp@~3.5.0:
 
 regexpp@^3.1.0:
   version "3.1.0"
-  resolved "https://registry.npm.taobao.org/regexpp/download/regexpp-3.1.0.tgz"
+  resolved "https://registry.npm.taobao.org/regexpp/download/regexpp-3.1.0.tgz#206d0ad0a5648cffbdb8ae46438f3dc51c9f78e2"
   integrity sha1-IG0K0KVkjP+9uK5GQ489xRyfeOI=
 
 registry-auth-token@^4.0.0:

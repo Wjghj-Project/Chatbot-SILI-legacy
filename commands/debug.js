@@ -11,11 +11,11 @@ module.exports = ({ koishi }) => {
   koishi
     .command('debug', '运行诊断测试', { authority: 2 })
     .option('bot', '')
-    .option('face', '[id] 发送QQ表情')
+    .option('face [id]', '发送QQ表情')
     .option('localimg', '本地图片')
-    .option('reply', '[content] 回复消息')
-    .option('tts', '[text] 基于文字发送tts语音消息')
-    .option('urlimg', '<url> 网络图片')
+    .option('reply [content]', '回复消息')
+    .option('tts [text]', '基于文字发送tts语音消息')
+    .option('urlimg <url>', '网络图片')
     .option('version', '-v 显示SILI的版本信息', { type: 'boolean' })
     .action(async ({ session, options }) => {
       console.log('!debug', options)

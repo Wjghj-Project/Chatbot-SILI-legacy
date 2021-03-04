@@ -5,7 +5,8 @@ const resolveBrackets = require('../utils/resolveBrackets')
 module.exports = ({ koishi }) => {
   koishi
     .command(
-      'wiki <pagename:text> 发送 wiki 链接（本功能需要 QQ 群申请链接到某个 MediaWiki 网站）'
+      'wiki <pagename:text>',
+      '发送 wiki 链接（本功能需要 QQ 群申请链接到某个 MediaWiki 网站）'
     )
     // .alias('')
     .option('info', '-i MediaWiki link info')
