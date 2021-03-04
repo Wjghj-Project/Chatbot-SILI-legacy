@@ -90,7 +90,7 @@ async function qqToDiscord({ session }) {
     //   }
     // }
     var replyTime = new Date(replyMeta.timestamp),
-      replyDate = `${replyTime.getHours()}:${replyTime.getMinutes()}:${replyTime.getSeconds()}`
+      replyDate = `${replyTime.getHours()}:${replyTime.getMinutes()}`
 
     replyMsg = replyMeta.content
     replyMsg = resolveBrackets(replyMsg)
