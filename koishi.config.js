@@ -2,9 +2,9 @@
 const qqNumber = require('./secret/qqNumber') // 机器人的QQ
 
 module.exports = {
-  type: 'onebot:http',
+  type: 'onebot:ws',
   port: 3100,
-  server: 'http://127.0.0.1:5700',
+  server: 'ws://127.0.0.1:5700',
   selfId: qqNumber.user.mySelf,
   nickname: 'sili',
   prefix: ['!', '！'],
