@@ -1,12 +1,20 @@
 const puppeteer = require('puppeteer')
 
-module.exports = async url => {
+module.exports = async (url, selector) => {
   if (!url) return ''
+  const browser = await puppeteer.launch({ headless: 0 })
   try {
-    const browser = await puppeteer.launch({ headless: 1 })
     const page = await browser.newPage()
     await page.goto(url)
-    const image = await page.screenshot()
+
+    let image
+
+    if (selector) {
+      let area = await page.$(selector)
+      image = await area.screenshot()
+    } else {
+      image = await page.screenshot()
+    }
 
     await browser.close()
 
@@ -15,6 +23,7 @@ module.exports = async url => {
     return `[CQ:image,file=base64://${base64}]`
   } catch (e) {
     // console.log('error', e)
+    await browser.close()
     return '截图时遇到问题：' + e
   }
 }

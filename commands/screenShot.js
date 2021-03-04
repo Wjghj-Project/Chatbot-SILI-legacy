@@ -6,14 +6,11 @@ module.exports = ({ koishi }) => {
     .command('screenshot <url>', {
       authority: 3,
     })
+    .option('selector', '-s <selector>')
     .alias('截图')
-    .action(async ({ session }, url) => {
-      if (!url || !/^https?:\/\//.test(url)) {
-        session.send('URL 不正确！')
-        return
-      }
-
-      let image = await screenShot(url)
+    .action(async ({ session, options }, url) => {
+      if (options.selector === true) options.selector = undefined
+      let image = await screenShot(url, options.selector)
       session.send(`${url} 的网页截图：${image}`)
     })
 }
