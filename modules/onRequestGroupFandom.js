@@ -1,10 +1,11 @@
 const qqNumber = require('../secret/qqNumber')
 const verifyQQ = require('../utils/verifyQQ')
+const { koishi } = require('../index')
 
 /**
  * @module Fandom群入群申请
  */
-module.exports = ({ koishi }) => {
+module.exports = () => {
   const bot = require('../utils/bot')(koishi)
 
   koishi

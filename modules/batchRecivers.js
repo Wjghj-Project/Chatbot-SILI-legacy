@@ -1,7 +1,8 @@
 const sysLog = require('../utils/sysLog')
 const { mySelf } = require('../secret/qqNumber').user
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   const bot = require('../utils/bot')(koishi)
 
   // 添加好友

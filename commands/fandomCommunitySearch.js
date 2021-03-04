@@ -1,10 +1,11 @@
-const axios = require('axios')
+const axios = require('axios').default
 const cheerio = require('cheerio')
+const { koishi } = require('../index')
 
 /**
  * @module command-fandomCommunitySearch
  */
-module.exports = ({ koishi }) => {
+module.exports = () => {
   // koishi
   koishi
     .command(

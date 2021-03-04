@@ -51,3 +51,9 @@ discord.on('ready', () => {
 koishi.start().then(() => {
   sysLog('🌈', 'QQ 成功登录')
 })
+
+module.exports = {
+  name: 'index',
+  koishi,
+  discord,
+}

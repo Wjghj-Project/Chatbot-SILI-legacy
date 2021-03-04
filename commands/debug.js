@@ -1,8 +1,9 @@
 const axios = require('axios').default
 const path = require('path')
 const reply = require('../utils/reply')
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   const bot = require('../utils/bot')(koishi)
 
   /**

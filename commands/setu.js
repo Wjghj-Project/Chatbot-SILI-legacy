@@ -1,8 +1,9 @@
 const { setu } = require('../secret/api')
 const axios = require('axios').default
 const { s } = require('koishi')
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   koishi
     .command('setu', '好东西，但伤身体，请节制使用。', {
       minInterval: 120 * 1000,

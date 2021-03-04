@@ -1,7 +1,8 @@
 const sysLog = require('../utils/sysLog')
-const { segment } = require('koishi-utils')
+// const { segment } = require('koishi-utils')
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   /**
    * @methid 任意消息事件监听
    */

@@ -5,8 +5,9 @@ const parseDiscordImages = require('../utils/parseDiscordImages')
 const resolveBrackets = require('../utils/resolveBrackets')
 const md5 = require('../utils/md5')
 const sysLog = require('../utils/sysLog')
+const { koishi, discord } = require('../index')
 
-module.exports = ({ koishi, discord }) => {
+module.exports = () => {
   // QQ 收到消息
   koishi.on('message', session => {
     // koishi.database.getGroup(session.groupId, ['discordWebhook'])
@@ -124,9 +125,7 @@ async function qqToDiscord({ session }) {
   var body = {
     username: nickname,
     content: send,
-    avatar_url:
-      'https://www.gravatar.com/avatar/' +
-      md5(id + '@qq.com'),
+    avatar_url: 'https://www.gravatar.com/avatar/' + md5(id + '@qq.com'),
   }
   axios
     .post(require('../secret/discord').fandom_zh.webhook, body)

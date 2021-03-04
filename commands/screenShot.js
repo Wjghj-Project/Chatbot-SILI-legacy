@@ -1,7 +1,8 @@
 const screenShot = require('../utils/screenShot')
 const reply = require('../utils/reply')
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   koishi
     .command('screenshot <url>', {
       authority: 3,

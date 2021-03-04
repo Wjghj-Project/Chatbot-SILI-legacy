@@ -1,6 +1,7 @@
 const sysLog = require('../utils/sysLog')
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   koishi.on('friend-request', session => {
     var answer = session.comment.replace(/.*\n回答:(.+)\n.*/i, '$1')
     var user = session.userId

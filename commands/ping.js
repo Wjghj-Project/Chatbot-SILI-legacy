@@ -1,9 +1,10 @@
 const random = require('../utils/random')
+const { koishi } = require('../index')
 
 /**
  * @module command-ping
  */
-module.exports = ({ koishi }) => {
+module.exports = () => {
   koishi
     .command('ping', '应答测试')
     .alias('在吗', '!')

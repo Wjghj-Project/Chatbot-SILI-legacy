@@ -1,8 +1,8 @@
 const axios = require('axios').default
 const reply = require('../utils/reply')
-const resolveBrackets = require('../utils/resolveBrackets')
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   koishi
     .command(
       'wiki <pagename:text>',

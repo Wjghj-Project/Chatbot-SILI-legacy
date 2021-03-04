@@ -1,6 +1,7 @@
 const axios = require('axios').default
+const { koishi } = require('../index')
 
-module.exports = ({ koishi }) => {
+module.exports = () => {
   /**
    * @module command-inpageeditSearch
    */

@@ -1,10 +1,11 @@
 const path = require('path')
 const password = require('../secret/password')
+const { koishi } = require('../index')
 
 /**
  * @module loadPlugins 插件配置
  */
-module.exports = ({ koishi }) => {
+module.exports = () => {
   // koishi.plugin(require('koishi-plugin-mysql'), {
   //   host: '127.0.0.1',
   //   port: 3306,
