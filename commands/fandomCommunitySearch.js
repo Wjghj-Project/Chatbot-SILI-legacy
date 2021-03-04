@@ -1,4 +1,5 @@
 const axios = require('axios')
+const cheerio = require('cheerio')
 
 /**
  * @module command-fandomCommunitySearch
@@ -28,28 +29,6 @@ module.exports = ({ koishi }) => {
 
       // makeSearch
       makeSearch({ wiki, lang }, (err, data) => {
-        // {
-        //   "total": 1,
-        //   "batches": 1,
-        //   "currentBatch": 1,
-        //   "next": null,
-        //   "items": [
-        //     {
-        //       "id": "1945950",
-        //       "title": "No Game No Life 游戏人生 Wiki",
-        //       "url": "https://ngnl.fandom.com/zh/",
-        //       "topic": "Anime",
-        //       "desc": "No Game No Life 游戏人生 Wiki是一个任何人都可以贡献的线上社区网站。你可以发现、分享和添加知识！",
-        //       "stats": {
-        //         "articles": 200,
-        //         "images": 10,
-        //         "videos": 0
-        //       },
-        //       "image": "https://community.fandom.com/extensions/wikia/Search/images/fandom_image_placeholder.jpg",
-        //       "language": "zh"
-        //     }
-        //   ]
-        // }
         var ping = new Date().getTime() - timeBefore
 
         // if error
@@ -59,7 +38,7 @@ module.exports = ({ koishi }) => {
         }
 
         // if no wiki
-        if (data.items.length < 1) {
+        if (data.length < 1) {
           session.send(
             `喵，关键词“${wiki}”未能匹配到 wiki，请尝试更改语言或者关键词~`
           )
@@ -67,21 +46,21 @@ module.exports = ({ koishi }) => {
         }
 
         var nth = isNaN(options.nth) ? 1 : options.nth
-        if (nth > 10 || nth < 1 || nth > data.items.length) nth = 1
+        if (nth > 10 || nth < 1 || nth > data.length) nth = 1
         var indexNth = nth - 1
-        var theWiki = data.items[indexNth]
+        var wikiData = data[indexNth]
 
         // 创建空数组
         var text = [
-          `[CQ:image,file=${theWiki.image}]`,
-          theWiki.title,
-          theWiki.url,
+          `[CQ:image,file=${wikiData.image}]`,
+          wikiData.name,
+          wikiData.link,
           '',
-          `简介：${theWiki.desc}`,
-          `主题：${theWiki.topic}`,
-          `统计：共 ${theWiki.stats.articles} 个文章页面、${theWiki.stats.images} 个媒体文件`,
+          `简介：${wikiData.desc}`,
+          `主题：${wikiData.hub}`,
+          `统计：共 ${wikiData.stats.pages}、${wikiData.stats.images}、${wikiData.stats.videos}`,
           '',
-          `(第${nth}/${data.total}个结果，耗时: ${ping}ms)`,
+          `(第${nth}/${data.length}个结果，耗时: ${ping}ms)`,
         ]
 
         // 合并数组为字符串
@@ -93,23 +72,59 @@ module.exports = ({ koishi }) => {
 }
 
 function makeSearch({ wiki = '', lang = 'zh' }, next) {
-  console.log('Search Fandom wiki:', wiki + ' | Lang: ' + lang)
+  // console.log('Search Fandom wiki:', wiki + ' | Lang: ' + lang)
 
   // GET 网页内容
   axios
-    .get('https://community.fandom.com/api/v1/Search/CrossWiki', {
+    .get('https://community.fandom.com/wiki/Special:SearchCommunity', {
       params: {
         query: wiki,
-        lang,
-        limit: 25,
+        scope: 'community',
+        resultsLang: lang,
+        uselang: 'zh',
       },
     })
-    .then(({ data }) => {
-      console.log('Done search wiki')
+    .then(({ data: html }) => {
+      const $ = cheerio.load(html)
+      let data = []
+      $('li.unified-search__result').each((index, el) => {
+        let $el = $(el)
+        let wiki = {}
+        wiki.image = $el.find('.wikiPromoteThumbnail').attr('src')
+        wiki.name = $el
+          .find('.unified-search__result__title')
+          .text()
+          .trim()
+        wiki.hub = $el
+          .find('.unified-search__result__community__content__hub')
+          .text()
+          .trim()
+        wiki.desc = $el
+          .find('.unified-search__result__community__description')
+          .text()
+          .trim()
+        wiki.link = $el.find('.unified-search__result__link').attr('href')
+        let $stats = $el.find(
+          '.unified-search__result__community__content__statistics li'
+        )
+        wiki.stats = {
+          pages: $($stats.get(0))
+            .text()
+            .trim(),
+          images: $($stats.get(1))
+            .text()
+            .trim(),
+          videos: $($stats.get(2))
+            .text()
+            .trim(),
+        }
+        data.push(wiki)
+      })
+      // console.log('Done search wiki', data)
       next(null, data)
     })
     .catch(error => {
-      console.error('Error when search wiki')
+      console.error('Error when search wiki', error)
       next(error, null)
     })
 }
