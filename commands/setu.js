@@ -6,7 +6,7 @@ const { koishi } = require('../index')
 module.exports = () => {
   koishi
     .command('setu', '好东西，但伤身体，请节制使用。', {
-      minInterval: 120 * 1000,
+      minInterval: 3 * 60 * 1000,
     })
     .alias('色图')
     .action(({ session }) => {

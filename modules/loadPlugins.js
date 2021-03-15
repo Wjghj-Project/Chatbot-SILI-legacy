@@ -35,7 +35,7 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
   })
-  // koishi.plugin(require('koishi-plugin-schedule'))
+  koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
   })
@@ -44,4 +44,14 @@ module.exports = () => {
     unsafeAuthority: 2,
   })
   koishi.plugin(require('../plugins/dbadmin'))
+  koishi.plugin(require('../plugins/baidu'))
+  koishi.plugin(require('../plugins/recall'))
+  koishi.plugin(require('koishi-plugin-blame'), {
+    catch: ['unhandledRejection'],
+    send: {
+      private: ['onebot:' + require('../secret/qqNumber').user.xiaoyujun],
+      group: [],
+    },
+    sender: ['onebot:' + require('../secret/qqNumber').user.mySelf],
+  })
 }

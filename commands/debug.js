@@ -12,6 +12,7 @@ module.exports = () => {
   koishi
     .command('debug', '运行诊断测试', { authority: 2 })
     .option('bot', '')
+    .option('broken', '')
     .option('face [id]', '发送QQ表情')
     .option('localimg', '本地图片')
     .option('reply [content]', '回复消息')
@@ -61,16 +62,18 @@ module.exports = () => {
       }
 
       if (options.version) {
-        const { data: onebotInfo } = await axios.get(
-          'http://127.0.0.1:5700/get_version_info'
-        )
+        const { appVersion: onebotVer } = await session.bot.$getVersionInfo()
         const packageInfo = require('../package.json')
         const versionMsg = [
           `- SILI  : ${packageInfo.version}`,
           `- Koishi: ${packageInfo.dependencies.koishi}`,
-          `- OneBot: ${onebotInfo.data.version}`,
+          `- OneBot: ${onebotVer}`,
         ].join('\n')
         session.send(versionMsg)
+      }
+
+      if (options.broken) {
+        throw new Error('test')
       }
     })
 }

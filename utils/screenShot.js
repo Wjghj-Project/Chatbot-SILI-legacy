@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer')
+const { segment } = require('koishi-utils')
+const path = require('path')
 
 module.exports = async (url, selector) => {
   if (!url) return ''
@@ -20,10 +22,14 @@ module.exports = async (url, selector) => {
 
     let base64 = image.toString('base64')
     // console.log(base64)
-    return `[CQ:image,file=base64://${base64}]`
-  } catch (e) {
+    return segment('image', { file: 'base64://' + base64 })
+  } catch (err) {
     // console.log('error', e)
     await browser.close()
-    return '截图时遇到问题：' + e
+    return `${segment('image', {
+      file:
+        'file:///' +
+        path.resolve(__dirname, '../images/connection_err_firefox.png'),
+    })}\n(截图时遇到问题：${err})`
   }
 }

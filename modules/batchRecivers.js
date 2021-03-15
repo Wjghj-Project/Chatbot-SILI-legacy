@@ -17,8 +17,8 @@ module.exports = () => {
 
   // 加群邀请
   koishi.on('group-request', session => {
-    sysLog('💌', '收到加群邀请', '群' + session.groupId, '√通过')
-    bot.handelReauest()
+    sysLog('💌', '收到加群邀请', '群' + session.groupId)
+    // bot.handelReauest()
   })
 
   // 群成员增加
@@ -41,7 +41,7 @@ module.exports = () => {
   })
 
   // 群成员减少
-  koishi.on('group-deleted', session => {
+  koishi.on('group-member-deleted', session => {
     sysLog('💔', '检测到群成员减少', session)
     bot.sendMsg(
       session.groupId,

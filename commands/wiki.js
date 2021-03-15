@@ -1,6 +1,7 @@
 const axios = require('axios').default
 const reply = require('../utils/reply')
 const { koishi } = require('../index')
+const resolveBrackets = require('../utils/resolveBrackets')
 
 module.exports = () => {
   koishi
@@ -95,4 +96,15 @@ module.exports = () => {
           }
         )
     })
+
+  koishi.middleware(async (session, next) => {
+    await next()
+    let content = resolveBrackets(session.content)
+    let link = /\[\[(.+?)\]\]/.exec(content)
+    if (link && link[1]) {
+      // console.log('link', link)
+      link = link[1]
+      session.execute('wiki -S ' + link)
+    }
+  })
 }
