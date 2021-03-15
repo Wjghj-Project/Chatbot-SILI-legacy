@@ -35,7 +35,7 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
   })
-  koishi.plugin(require('koishi-plugin-schedule'))
+  // koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
   })

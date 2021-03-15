@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,238 +46,143 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
 exports.__esModule = true;
-// const axios = require('axios').default
-// const cheerio = require('cheerio')
-// const { segment } = require('koishi-utils')
+exports.apply = exports.name = void 0;
 var axios_1 = require("axios");
-var cheerio = require("cheerio");
+var cheerio_1 = require("cheerio");
 var koishi_core_1 = require("koishi-core");
-/**
- * @name koishi-plugin-baidu 百度百科插件
- * @author 机智的小鱼君 <dragon-fish@qq.com>
- * @license Apache-2.0
- */
-module.exports.name = 'plugin-baidu';
-/**
- * @function _msg
- * @param {String} msgKey
- * @param  {...String} args
- * @return {String}
- */
-function _msg(msgKey) {
-    var args = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        args[_i - 1] = arguments[_i];
-    }
-    function handleArgs(message) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        args.forEach(function (elem, index) {
-            var rgx = new RegExp('\\$' + (index + 1), 'g');
-            message = message.replace(rgx, elem);
-        });
-        return message;
-    }
-    var allMsg = {
-        article_not_exist: '喵，百度百科尚未收录词条 “$1” 。\n您可以访问以确认：$2',
-        baikeArticle: 'https://baike.baidu.com/item/$1',
-        baikeSearch: 'https://baike.baidu.com/search?word=$1',
-        basicSearch: 'https://www.baidu.com/s?wd=$1',
-        error_with_link: '百度搜索时出现问题。\n您可以访问以确认：$1'
-    };
-    if (allMsg[msgKey]) {
-        var finalMsg = handleArgs.apply(void 0, __spreadArrays([allMsg[msgKey]], args));
-        return finalMsg;
-    }
-    else {
-        var showArgs = '';
-        if (args.length > 0) {
-            showArgs += ': ' + args.join(', ');
-        }
-        return "<" + module.exports.name + "-" + msgKey + showArgs + ">";
-    }
-}
-/**
- * @function makeSearch 获取搜索列表
- * @param {String} keyword 搜索关键词
- * @return {Promise}
- */
-function makeSearch(keyword) {
-    return __awaiter(this, void 0, Promise, function () {
-        var data;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, axios_1["default"].get(_msg('baikeSearch', encodeURI(keyword)))];
-                case 1:
-                    data = (_a.sent()).data;
-                    return [2 /*return*/, cheerio.load(data)];
-            }
-        });
-    });
-}
-/**
- * @function getArticleLink 从搜索列表中获取指定顺位结果的词条链接
- * @param {Cheerio} $search 搜索列表的cheerio对象
- * @param {Number} index
- * @return {String} 词条的链接
- */
-function getArticleLink($search, index) {
-    if (index === void 0) { index = 0; }
-    var $list = $search('.search-list dd');
+exports.name = 'baidu';
+var URL_BASE = 'https://baike.baidu.com';
+var URL_SEARCH = URL_BASE + '/search?word=';
+koishi_core_1.template.set('baidu', {
+    'article-not-exist': '百度百科尚未收录词条 “{0}” 。',
+    'await-choose-result': '请发送您想查看的词条编号。',
+    'error-with-link': '百度搜索时出现问题。',
+    'has-multi-result': '“{0}”有多个搜索结果（显示前 {1} 个）：',
+    'incorrect-index': ''
+});
+/** 从搜索列表中获取指定顺位结果的词条链接 */
+function getArticleLink($, index) {
+    var $list = $('.search-list dd');
     // 处理 index
     if (index < 0)
         index = 0;
     if ($list.length < 1 || index + 1 > $list.length)
-        return null;
+        return;
     // 获取词条链接
     var $entry = $list.eq(index);
     var url = $entry.find('a.result-title').attr('href');
     if (!url)
-        return null;
-    if (/^\/item\//.test(url))
-        url = _msg('baikeArticle', url.replace('/item/', ''));
+        return;
+    if (/^\/item\//.test(url)) {
+        url = URL_BASE + url;
+    }
     return url;
 }
-/**
- * @function getArticle 从搜索列表中获取指定顺位结果的词条内容
- * @param {Cheerio} $search 搜索列表的cheerio对象
- * @param {Number} index
- * @return {Promise}
- */
-function getArticle($search, index) {
-    if (index === void 0) { index = 0; }
-    return __awaiter(this, void 0, Promise, function () {
-        var url, data;
+/** 从搜索列表中获取指定顺位结果的词条内容 */
+function getHtml(url) {
+    return __awaiter(this, void 0, void 0, function () {
+        var data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    url = getArticleLink($search, index);
                     if (!url)
-                        return [2 /*return*/, null
-                            // 获取词条内容
-                        ];
+                        return [2 /*return*/, null];
                     return [4 /*yield*/, axios_1["default"].get(url)];
                 case 1:
                     data = (_a.sent()).data;
-                    return [2 /*return*/, cheerio.load(data)];
+                    return [2 /*return*/, cheerio_1.load(data)];
             }
         });
     });
 }
-/**
- * @function formatAnswer
- * @param {Cheerio} $article 词条页面的cheerio对象
- * @param {String} from 来源url
- * @return {String}
- */
-function formatAnswer(_a) {
-    var $article = _a.$article, from = _a.from, pOptions = _a.pOptions;
-    var msg = [];
-    // 获取简图
-    var summaryPic = $article('.summary-pic img');
-    if (summaryPic.length > 0 && pOptions.showImage) {
-        msg.push(koishi_core_1.segment('image', {
-            file: summaryPic.attr('src')
-        }));
+function formatAnswer($, link, options) {
+    $('.lemma-summary sup').remove(); // 删掉 [1] 这种鬼玩意
+    var summary = $('.lemma-summary').text().trim(); // 获取词条的第一段
+    if (summary.length > options.maxSummaryLength) {
+        summary = summary.slice(0, options.maxSummaryLength) + '...';
     }
-    // 获取词条标题
-    var title = $article('h1')
-        .text()
-        .trim();
-    msg.push(title);
-    // 获取类似“同义词”的提示
-    var tip = $article('.view-tip-panel');
-    if (tip.length > 0) {
-        tip = tip.text().trim();
-        msg.push(tip);
-    }
-    // 获取词条的第一段
-    $article('.lemma-summary sup').remove(); // 删掉 [1] 这种鬼玩意
-    var summary = $article('.lemma-summary')
-        .text()
-        .trim();
-    var maxLength = summary.length;
-    if (pOptions.maxSummaryLength > 0) {
-        maxLength = pOptions.maxSummaryLength;
-    }
-    msg.push(summary.length > maxLength
-        ? summary.substr(0, maxLength) + ' [...]'
-        : summary);
-    msg.push("\u6765\u81EA\uFF1A" + from);
-    return msg.join('\n');
+    return koishi_core_1.interpolate(options.format, {
+        title: $('h1').text().trim(),
+        thumbnail: koishi_core_1.segment.image($('.summary-pic img').attr('src')),
+        tips: $('.view-tip-panel').text().trim(),
+        summary: summary,
+        link: link
+    }).replace(/\n+/g, '\n');
 }
-module.exports.apply = function (koishi, userOptions) {
-    if (userOptions === void 0) { userOptions = {}; }
-    var defaultOptions = {
-        maxSummaryLength: 220,
-        sendError: true,
-        showImage: true
-    };
-    var pOptions = Object.assign({}, defaultOptions, userOptions);
-    koishi
-        .command('baidu <keyword>', '使用百度百科搜索')
-        .example('baidu 最终幻想14')
+function apply(ctx, options) {
+    var _this = this;
+    if (options === void 0) { options = {}; }
+    options = __assign({ maxResultCount: 3, maxSummaryLength: 200, format: '{{ thumbnail }}\n{{ title }}\n{{ tips }}\n{{ summary }}\n来自：{{ link }}' }, options);
+    ctx.command('tools/baidu <keyword>', '使用百度百科搜索')
+        .example('百度一下最终幻想14')
+        .shortcut('百度一下', { fuzzy: true, greedy: true })
+        .shortcut('百度', { fuzzy: true, greedy: true })
         .action(function (_a, keyword) {
         var session = _a.session;
-        return __awaiter(void 0, void 0, void 0, function () {
-            var $search, $article, err_1;
+        return __awaiter(_this, void 0, void 0, function () {
+            var url, $, index, $results, count, output, i, $item, title, desc, answer, articleLink, $article, err_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        // 是否有关键词
                         if (!keyword)
                             return [2 /*return*/, session.execute('baidu -h')];
+                        url = URL_SEARCH + encodeURI(keyword);
                         _b.label = 1;
                     case 1:
-                        _b.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, makeSearch(keyword)
-                            // console.log('搜索完成')
+                        _b.trys.push([1, 7, , 8]);
+                        return [4 /*yield*/, getHtml(url)
                             // 没有相关词条
                         ];
                     case 2:
-                        $search = _b.sent();
-                        // console.log('搜索完成')
+                        $ = _b.sent();
                         // 没有相关词条
-                        if ($search('.create-entrance').length > 0 || $search('.no-result')) {
-                            return [2 /*return*/, _msg('article_not_exist', keyword, _msg('baikeSearch', encodeURI(keyword)))];
+                        if ($('.create-entrance').length || $('.no-result').length) {
+                            return [2 /*return*/, koishi_core_1.template('baidu.article-not-exist', keyword, url)];
                         }
-                        return [4 /*yield*/, getArticle($search, 0)
-                            // console.log('已取得词条内容')
-                        ];
+                        index = 0;
+                        $results = $('.search-list dd');
+                        count = Math.min($results.length, options.maxResultCount);
+                        if (!(count > 1)) return [3 /*break*/, 5];
+                        output = [koishi_core_1.template('baidu.has-multi-result', keyword, count)];
+                        for (i = 0; i < count; i++) {
+                            $item = $results.eq(i);
+                            title = $item.find('.result-title').text().replace(/[_\-]\s*百度百科\s*$/, '').trim();
+                            desc = $item.find('.result-summary').text().trim();
+                            output.push(i + 1 + ". " + title + "\n  " + desc);
+                        }
+                        output.push(koishi_core_1.template('baidu.await-choose-result', count));
+                        return [4 /*yield*/, session.send(output.join('\n'))];
                     case 3:
+                        _b.sent();
+                        return [4 /*yield*/, session.prompt(30 * 1000)];
+                    case 4:
+                        answer = _b.sent();
+                        if (!answer)
+                            return [2 /*return*/];
+                        index = +answer - 1;
+                        if (!koishi_core_1.isInteger(index) || index < 0 || index >= count) {
+                            return [2 /*return*/, koishi_core_1.template('baidu.incorrect-index')];
+                        }
+                        _b.label = 5;
+                    case 5:
+                        articleLink = getArticleLink($, index);
+                        return [4 /*yield*/, getHtml(articleLink)];
+                    case 6:
                         $article = _b.sent();
-                        // console.log('已取得词条内容')
                         if (!$article) {
-                            console.log('$article出现问题');
-                            return [2 /*return*/, pOptions.sendError
-                                    ? _msg('error_with_link', _msg('baikeSearch', encodeURI(keyword)))
-                                    : ''];
+                            return [2 /*return*/, koishi_core_1.template('baidu.error-with-link', url)];
                         }
                         // 获取格式化文本
-                        return [2 /*return*/, formatAnswer({
-                                $article: $article,
-                                from: getArticleLink($search, 0),
-                                pOptions: pOptions
-                            })];
-                    case 4:
+                        return [2 /*return*/, formatAnswer($article, articleLink, options)];
+                    case 7:
                         err_1 = _b.sent();
-                        // console.error('百度搜索时出现问题', err)
-                        return [2 /*return*/, pOptions.sendError
-                                ? _msg('error_with_link', _msg('baikeSearch', encodeURI(keyword)))
-                                : ''];
-                    case 5: return [2 /*return*/];
+                        ctx.logger('baidu').warn(err_1);
+                        return [2 /*return*/, koishi_core_1.template('baidu.error-with-link', url)];
+                    case 8: return [2 /*return*/];
                 }
             });
         });
     });
-};
+}
+exports.apply = apply;
