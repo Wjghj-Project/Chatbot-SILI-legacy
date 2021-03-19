@@ -71,6 +71,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fortawesome/fontawesome-free@^5.15.2":
+  version "5.15.3"
+  resolved "https://registry.npm.taobao.org/@fortawesome/fontawesome-free/download/@fortawesome/fontawesome-free-5.15.3.tgz?cache=0&sync_timestamp=1615921258142&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40fortawesome%2Ffontawesome-free%2Fdownload%2F%40fortawesome%2Ffontawesome-free-5.15.3.tgz#c36ffa64a2a239bf948541a97b6ae8d729e09a9a"
+  integrity sha1-w2/6ZKKiOb+UhUGpe2ro1yngmpo=
+
 "@koa/router@^10.0.0":
   version "10.0.0"
   resolved "https://registry.npm.taobao.org/@koa/router/download/@koa/router-10.0.0.tgz#699115561afbd2740e2848ba299fc76b9e058ad6"
@@ -2314,11 +2319,12 @@ koishi-plugin-schedule@^3.0.1:
   resolved "https://registry.npm.taobao.org/koishi-plugin-schedule/download/koishi-plugin-schedule-3.0.1.tgz#42248919ce91e9f82993aa009710622c431ea555"
   integrity sha1-QiSJGc6R6fgpk6oAlxBiLEMepVU=
 
-koishi-plugin-status@^4.0.0-alpha.0:
-  version "4.0.0-alpha.0"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-status/download/koishi-plugin-status-4.0.0-alpha.0.tgz#d1209beed9654003b5affd1f9bdadaf1d2d42c1e"
-  integrity sha1-0SCb7tllQAO1r/0fm9ra8dLULB4=
+koishi-plugin-status@^4.0.0-alpha.1:
+  version "4.0.0-alpha.1"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-status/download/koishi-plugin-status-4.0.0-alpha.1.tgz#5e8b18ea5dec46a7fc1c3476b496a5c3785a72b4"
+  integrity sha1-XosY6l3sRqf8HDR2tJalw3hacrQ=
   dependencies:
+    "@fortawesome/fontawesome-free" "^5.15.2"
     "@types/ws" "^7.4.0"
     "@vitejs/plugin-vue" "^1.1.5"
     "@vue/compiler-sfc" "^3.0.7"
@@ -2330,6 +2336,7 @@ koishi-plugin-status@^4.0.0-alpha.0:
     vite "^2.0.5"
     vue "^3.0.7"
     vue-echarts "^6.0.0-rc.3"
+    vue-router "^4.0.5"
     ws "^7.4.3"
 
 koishi-plugin-teach@^2.0.0:
@@ -3883,6 +3890,11 @@ vue-echarts@^6.0.0-rc.3:
   dependencies:
     resize-detector "^0.3.0"
     vue-demi "^0.7.1"
+
+vue-router@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-4.0.5.tgz?cache=0&sync_timestamp=1615477462125&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-router%2Fdownload%2Fvue-router-4.0.5.tgz#dd0a4134bc950c37aef64b973e9ee1008428d8fa"
+  integrity sha1-3QpBNLyVDDeu9kuXPp7hAIQo2Po=
 
 vue@^3.0.7:
   version "3.0.7"

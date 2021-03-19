@@ -17,7 +17,7 @@
     "koishi-plugin-image-search": "^3.0.1",
     "koishi-plugin-mongo": "^2.1.0",
     "koishi-plugin-schedule": "^3.0.1",
-    "koishi-plugin-status": "^4.0.0-alpha.0",
+    "koishi-plugin-status": "^4.0.0-alpha.1",
     "koishi-plugin-teach": "^2.0.0",
     "koishi-plugin-tools": "^2.1.0",
     "lodash": "^4.17.21",
