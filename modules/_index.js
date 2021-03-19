@@ -8,8 +8,9 @@ module.exports = ctx => {
       try {
         require('./' + file)(ctx)
         console.log('√ Load auto module:', file)
-      } catch (e) {
+      } catch (err) {
         console.warn('× Faild to load module:', file)
+        console.warn(err)
       }
     })
   })

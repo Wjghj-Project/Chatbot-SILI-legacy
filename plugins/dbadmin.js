@@ -2,14 +2,14 @@ const { segment } = require('koishi-utils')
 
 function apply(koishi, pluginOpt) {
   koishi
-    .command('dbadmin', '数据库管理', { authority: 4 })
+    .command('admin/dbadmin', '数据库管理', { authority: 4 })
     .example('dbadmin.set 更新值\ndbadmin.get 获取值')
     .action(({ session }) => {
       session.execute('dbadmin -h')
     })
 
   koishi
-    .command('dbadmin.set <key> <val>', { authority: 4 })
+    .command('admin/dbadmin.set <key> <val>', { authority: 4 })
     .example(
       'dbadmin.set --user=onebot:123456 nickname foo 将标识符为onebot:123456的用户数据中的nickname字段值修改为foo'
     )
@@ -44,7 +44,7 @@ function apply(koishi, pluginOpt) {
     })
 
   koishi
-    .command('dbadmin.get <key>', { authority: 4 })
+    .command('admin/dbadmin.get <key>', { authority: 4 })
     .example(
       'dbadmin.get --user=onebot:123456 nickname 获取标识符为onebot:123456的用户数据中的nickname字段的值'
     )

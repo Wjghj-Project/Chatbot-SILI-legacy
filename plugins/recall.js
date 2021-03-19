@@ -22,7 +22,7 @@ module.exports = ctx => {
   })
 
   ctx
-    .command('recall', '撤回消息', { authority: 2 })
+    .command('admin/recall', '撤回消息', { authority: 2 })
     .usage(`撤回发送的消息，最多${maxRecall}条。`)
     .action(({ session }) => {
       let thisChannel = find(LastSent, o => o.channel == session.channelId)
