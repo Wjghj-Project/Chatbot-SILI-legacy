@@ -16,13 +16,13 @@ module.exports = () => {
     })
 
   // QQ 自己发消息
-  koishi
-    .platform('onebot')
-    .group(qqNumber.group.fandom)
-    .on('send', session => {
-      if (/^\[discord\]/i.test(session.content)) return
-      qqToDiscord(session)
-    })
+  // koishi
+  //   .platform('onebot')
+  //   .group(qqNumber.group.fandom)
+  //   .on('send', session => {
+  //     if (/^\[discord\]/i.test(session.content)) return
+  //     qqToDiscord(session)
+  //   })
 
   // Discord 收到消息
   koishi
@@ -38,16 +38,17 @@ module.exports = () => {
     })
 
   // Discord 自己发消息
-  koishi
-    .platform('discord')
-    .channel('736880471891378246')
-    .on('send', session => {
-      if (/%bridge-disabled%/i.test(session.content)) return
-      discordToQQ(session)
-    })
+  // koishi
+  //   .platform('discord')
+  //   .channel('736880471891378246')
+  //   .on('send', session => {
+  //     if (/%bridge-disabled%/i.test(session.content)) return
+  //     discordToQQ(session)
+  //   })
 }
 
 function discordToQQ(session) {
+  if (/%disabled%/i.test(session.content)) return
   const bots = require('../utils/bots')
   const bot = bots.onebot()
   let content = session.content
@@ -63,9 +64,9 @@ function discordToQQ(session) {
 async function qqToDiscord(session) {
   let message = session.message || session.content
   message = resolveBrackets(message)
-  var send = ''
+  let send = ''
   if (/\[cq:image,.+\]/gi.test(message)) {
-    var image = message.replace(
+    let image = message.replace(
       /(.*?)\[cq:image.+,url=(.+?)\](.*?)/gi,
       '$1 $2 $3'
     )
@@ -94,6 +95,11 @@ async function qqToDiscord(session) {
     send = send.replace(/\[cq:reply,id=.+?\]/i, replyMsg)
   }
 
+  // 安全性问题
+  send = send
+    .replace(/@everyone/, () => '@ everyone')
+    .replace(/@here/, () => '@ here')
+
   // console.log('isReply', send)
 
   let nickname = ''
@@ -111,11 +117,11 @@ async function qqToDiscord(session) {
   }
   axios
     .post(require('../secret/discord').fandom_zh.webhook, body)
-    .then(res => {
-      console.log(res.data)
+    .then(() => {
+      // console.log(res.data)
       sysLog('⇿', 'QQ消息已推送到Discord')
     })
     .catch(err => {
-      console.error(err)
+      koishi.logger('bridge').error(err)
     })
 }

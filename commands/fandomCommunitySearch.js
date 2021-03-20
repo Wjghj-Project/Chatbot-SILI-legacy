@@ -53,7 +53,7 @@ module.exports = () => {
 
         // 创建空数组
         var text = [
-          `[CQ:image,file=${wikiData.image}]`,
+          `[CQ:image,url=${wikiData.image}]`,
           wikiData.name,
           wikiData.link,
           '',

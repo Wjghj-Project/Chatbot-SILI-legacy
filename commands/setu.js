@@ -21,6 +21,6 @@ module.exports = () => {
       //   .catch(err => {
       //     session.send('获取图片时出现问')
       //   })
-      session.send(s('image', { file: setu() }))
+      session.send(s('image', { url: setu() }))
     })
 }
