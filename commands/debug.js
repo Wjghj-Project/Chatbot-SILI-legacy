@@ -2,10 +2,10 @@ const axios = require('axios').default
 const path = require('path')
 const reply = require('../utils/reply')
 const { koishi } = require('../index')
+const bots = require('../utils/bots')
+const { segment } = require('koishi-utils')
 
 module.exports = () => {
-  const bot = require('../utils/bot')(koishi)
-
   /**
    * @module command-debug
    */
@@ -13,17 +13,17 @@ module.exports = () => {
     .command('debug', '运行诊断测试', { authority: 2 })
     .option('bot', '')
     .option('broken', '')
-    .option('face [id]', '发送QQ表情')
+    .option('face', '[id:string] 发送QQ表情', { type: 'string' })
     .option('localimg', '本地图片')
     .option('reply [content]', '回复消息')
     .option('tts [text]', '基于文字发送tts语音消息')
     .option('urlimg <url>', '网络图片')
-    .option('version', '-v 显示SILI的版本信息', { type: 'boolean' })
+    .option('version', '-v 显示SILI的版本信息')
     .action(async ({ session, options }) => {
       console.log('!debug', options)
 
       if (options.bot) {
-        bot.sendMessage(session.channelId, 'bot test')
+        bots[session.platform]().sendMessage(session.channelId, 'bot test')
       }
 
       // face
@@ -31,15 +31,15 @@ module.exports = () => {
         var faceId
         if (
           options.face === true ||
-          isNaN(Number(options.face)) ||
-          options.face < 0
+          /^[0-9]+$/.test(options.face) ||
+          Number(options.face) < 0
         ) {
-          faceId = 0
+          faceId = '0'
         } else {
           faceId = options.face
         }
         // console.log(faceId)
-        session.send(`[CQ:face,id=${faceId}]`)
+        session.send(`${segment('face', { id: faceId })}`)
       }
 
       if (options.localimg) {

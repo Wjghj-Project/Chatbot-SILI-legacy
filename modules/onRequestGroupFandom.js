@@ -1,22 +1,21 @@
 const qqNumber = require('../secret/qqNumber')
 const verifyQQ = require('../utils/verifyQQ')
 const { koishi } = require('../index')
+const bots = require('../utils/bots')
 
 /**
  * @module Fandom群入群申请
  */
 module.exports = () => {
-  const bot = require('../utils/bot')(koishi)
-
   koishi
     .group(qqNumber.group.fandom, qqNumber.group.dftest)
     .on('group-member-request', session => {
       // sysLog('💭', '收到入群申请', session)
-      const { userId, groupId, comment } = session
-      const answer = comment.split('答案：')[1] || ''
+      const { userId, groupId, content } = session
+      const answer = content.split('答案：')[1] || ''
 
       var command = `!verify-qq --qq ${userId} --user ${answer}`
-      bot.sendMsg(groupId, command)
+      bots.onebot().sendMsg(groupId, command)
 
       verifyQQ(
         session,
@@ -25,10 +24,10 @@ module.exports = () => {
           user: answer,
         },
         ({ msg, status }) => {
-          koishi.bot.sendMsg(groupId, msg)
+          bots.onebot().sendMsg(groupId, msg)
           if (status === true) {
-            bot.handleGroupRequest(session.messageId, true)
-            bot.sendMsg(groupId, '已自动通过入群申请')
+            bots.onebot().handleGroupRequest(session.messageId, true)
+            bots.onebot().sendMsg(groupId, '已自动通过入群申请')
           } else {
             // 修正用户名
             var userName = answer.trim()
@@ -38,7 +37,7 @@ module.exports = () => {
             var _userNameFirst = userName.shift().toUpperCase()
             userName = _userNameFirst + userName.join('')
 
-            bot.sendMsg(
+            bots.onebot().sendMsg(
               groupId,
               [
                 '请手动检查该用户信息:',

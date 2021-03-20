@@ -16,11 +16,17 @@ module.exports = () => {
       case 'group':
         sysLog(
           '✉',
+          `[${session.platform}]`,
           '收到群消息',
           '群' + session.groupId,
-          `${session.sender.nickname}(${session.sender.userId})`,
-          session.message
+          `${session.author.nickname}${
+            session.author.discriminator
+              ? '#' + session.author.discriminator
+              : ''
+          }(${session.author.userId})`,
+          session.content
         )
+        // console.log('group msg', session)
         break
       default:
         sysLog(
@@ -29,7 +35,7 @@ module.exports = () => {
           '类型' + session.type,
           '子类型' + session.subtype,
           '用户' + session.userId,
-          session.message
+          session.content
         )
         break
     }

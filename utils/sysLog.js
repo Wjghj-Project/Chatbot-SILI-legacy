@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const { Logger } = require('koishi')
 
 /**
  * Date format
@@ -31,7 +32,8 @@ Date.prototype.format = function(fmt) {
 }
 
 function sysLog(...params) {
-  console.log(...params)
+  const logger = new Logger('MAIN')
+  logger.info(...params)
   var text = []
   var now = new Date()
   var file = path.resolve('./log/', now.format('yyyy-MM-dd') + '.log')
@@ -51,7 +53,7 @@ function sysLog(...params) {
   }
   text = text.join(' ').replace(/\n/g, ' ') + '\n'
   fs.writeFile(file, text, { flag: 'a' }, function(err) {
-    if (err) console.error(err)
+    if (err) logger.error(err)
   })
 }
 

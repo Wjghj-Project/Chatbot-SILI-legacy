@@ -53,8 +53,8 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-image-search'))
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-status'), {
-    path: '/status',
-    port: 8080,
+    // path: '/status',
+    // port: 8080,
   })
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
@@ -65,4 +65,6 @@ module.exports = () => {
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/recall'))
   koishi.plugin(require('../plugins/youdao'))
+
+  // koishi.logger('BOTS').info(koishi.bots)
 }

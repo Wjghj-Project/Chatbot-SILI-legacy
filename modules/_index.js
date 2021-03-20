@@ -1,17 +1,19 @@
 const path = require('path')
 const fs = require('fs')
+const { Logger } = require('koishi-utils')
+const logger = new Logger('MAIN')
 
-module.exports = ctx => {
+!(() => {
   fs.readdir(path.resolve('./modules'), (err, files) => {
     files.forEach(file => {
       if (/^_/.test(file) || !/\.js$/.test(file)) return
       try {
-        require('./' + file)(ctx)
-        console.log('√ Load auto module:', file)
+        require('./' + file)()
+        logger.info('√', 'Loaded auto module:', file)
       } catch (err) {
-        console.warn('× Faild to load module:', file)
-        console.warn(err)
+        logger.warn('×', 'Faild to load module:', file)
+        logger.warn(err)
       }
     })
   })
-}
+})()

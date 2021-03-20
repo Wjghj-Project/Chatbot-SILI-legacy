@@ -1,10 +1,10 @@
 const sysLog = require('../utils/sysLog')
 const { mySelf } = require('../secret/qqNumber').user
 const { koishi } = require('../index')
+const { segment } = require('koishi-utils')
+const bots = require('../utils/bots')
 
 module.exports = () => {
-  const bot = require('../utils/bot')(koishi)
-
   // 添加好友
   koishi.on('friend-added', session => {
     sysLog('❤', '已添加好友', session)
@@ -33,9 +33,9 @@ module.exports = () => {
       // sysLog('💌', '检测到加入群聊，发送自我介绍')
       // koishi.executeCommandLine('about', session)
     } else {
-      bot.sendMsg(
+      bots[session.platform]().sendMsg(
         session.groupId,
-        '❤群成员增加了，[CQ:at,id=' + session.userId + ']欢迎新大佬！'
+        `❤群成员增加了，${segment('at', { id: session.userId })}欢迎新大佬！`
       )
     }
   })
@@ -43,7 +43,7 @@ module.exports = () => {
   // 群成员减少
   koishi.on('group-member-deleted', session => {
     sysLog('💔', '检测到群成员减少', session)
-    bot.sendMsg(
+    bots[session.platform]().sendMsg(
       session.groupId,
       '💔成员 ' + session.userId + ' 离开了我们，sayonara。'
     )
@@ -62,6 +62,6 @@ module.exports = () => {
 
   // 指令调用
   koishi.on('command', ({ session }) => {
-    sysLog('🤖', '指令调用', session.userId, session.message)
+    sysLog('🤖', '指令调用', session.userId, session.content)
   })
 }

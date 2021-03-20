@@ -3,61 +3,64 @@ const qqNumber = require('../secret/qqNumber')
 const parseDiscordEmoji = require('../utils/parseDiscordEmoji')
 const parseDiscordImages = require('../utils/parseDiscordImages')
 const resolveBrackets = require('../utils/resolveBrackets')
-const md5 = require('../utils/md5')
 const sysLog = require('../utils/sysLog')
-const { koishi, discord } = require('../index')
+const { koishi } = require('../index')
 
 module.exports = () => {
   // QQ 收到消息
-  koishi.on('message', session => {
-    // koishi.database.getGroup(session.groupId, ['discordWebhook'])
-    if (session.groupId === qqNumber.group.fandom) {
-      qqToDiscord({ session, discord })
-      // console.log('message', session)
-    }
-  })
+  koishi
+    .platform('onebot')
+    .group(qqNumber.group.fandom)
+    .on('message', session => {
+      qqToDiscord(session)
+    })
+
+  // QQ 自己发消息
+  koishi
+    .platform('onebot')
+    .group(qqNumber.group.fandom)
+    .on('send', session => {
+      if (/^\[discord\]/i.test(session.content)) return
+      qqToDiscord(session)
+    })
+
   // Discord 收到消息
-  discord.on('message', msg => {
-    if (
-      msg.channel.id === '736880471891378246' && // #QQ互联
-      msg.author.id !== '714134302673207426' && // 自己
-      msg.author.id !== '736880520297971714' // QQ推送Hook
-    ) {
-      discordToQQ({ koishi, msg })
-    }
-  })
-  koishi.group(qqNumber.group.fandom).on('send', session => {
-    if (/^\[discord\]/i.test(session.content)) return
-    qqToDiscord({ session, discord })
-    // console.log('send', session)
-  })
+  koishi
+    .platform('discord')
+    .group('566623674770260004')
+    .channel('736880471891378246')
+    .on('message', session => {
+      if (
+        session.author.userId !== '736880520297971714' // QQ推送Hook
+      ) {
+        discordToQQ(session)
+      }
+    })
+
+  // Discord 自己发消息
+  koishi
+    .platform('discord')
+    .channel('736880471891378246')
+    .on('send', session => {
+      if (/%bridge-disabled%/i.test(session.content)) return
+      discordToQQ(session)
+    })
 }
 
-function discordToQQ({ koishi, msg }) {
-  const bot = require('../utils/bot')(koishi)
-  var content = msg.content
+function discordToQQ(session) {
+  const bots = require('../utils/bots')
+  const bot = bots.onebot()
+  let content = session.content
+  const sender = `${session.author.nickname ||
+    session.author.username}#${session.author.discriminator || '0000'}`
+  content = parseDiscordImages({ session, content })
   content = parseDiscordEmoji(content)
-  content = parseDiscordImages({ msg, content })
-  var send = [
-    '[Discord] ' + msg.author.username + '#' + msg.author.discriminator,
-    content,
-  ].join('\n')
-  if (
-    msg.channel.id === '736880471891378246' && // #QQ互联
-    msg.author.id !== '714134302673207426' && // 自己
-    msg.author.id !== '736880520297971714' // QQ推送Hook
-  ) {
-    sysLog(
-      '⇿',
-      'Discord信息已推送到QQ',
-      msg.author.username + '#' + msg.author.discriminator,
-      msg.content
-    )
-    bot.sendMessage(qqNumber.group.fandom, send)
-  }
+  let send = [`[Discord] ${sender}`, content].join('\n')
+  sysLog('⇿', 'Discord信息已推送到QQ', sender, session.content)
+  bot.sendMessage(qqNumber.group.fandom, send)
 }
 
-async function qqToDiscord({ session }) {
+async function qqToDiscord(session) {
   let message = session.message || session.content
   message = resolveBrackets(message)
   var send = ''
@@ -78,18 +81,7 @@ async function qqToDiscord({ session }) {
 
     let replyMeta = await session.bot.getMessage(session.channelId, replyMsgId)
 
-    // {
-    //   messageId: '-2059103050',
-    //   timestamp: 1614868765000,
-    //   content: '挂的真快啊',
-    //   author: {
-    //     userId: '123456',
-    //     username: '机智的小鱼君⚡️',
-    //     nickname: undefined,
-    //     anonymous: undefined
-    //   }
-    // }
-    var replyTime = new Date(replyMeta.timestamp),
+    let replyTime = new Date(replyMeta.timestamp),
       replyDate = `${replyTime.getHours()}:${replyTime.getMinutes()}`
 
     replyMsg = replyMeta.content
