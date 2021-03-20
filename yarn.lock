@@ -1743,10 +1743,10 @@ generic-names@^2.0.1:
   dependencies:
     loader-utils "^1.1.0"
 
-genshin-kit@^0.3.0:
-  version "0.3.1"
-  resolved "https://registry.npm.taobao.org/genshin-kit/download/genshin-kit-0.3.1.tgz#39e68359bf03b806a03529ad9b6823f24f110aee"
-  integrity sha1-OeaDWb8DuAagNSmtm2gj8k8RCu4=
+genshin-kit@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npm.taobao.org/genshin-kit/download/genshin-kit-0.4.0.tgz#10c4f8a6e2f5dea45f5eac7226d33170d4370ba4"
+  integrity sha1-EMT4puL13qRfXqxyJtMxcNQ3C6Q=
   dependencies:
     axios "^0.21.1"
 
@@ -2335,13 +2335,13 @@ koishi-plugin-common@^4.1.2:
   resolved "https://registry.npm.taobao.org/koishi-plugin-common/download/koishi-plugin-common-4.1.2.tgz#ab1feba296ccd64af47bc0227c1ad17624c447bf"
   integrity sha1-qx/ropbM1kr0e8AifBrRdiTER78=
 
-koishi-plugin-genshin@^2.0.0-alpha.10:
-  version "2.0.0-alpha.10"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-genshin/download/koishi-plugin-genshin-2.0.0-alpha.10.tgz#bce73682d4f903f0d136b52c94e1c38f722fbb59"
-  integrity sha1-vOc2gtT5A/DRNrUslOHDj3Ivu1k=
+koishi-plugin-genshin@^2.0.0-alpha.11:
+  version "2.0.0-alpha.11"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-genshin/download/koishi-plugin-genshin-2.0.0-alpha.11.tgz#af01048c74250708cf68b98c6dc455d0905dd0a4"
+  integrity sha1-rwEEjHQlBwjPaLmMbcRV0JBd0KQ=
   dependencies:
     dayjs "^1.10.4"
-    genshin-kit "^0.3.0"
+    genshin-kit "^0.4.0"
     koishi-utils "^4.0.1"
 
 koishi-plugin-image-search@^3.0.1:
