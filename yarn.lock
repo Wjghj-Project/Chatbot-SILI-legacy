@@ -82,6 +82,11 @@
     methods "^1.1.2"
     path-to-regexp "^6.1.0"
 
+"@octokit/webhooks-definitions@^3.62.5":
+  version "3.65.0"
+  resolved "https://registry.npm.taobao.org/@octokit/webhooks-definitions/download/@octokit/webhooks-definitions-3.65.0.tgz#80ac65f18b95a8c100b3c02bd2acab0696a35fe4"
+  integrity sha1-gKxl8YuVqMEAs8Ar0qyrBpajX+Q=
+
 "@opencensus/core@0.0.9":
   version "0.0.9"
   resolved "https://registry.npm.taobao.org/@opencensus/core/download/@opencensus/core-0.0.9.tgz#b16f775435ee309433e4126af194d37313fc93b3"
@@ -2268,6 +2273,14 @@ koishi-plugin-genshin@^2.0.0-alpha.11:
     dayjs "^1.10.4"
     genshin-kit "^0.4.0"
     koishi-utils "^4.0.1"
+
+koishi-plugin-github@^3.0.0-beta.11:
+  version "3.0.0-beta.11"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-github/download/koishi-plugin-github-3.0.0-beta.11.tgz#6b0d47c3b10fabd9a383def30d722e33add03cc2"
+  integrity sha1-aw1Hw7EPq9mjg97zDXIuM63QPMI=
+  dependencies:
+    "@octokit/webhooks-definitions" "^3.62.5"
+    axios "^0.21.1"
 
 koishi-plugin-image-search@^3.0.1:
   version "3.0.1"

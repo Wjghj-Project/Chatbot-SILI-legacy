@@ -18,6 +18,7 @@ module.exports = () => {
     .option('tts [text]', '基于文字发送tts语音消息')
     .option('urlimg <url>', '网络图片')
     .option('version', '-v 显示SILI的版本信息', { authority: 1 })
+    // .option('xml', '')
     .action(async ({ session, options }) => {
       console.log('!debug', options)
 
@@ -74,6 +75,19 @@ module.exports = () => {
           '  ' + koishiPlugs.join('\n  '),
         ].join('\n')
         session.send(versionMsg)
+      }
+
+      if (options.xml) {
+        session.send(
+          segment('xml', {
+            data: `<?xml version="1.0" encoding="utf-8"?><msg serviceID="5" templateID="12345" brief="&#91;分享&#93;我在百词斩背单词" token="291b5af7377f4473120959aff69b58c8" timestamp="1616428713" nonce="145091819"><item layout="0"><image uuid="{ABA235F2-916E-D849-008D-BDA91066AAC8}.jpg" md5="ABA235F2916ED849008DBDA91066AAC8" GroupFiledid="2431688022" minWidth="100" minHeight="100" maxWidth="180" maxHeight="180"/></item><source name="百词斩" icon="http://i.gtimg.cn/open/app_icon/00/34/46/05//100344605_100_m.png?t=1613703206" appid="100344605" action="" i_actionData="" a_actionData="" url=""/></msg>`,
+            resid: 5,
+          }) +
+            segment('image', {
+              url:
+                'http://gchat.qpic.cn/gchatpic_new/824399619/711890863-2431688022-ABA235F2916ED849008DBDA91066AAC8/0?term=3',
+            })
+        )
       }
     })
 }
