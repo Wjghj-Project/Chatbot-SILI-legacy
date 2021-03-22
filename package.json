@@ -1,6 +1,6 @@
 {
   "name": "wjghj-chatbot-sili",
-  "version": "3.2.11",
+  "version": "3.2.12",
   "description": "Wjghj Project Chat Bot, SILI - Sara Lindery",
   "main": "index.js",
   "private": true,
@@ -20,6 +20,7 @@
     "koishi-plugin-image-search": "^3.0.1",
     "koishi-plugin-mongo": "^2.1.0",
     "koishi-plugin-schedule": "^3.0.1",
+    "koishi-plugin-shell": "^0.0.3",
     "koishi-plugin-status": "^4.0.0-rc.1",
     "koishi-plugin-teach": "^2.0.0",
     "koishi-plugin-tools": "^2.1.0",

@@ -2291,6 +2291,13 @@ koishi-plugin-schedule@^3.0.1:
   resolved "https://registry.npm.taobao.org/koishi-plugin-schedule/download/koishi-plugin-schedule-3.0.1.tgz#42248919ce91e9f82993aa009710622c431ea555"
   integrity sha1-QiSJGc6R6fgpk6oAlxBiLEMepVU=
 
+koishi-plugin-shell@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-shell/download/koishi-plugin-shell-0.0.3.tgz#13a23eaa35abb3974d4c127556d979a97eb1b18e"
+  integrity sha1-E6I+qjWrs5dNTBJ1Vtl5qX6xsY4=
+  dependencies:
+    koishi-utils "^4.0.3"
+
 koishi-plugin-status@^4.0.0-rc.1:
   version "4.0.0-rc.1"
   resolved "https://registry.npm.taobao.org/koishi-plugin-status/download/koishi-plugin-status-4.0.0-rc.1.tgz#c9ff2f75de0d224b376ad40f1f00e39cb0974e0e"

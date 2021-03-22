@@ -52,6 +52,9 @@ module.exports = () => {
   })
   koishi.plugin(require('koishi-plugin-image-search'))
   koishi.plugin(require('koishi-plugin-schedule'))
+  koishi.plugin(require('koishi-plugin-shell'), {
+    shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+  })
   koishi.plugin(require('koishi-plugin-status'), {
     uiPath: '/dash',
     apiPath: '/dash/status',
