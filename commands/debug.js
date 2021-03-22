@@ -73,10 +73,10 @@ module.exports = () => {
             )
         })
         const versionMsg = [
-          `- SILI Core: ${packageInfo.version}`,
-          `- OneBot: ${onebotVer}`,
-          `- koishi: ${packageInfo.dependencies.koishi}`,
-          '  - ' + koishiPlugs.join('\n  - '),
+          `SILI Core: ${packageInfo.version}`,
+          `OneBot: ${onebotVer}`,
+          `koishi: ${packageInfo.dependencies.koishi}`,
+          '  ' + koishiPlugs.join('\n  '),
         ].join('\n')
         session.send(versionMsg)
       }
