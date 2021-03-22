@@ -15,25 +15,36 @@ module.exports = () => {
         timeout = Math.max(10, timeout)
       }
 
-      session.send(
+      await session.send(
         [
-          segment('quote', { id: session.messageId }),
-          '指令：' + cmd,
-          '限时：' + timeout + ' 秒',
+          `${segment('quote', { id: session.messageId })}指令：${cmd}`,
+          `限时：${timeout} 秒`,
         ].join('\n')
       )
 
       return new Promise(resolve => {
         const { exec } = require('child_process')
+        const start = Date.now()
         const child = exec(cmd, {
           timeout: timeout * 1000,
           encoding: 'utf-8',
           shell:
             'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+          windowsHide: false,
         })
-        child.stdout.on('data', data => session.send(String(data).trim()))
-        child.stderr.on('data', data => session.send(String(data).trim()))
-        child.on('close', resolve)
+        child.stdout.on('data', data => {
+          session.sendQueued(String(data).trim(), 500)
+        })
+        child.stderr.on('data', data => {
+          session.sendQueued(String(data).trim(), 500)
+        })
+        child.on('close', () => {
+          session.sendQueued(
+            `[执行完毕]\n耗时：${((Date.now() - start) / 1000).toFixed(2)} 秒`,
+            500
+          )
+          resolve()
+        })
       })
     })
 }

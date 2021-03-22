@@ -11,20 +11,15 @@ module.exports = () => {
    */
   koishi
     .command('debug', '运行诊断测试', { authority: 2 })
-    .option('bot', '')
     .option('broken', '')
     .option('face', '[id:string] 发送QQ表情', { type: 'string' })
     .option('localimg', '本地图片')
     .option('reply [content]', '回复消息')
     .option('tts [text]', '基于文字发送tts语音消息')
     .option('urlimg <url>', '网络图片')
-    .option('version', '-v 显示SILI的版本信息')
+    .option('version', '-v 显示SILI的版本信息', { authority: 1 })
     .action(async ({ session, options }) => {
       console.log('!debug', options)
-
-      if (options.bot) {
-        bots[session.platform]().sendMessage(session.channelId, 'bot test')
-      }
 
       // face
       if (options.face || options.face === 0) {
@@ -44,7 +39,7 @@ module.exports = () => {
 
       if (options.localimg) {
         session.send(
-          `[CQ:image,file=file:///${path.resolve('./images/test.png')}]`
+          `[CQ:image,url=file:///${path.resolve('./images/test.png')}]`
         )
       }
 
@@ -54,7 +49,7 @@ module.exports = () => {
 
       if (options.urlimg) {
         session.send('wait...')
-        session.send('[CQ:image,file=' + options.urlimg + ']')
+        session.send('[CQ:image,url=' + options.urlimg + ']')
       }
 
       if (options.reply) {
@@ -79,10 +74,6 @@ module.exports = () => {
           '  ' + koishiPlugs.join('\n  '),
         ].join('\n')
         session.send(versionMsg)
-      }
-
-      if (options.broken) {
-        throw new Error('test')
       }
     })
 }

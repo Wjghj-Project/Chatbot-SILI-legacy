@@ -1,6 +1,6 @@
 {
   "name": "wjghj-chatbot-sili",
-  "version": "3.2.7",
+  "version": "3.2.10",
   "description": "Wjghj Project Chat Bot, SILI - Sara Lindery",
   "main": "index.js",
   "private": true,
@@ -36,6 +36,7 @@
   "scripts": {
     "start": "pm2 start index.js --name=\"qq-bot-sili\"",
     "dev": "nodemon --config nodemon.json index.js",
+    "bump": "bump --nopublish",
     "stop": "pm2 delete qq-bot-sili"
   },
   "author": "Dragon-Fish",
