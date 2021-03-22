@@ -53,7 +53,8 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-image-search'))
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-status'), {
-    // path: '/status',
+    uiPath: '/dash',
+    apiPath: '/dash/status',
     // port: 8080,
   })
   koishi.plugin(require('koishi-plugin-teach'), {

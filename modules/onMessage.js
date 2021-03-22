@@ -11,7 +11,7 @@ module.exports = () => {
     // 保留记录
     switch (session.subtype) {
       case 'private':
-        sysLog('✉', '收到私信', session.userId, session.message)
+        sysLog('✉', '收到私信', session.userId, session.content)
         break
       case 'group':
         sysLog(

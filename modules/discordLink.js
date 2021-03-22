@@ -16,13 +16,13 @@ module.exports = () => {
     })
 
   // QQ 自己发消息
-  // koishi
-  //   .platform('onebot')
-  //   .group(qqNumber.group.fandom)
-  //   .on('send', session => {
-  //     if (/^\[discord\]/i.test(session.content)) return
-  //     qqToDiscord(session)
-  //   })
+  koishi
+    .platform('onebot')
+    .group(qqNumber.group.fandom)
+    .on('send', session => {
+      if (/^\[discord\]/i.test(session.content)) return
+      qqToDiscord(session)
+    })
 
   // Discord 收到消息
   koishi
@@ -38,17 +38,17 @@ module.exports = () => {
     })
 
   // Discord 自己发消息
-  // koishi
-  //   .platform('discord')
-  //   .channel('736880471891378246')
-  //   .on('send', session => {
-  //     if (/%bridge-disabled%/i.test(session.content)) return
-  //     discordToQQ(session)
-  //   })
+  koishi
+    .platform('discord')
+    .channel('736880471891378246')
+    .on('send', session => {
+      discordToQQ(session)
+    })
 }
 
 function discordToQQ(session) {
-  if (/%disabled%/i.test(session.content)) return
+  if (/(%disabled%|__noqq__)/i.test(session.content)) return
+
   const bots = require('../utils/bots')
   const bot = bots.onebot()
   let content = session.content
@@ -96,9 +96,7 @@ async function qqToDiscord(session) {
   }
 
   // 安全性问题
-  send = send
-    .replace(/@everyone/, () => '@ everyone')
-    .replace(/@here/, () => '@ here')
+  send = send.replace(/@everyone/g, '@ everyone').replace(/@here/g, '@ here')
 
   // console.log('isReply', send)
 

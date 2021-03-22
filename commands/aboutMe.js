@@ -9,7 +9,7 @@ module.exports = () => {
     session.send(
       [
         segment('image', {
-          file: 'https://i.loli.net/2021/02/19/nPzM8qvmyGBI2aL.jpg',
+          url: 'https://i.loli.net/2021/02/19/nPzM8qvmyGBI2aL.jpg',
         }),
         '✨ 自我介绍',
         '您好，我是SILI——「即时通讯软件转接姬」SILI-t137-[Tumita]-Invoke-II@LD(A)——来自Tumita序列的参与Invoke项目的后勤部II阶137号万界规划局跨界共享数据库自主学习型人工智能测试机，目前状态存活。',
