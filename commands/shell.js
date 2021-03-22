@@ -4,22 +4,19 @@ const { koishi } = require('../')
 module.exports = () => {
   koishi
     .command('admin/sh <cmd:text>', '执行shell命令', { authority: 4 })
-    .option('timeout', '-t <s:number> 超时时间，单位秒，最小10秒，最大120秒')
+    .option('timeout', '-t <s:number> 超时时间，单位秒，最小10秒，最大180秒')
     .action(async ({ session, options }, cmd) => {
       if (!cmd) return
 
-      let timeout = 15
+      let timeout = 30
       if (options.timeout) {
         if (typeof options.timeout === 'number') timeout = options.timeout
-        timeout = Math.min(120, timeout)
+        timeout = Math.min(180, timeout)
         timeout = Math.max(10, timeout)
       }
 
       await session.send(
-        [
-          `${segment('quote', { id: session.messageId })}指令：${cmd}`,
-          `限时：${timeout} 秒`,
-        ].join('\n')
+        [`[执行指令] ${cmd}`, `限时：${timeout} 秒`].join('\n')
       )
 
       return new Promise(resolve => {
@@ -38,9 +35,13 @@ module.exports = () => {
         child.stderr.on('data', data => {
           session.sendQueued(String(data).trim(), 500)
         })
-        child.on('close', () => {
+        child.on('close', (code, signal) => {
           session.sendQueued(
-            `[执行完毕]\n耗时：${((Date.now() - start) / 1000).toFixed(2)} 秒`,
+            [
+              `[执行完毕] ${cmd}`,
+              `耗时：${((Date.now() - start) / 1000).toFixed(2)} 秒`,
+              `退出码：${code}，终止信号：${signal}`,
+            ].join('\n'),
             500
           )
           resolve()
