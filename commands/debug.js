@@ -64,10 +64,19 @@ module.exports = () => {
       if (options.version) {
         const { appVersion: onebotVer } = await session.bot.$getVersionInfo()
         const packageInfo = require('../package.json')
+        const { dependencies } = packageInfo
+        let koishiPlugs = []
+        Object.keys(dependencies).forEach(item => {
+          if (/^koishi-/.test(item))
+            koishiPlugs.push(
+              `${item.replace(/^koishi-/, '')}: ${dependencies[item]}`
+            )
+        })
         const versionMsg = [
-          `- SILI  : ${packageInfo.version}`,
-          `- Koishi: ${packageInfo.dependencies.koishi}`,
+          `- SILI Core: ${packageInfo.version}`,
           `- OneBot: ${onebotVer}`,
+          `- koishi: ${packageInfo.dependencies.koishi}`,
+          '  - ' + koishiPlugs.join('\n  - '),
         ].join('\n')
         session.send(versionMsg)
       }
