@@ -47,6 +47,16 @@ module.exports = () => {
       }
     },
   })
+  koishi.plugin(require('koishi-plugin-github'), {
+    webhook: '/api/github/webhook',
+    authorize: '/api/github/authorize',
+    appId: password.github.appId,
+    appSecret: password.github.appSecret,
+    secret: password.github.webhookSecret,
+    repos: {
+      'InPageEdit/InPageEdit': ['onebot:1026023666'],
+    },
+  })
   koishi.plugin(require('koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
   })
