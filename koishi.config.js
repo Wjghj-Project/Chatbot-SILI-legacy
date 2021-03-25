@@ -4,6 +4,7 @@ const discordToken = require('./secret/discord').botToken
 
 module.exports = {
   port: 3100,
+  selfUrl: 'https://sili.wjghj.cn',
   // 定义机器人账号
   bots: [
     // QQ

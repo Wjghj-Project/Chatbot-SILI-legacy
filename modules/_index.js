@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const { Logger } = require('koishi-utils')
-const logger = new Logger('MAIN')
+const logger = new Logger('INIT')
 
 !(() => {
   fs.readdir(path.resolve('./modules'), (err, files) => {

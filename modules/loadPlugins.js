@@ -24,12 +24,12 @@ module.exports = () => {
 
       // 参与复读
       if (state.times === 3 && now - globalThis.repeaterLast > repeatCD) {
-        if (1 - Math.random() > 0.8) {
-          globalThis.repeaterLast = now
-          return state.content
-        } else {
-          koishi.logger('复读机').info('概率未触发复读机')
-        }
+        // if (1 - Math.random() > 0.8) {
+        globalThis.repeaterLast = now
+        return state.content
+        // } else {
+        //   koishi.logger('复读机').info('概率未触发复读机')
+        // }
       }
 
       // 冷却未好
@@ -48,19 +48,15 @@ module.exports = () => {
     },
   })
   koishi.plugin(require('koishi-plugin-github'), {
-    webhook: '/api/github/webhook',
-    authorize: '/api/github/authorize',
+    path: '/api/github',
     appId: password.github.appId,
     appSecret: password.github.appSecret,
-    secret: password.github.webhookSecret,
-    repos: {
-      'InPageEdit/InPageEdit': ['onebot:1026023666'],
-    },
   })
   koishi.plugin(require('koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
   })
   koishi.plugin(require('koishi-plugin-image-search'))
+  koishi.plugin(require('koishi-plugin-rss'))
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-shell'), {
     shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',

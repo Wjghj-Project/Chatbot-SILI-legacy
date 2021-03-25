@@ -5,6 +5,7 @@ const parseDiscordImages = require('../utils/parseDiscordImages')
 const resolveBrackets = require('../utils/resolveBrackets')
 const sysLog = require('../utils/sysLog')
 const { koishi } = require('../index')
+const bots = require('../utils/bots')
 
 module.exports = () => {
   // QQ 收到消息
@@ -20,14 +21,13 @@ module.exports = () => {
     .platform('onebot')
     .group(qqNumber.group.fandom)
     .on('send', session => {
-      if (/^\[discord\]/i.test(session.content)) return
       qqToDiscord(session)
     })
 
   // Discord 收到消息
   koishi
     .platform('discord')
-    .group('566623674770260004')
+    // .group('566623674770260004')
     .channel('736880471891378246')
     .on('message', session => {
       if (
@@ -48,6 +48,7 @@ module.exports = () => {
 
 function discordToQQ(session) {
   if (/(%disabled%|__noqq__)/i.test(session.content)) return
+  if (/^\[qq\]/i.test(session.content)) return
 
   const bots = require('../utils/bots')
   const bot = bots.onebot()
@@ -62,6 +63,7 @@ function discordToQQ(session) {
 }
 
 async function qqToDiscord(session) {
+  if (/^\[discord\]/i.test(session.content)) return
   let message = session.message || session.content
   message = resolveBrackets(message)
   let send = ''
@@ -122,4 +124,7 @@ async function qqToDiscord(session) {
     .catch(err => {
       koishi.logger('bridge').error(err)
     })
+  // bots
+  //   .discord()
+  //   .sendMessage('736880471891378246', `[QQ] ${nickname}(${id})\n${send}`)
 }
