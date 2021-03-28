@@ -27,4 +27,9 @@ module.exports = {
   autoAuthorize: 1,
   // 自动配置群组
   autoAssign: true,
+  // 延迟
+  delay: {
+    message: 1000,
+    prompt: 30 * 1000,
+  },
 }

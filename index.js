@@ -38,10 +38,8 @@ koishi.plugin(require('koishi-plugin-mongo'), {
 require('./commands/_index')
 require('./modules/_index')
 
-/**
- * @method koishi.start koishi启动完毕，登录discord
- */
-koishi.start().then(() => {
+koishi.start()
+koishi.on('connect', () => {
   sysLog('🌈', 'Koishi 启动成功')
 })
 

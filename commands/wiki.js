@@ -2,14 +2,15 @@ const axios = require('axios').default
 const reply = require('../utils/reply')
 const { koishi } = require('../index')
 const resolveBrackets = require('../utils/resolveBrackets')
+const qs = require('qs')
 
 module.exports = () => {
   koishi
+    // .unselect('user')
     .command(
       'wiki <pagename:text>',
       '发送 wiki 链接（本功能需要 QQ 群申请链接到某个 MediaWiki 网站）'
     )
-    // .alias('')
     .option('info', '-i MediaWiki link info')
     .option('set', '-s <api> Set MediaWiki API', {
       authority: 3,
@@ -18,20 +19,15 @@ module.exports = () => {
       type: 'boolean',
     })
     .channelFields(['mwApi'])
-    .action(({ session, options }, pagename) => {
+    .action(async ({ session, options }, pagename) => {
       if (options.set) {
-        session.database
-          .setChannel(session.platform, session.groupId, {
-            mwApi: options.set,
-          })
-          .then(
-            () => {
-              reply(session, '成功将QQ群与wiki连接')
-            },
-            () => {
-              reply(session, '将QQ群与wiki连接时发生错误')
-            }
-          )
+        try {
+          session.channel.mwApi = options.set
+          await session.channel._update()
+          reply(session, '成功将QQ群与wiki连接')
+        } catch (err) {
+          reply(session, '将QQ群与wiki连接时发生错误')
+        }
         return
       }
       if (!session.groupId) {
@@ -44,7 +40,7 @@ module.exports = () => {
       if (options.info) {
         reply(
           session,
-          `{\n  "groupId": ${session.groupId},\n  "mwApi": "${mwApi}"\n}`
+          mwApi ? `本群已绑定到 ${mwApi}` : '本群未绑定 MediaWiki 网站'
         )
         return
       }
@@ -55,11 +51,12 @@ module.exports = () => {
         return
       }
 
-      var link =
-        mwApi.replace('api.php', 'index.php?title=') + encodeURI(pagename)
+      let mwIndex = mwApi.replace('api.php', 'index.php')
+
+      var link = `${mwIndex}?${qs.stringify({ title: pagename })}`
 
       if (!pagename) {
-        reply(session, mwApi.replace('api.php', 'index.php'))
+        reply(session, mwIndex)
         return
       }
 
@@ -79,19 +76,25 @@ module.exports = () => {
             var query = data.query
             if (query && query.pages) {
               var pages = query.pages
-              link =
-                pages[Object.keys(pages)[0]].fullurl || link + ' (可能不准确)'
-              console.log('找到链接')
+              let pageid = parseInt(Object.keys(pages)[0])
+              if (isNaN(pageid) || pageid < 1) {
+                link += ' (可能不准确)'
+              } else {
+                link = `您要的 ${
+                  pages[pageid].title
+                }\n${mwIndex}?${qs.stringify({ curid: pageid })}`
+              }
+              koishi.logger('mediawiki').info('找到链接')
             } else if (query && query.interwiki) {
               link = query.interwiki[0].url || link
-              console.log('找到跨语言链接')
+              koishi.logger('mediawiki').info('找到跨语言链接')
             } else {
-              console.log('页面不存在？')
+              koishi.logger('mediawiki').info('页面不存在？')
             }
             reply(session, link)
           },
           err => {
-            console.error('Axios 错误', err)
+            koishi.logger('mediawiki').warn('Axios 错误', err)
             reply(session, link + ' (似乎出现错误)')
           }
         )

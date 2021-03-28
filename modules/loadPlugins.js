@@ -75,6 +75,7 @@ module.exports = () => {
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/recall'))
   koishi.plugin(require('../plugins/youdao'))
+  koishi.plugin(require('../plugins/demo'))
 
   // koishi.logger('BOTS').info(koishi.bots)
 }

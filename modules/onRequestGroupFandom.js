@@ -15,7 +15,7 @@ module.exports = () => {
       const answer = content.split('答案：')[1] || ''
 
       var command = `!verify-qq --qq ${userId} --user ${answer}`
-      bots.onebot().sendMsg(groupId, command)
+      session.bot.sendMessage(groupId, command)
 
       verifyQQ(
         session,
@@ -26,8 +26,8 @@ module.exports = () => {
         ({ msg, status }) => {
           bots.onebot().sendMsg(groupId, msg)
           if (status === true) {
-            bots.onebot().handleGroupRequest(session.messageId, true)
-            bots.onebot().sendMsg(groupId, '已自动通过入群申请')
+            session.bot.handleGroupRequest(session.messageId, true)
+            session.bot.sendMessage(groupId, '已自动通过入群申请')
           } else {
             // 修正用户名
             var userName = answer.trim()
@@ -37,7 +37,7 @@ module.exports = () => {
             var _userNameFirst = userName.shift().toUpperCase()
             userName = _userNameFirst + userName.join('')
 
-            bots.onebot().sendMsg(
+            session.bot.sendMessage(
               groupId,
               [
                 '请手动检查该用户信息:',
