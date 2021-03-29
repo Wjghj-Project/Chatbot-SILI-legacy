@@ -11,7 +11,7 @@ module.exports = () => {
    */
   koishi
     .command('debug', '运行诊断测试', { authority: 2 })
-    .option('broken', '')
+    .option('announcement', '<content:text> 发送群公告')
     .option('face', '[id:string] 发送QQ表情', { type: 'string' })
     .option('localimg', '本地图片')
     .option('reply [content]', '回复消息')
@@ -20,7 +20,15 @@ module.exports = () => {
     .option('version', '-v 显示SILI的版本信息', { authority: 1 })
     // .option('xml', '')
     .action(async ({ session, options }) => {
-      console.log('!debug', options)
+      koishi.logger('!debug').info(options)
+
+      if (
+        options.announcement &&
+        options.announcement !== '' &&
+        session.bot.$sendGroupNotice
+      ) {
+        session.bot.$sendGroupNotice(session.groupId, options.announcement)
+      }
 
       // face
       if (options.face || options.face === 0) {

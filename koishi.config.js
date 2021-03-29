@@ -1,6 +1,10 @@
 // 这些文件不会被push，保存着各种不可告人的秘密
 const qqNumber = require('./secret/qqNumber') // 机器人的QQ
 const discordToken = require('./secret/discord').botToken
+const https = require('https')
+const agent = new https.Agent({
+  rejectUnauthorized: false,
+})
 
 module.exports = {
   port: 3100,
@@ -31,5 +35,8 @@ module.exports = {
   delay: {
     message: 1000,
     prompt: 30 * 1000,
+  },
+  axiosConfig: {
+    httpsAgent: agent,
   },
 }

@@ -55,7 +55,7 @@ function discordToQQ(session) {
   let content = session.content
   const sender = `${session.author.nickname ||
     session.author.username}#${session.author.discriminator || '0000'}`
-  content = parseDiscordImages({ session, content })
+  // content = parseDiscordImages({ session, content })
   content = parseDiscordEmoji(content)
   let send = [`[Discord] ${sender}`, content].join('\n')
   sysLog('⇿', 'Discord信息已推送到QQ', sender, session.content)
@@ -110,21 +110,25 @@ async function qqToDiscord(session) {
     session?.author?.username ||
     '[UNKNOWN_USER_NAME]'
   nickname += ' (' + id + ')'
-  var body = {
+  const body = {
     username: nickname,
     content: send,
     avatar_url: 'http://q1.qlogo.cn/g?b=qq&nk=' + id + '&s=640',
   }
-  axios
-    .post(require('../secret/discord').fandom_zh.webhook, body)
+
+  axios({
+    ...koishi.app.options.axiosConfig,
+    method: 'post',
+    url: require('../secret/discord').fandom_zh.webhook,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: JSON.stringify(body),
+  })
     .then(() => {
-      // console.log(res.data)
       sysLog('⇿', 'QQ消息已推送到Discord')
     })
     .catch(err => {
       koishi.logger('bridge').error(err)
     })
-  // bots
-  //   .discord()
-  //   .sendMessage('736880471891378246', `[QQ] ${nickname}(${id})\n${send}`)
 }
