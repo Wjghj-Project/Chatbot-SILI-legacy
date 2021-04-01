@@ -12,14 +12,17 @@ module.exports = () => {
       }
     })
 
-  koishi.platform('discord').on('before-command', ({ session }) => {
-    console.log(session.author)
+  koishi.platform('discord').on('before-command', killCmd)
+  koishi.platform('discord').on('dialogue/before-send', killCmd)
+
+  function killCmd({ session }) {
+    // console.log(session.author)
     if (
       !session.author.discriminator ||
       session.author.discriminator === '0000'
     ) {
       koishi.logger('MAIN').info('不响应非人类调用的指令')
-      return ''
+      return false
     }
-  })
+  }
 }

@@ -18,7 +18,8 @@ module.exports = () => {
     .option('tts [text]', '基于文字发送tts语音消息')
     .option('urlimg <url>', '网络图片')
     .option('version', '-v 显示SILI的版本信息', { authority: 1 })
-    // .option('xml', '')
+    .option('xml', '')
+    .option('nothing', '')
     .action(async ({ session, options }) => {
       koishi.logger('!debug').info(options)
 
@@ -28,6 +29,10 @@ module.exports = () => {
         session.bot.$sendGroupNotice
       ) {
         session.bot.$sendGroupNotice(session.groupId, options.announcement)
+      }
+
+      if (options.nothing) {
+        return false
       }
 
       // face
