@@ -18,8 +18,10 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-common'), {
     // 复读机
     onRepeat(state) {
-      let repeatCD = 30 * 1000
+      let repeatCD = 45 * 1000
+      let stopRepeatCD = 30 * 1000
       globalThis.repeaterLast = globalThis.repeaterLast || 0
+      globalThis.stopRepeatLast = globalThis.stopRepeatLast || 0
       let now = new Date().getTime()
 
       // 参与复读
@@ -38,7 +40,7 @@ module.exports = () => {
       }
 
       // 大于 5 次，打断复读
-      if (state.times > 5) {
+      if (state.times === 5 && now - globalThis.stopRepeatLast > stopRepeatCD) {
         return (
           segment('image', {
             file: `file:///${path.resolve('./images/no_repeat.jpg')}`,
@@ -61,21 +63,16 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-shell'), {
     shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
   })
-  koishi.plugin(require('koishi-plugin-status'), {
+  koishi.plugin(require('koishi-plugin-webui'), {
     uiPath: '/dash',
     apiPath: '/dash/status',
-    // port: 8080,
   })
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
   })
-  koishi.plugin(require('koishi-plugin-tools'))
+  koishi.plugin(require('koishi-plugin-tools'), {})
 
   // Local plugins
   koishi.plugin(require('../plugins/dbadmin'))
-  koishi.plugin(require('../plugins/recall'))
   koishi.plugin(require('../plugins/youdao'))
-  koishi.plugin(require('../plugins/demo'))
-
-  // koishi.logger('BOTS').info(koishi.bots)
 }
