@@ -64,9 +64,11 @@ module.exports = () => {
     shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
   })
   koishi.plugin(require('koishi-plugin-webui'), {
+    title: 'SILI 监控中心',
     uiPath: '/dash',
     apiPath: '/dash/status',
   })
+  // koishi.plugin(require('koishi-plugin-chat'))
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
   })
@@ -75,4 +77,5 @@ module.exports = () => {
   // Local plugins
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/youdao'))
+  koishi.plugin(require('../plugins/webui-plus'))
 }
