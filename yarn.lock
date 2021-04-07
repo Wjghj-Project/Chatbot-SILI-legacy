@@ -978,11 +978,6 @@ data-uri-to-buffer@3:
   resolved "https://registry.npm.taobao.org/data-uri-to-buffer/download/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"
   integrity sha1-WUuJc5OMW8LDMEZTV4U0GrxPNjY=
 
-dayjs@^1.10.4:
-  version "1.10.4"
-  resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.10.4.tgz?cache=0&sync_timestamp=1611309982734&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdayjs%2Fdownload%2Fdayjs-1.10.4.tgz#8e544a9b8683f61783f570980a8a80eaf54ab1e2"
-  integrity sha1-jlRKm4aD9heD9XCYCoqA6vVKseI=
-
 dayjs@~1.8.24, dayjs@~1.8.25:
   version "1.8.36"
   resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.8.36.tgz#be36e248467afabf8f5a86bae0de0cdceecced50"
@@ -1574,8 +1569,8 @@ functional-red-black-tree@^1.0.1:
 
 genshin-kit@^0.4.2:
   version "0.4.2"
-  resolved "https://registry.npmjs.org/genshin-kit/-/genshin-kit-0.4.2.tgz#b917f8e9d345f71acd1f7fb6482c17b21f47c3e5"
-  integrity sha512-f1BR3BMt0GwS6pS747Akk08oal/h2jvpvlXGlIJSJWOgoDINd2z/ZMbSJUl7wtSmLIZVE/bbVHE5UIDz3rCJPg==
+  resolved "https://registry.npm.taobao.org/genshin-kit/download/genshin-kit-0.4.2.tgz#b917f8e9d345f71acd1f7fb6482c17b21f47c3e5"
+  integrity sha1-uRf46dNF9xrNH3+2SCwXsh9Hw+U=
   dependencies:
     axios "^0.21.1"
 
@@ -2171,7 +2166,7 @@ koa@^2.13.1:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-koishi-adapter-discord@^1.0.6:
+koishi-adapter-discord@^1.0.7:
   version "1.0.7"
   resolved "https://registry.npm.taobao.org/koishi-adapter-discord/download/koishi-adapter-discord-1.0.7.tgz#7717139e92278706500bb04968ba8ca30a6b1545"
   integrity sha1-dxcTnpInhwZQC7BJaLqMowprFUU=
@@ -2181,19 +2176,19 @@ koishi-adapter-discord@^1.0.6:
     form-data "^4.0.0"
     ws "^7.4.4"
 
-koishi-adapter-onebot@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npm.taobao.org/koishi-adapter-onebot/download/koishi-adapter-onebot-3.0.4.tgz#b4d46d70f2ef9d00459bbf2f50379d720eab2383"
-  integrity sha1-tNRtcPLvnQBFm78vUDedcg6rI4M=
+koishi-adapter-onebot@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.npm.taobao.org/koishi-adapter-onebot/download/koishi-adapter-onebot-3.0.5.tgz#714dd055040f61cf599dd17bbbf9ea560352f622"
+  integrity sha1-cU3QVQQPYc9ZndF7u/nqVgNS9iI=
   dependencies:
     axios "^0.21.1"
-    koishi-utils "^4.1.2"
+    koishi-utils "^4.1.3"
     ws "^7.4.4"
 
-koishi-core@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.npm.taobao.org/koishi-core/download/koishi-core-3.7.0.tgz#03c8365271d55446be9f3ed9977871eac1074cab"
-  integrity sha1-A8g2UnHVVEa+nz7Zl3hx6sEHTKs=
+koishi-core@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.npm.taobao.org/koishi-core/download/koishi-core-3.7.1.tgz#a216ed586fc0bc78de3fbececc4269ba68cfd866"
+  integrity sha1-ohbtWG/AvHjeP77OzEJpumjP2GY=
   dependencies:
     "@koa/router" "^10.0.0"
     "@types/koa-bodyparser" "^4.3.0"
@@ -2212,18 +2207,18 @@ koishi-plugin-blame@^3.0.0:
   resolved "https://registry.npm.taobao.org/koishi-plugin-blame/download/koishi-plugin-blame-3.0.0.tgz#4940eef531597711c321f973cd5fd3e2d3acfaf3"
   integrity sha1-SUDu9TFZdxHDIflzzV/T4tOs+vM=
 
-koishi-plugin-common@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-common/download/koishi-plugin-common-4.2.1.tgz#eac21dfa6c22185df4f65b9534387f6c7ff1ec07"
-  integrity sha1-6sId+mwiGF309luVNDh/bH/x7Ac=
+koishi-plugin-common@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-common/download/koishi-plugin-common-4.2.2.tgz#a57f1e7fac32d00a5b2f856813097c03b3fb6f5d"
+  integrity sha1-pX8ef6wy0ApbL4VoEwl8A7P7b10=
 
-koishi-plugin-genshin@^2.0.0-alpha.16:
-  version "2.0.0-alpha.16"
-  resolved "https://registry.npmjs.org/koishi-plugin-genshin/-/koishi-plugin-genshin-2.0.0-alpha.16.tgz#7e5f0a4070ba8e3585e4e6eb675b8ebda568c7fd"
-  integrity sha512-2SrT/KwLuDy8aWNCjjdz6NT9cJbHsVAZnKxyTwu5LIEmnp0lLq3QBbf10W9SBqfXu9QBbc26HEsy5R+3ZKAlaw==
+koishi-plugin-genshin@^2.0.0-alpha.19:
+  version "2.0.0-alpha.19"
+  resolved "https://registry.npmjs.org/koishi-plugin-genshin/-/koishi-plugin-genshin-2.0.0-alpha.19.tgz#f1d2939d596eab068f4ec087b59237da7c46c673"
+  integrity sha512-h4aA5hjnf6ZBgQzwSq6ljfrt6D1LcIT3t0ky/1nMgI9DBJS7hKy1Wwi4SSQUavc2hzSWwcwhqUV+56JPpKmuFw==
   dependencies:
-    dayjs "^1.10.4"
     genshin-kit "^0.4.2"
+    puppeteer "^8.0.0"
 
 koishi-plugin-github@^3.0.3:
   version "3.0.3"
@@ -2268,18 +2263,10 @@ koishi-plugin-shell@^0.0.4:
   resolved "https://registry.npmjs.org/koishi-plugin-shell/-/koishi-plugin-shell-0.0.4.tgz#9b6415efa5346477c7859f315aca7bcbf6278ee3"
   integrity sha512-4swF9QRTOkP+8WZpvabDmjUpop51aUjnHxNrJbyA/8V5KnN0wq1sQpfzXxrW9Zp4hmScXKoImHzHa9AGSq+DGQ==
 
-koishi-plugin-status@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-status/download/koishi-plugin-status-4.0.0.tgz#2225f5ca5dbb88100dd150342de3db787734acfb"
-  integrity sha1-IiX1yl27iBAN0VA0LePbeHc0rPs=
-  dependencies:
-    systeminformation "^5.6.7"
-    ws "^7.4.4"
-
 koishi-plugin-teach@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-teach/download/koishi-plugin-teach-2.1.1.tgz#1b1173a93bb9bb768d3c6adfbce2ed35467fd0fd"
-  integrity sha1-GxFzqTu5u3aNPGrfvOLtNUZ/0P0=
+  version "2.1.2"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-teach/download/koishi-plugin-teach-2.1.2.tgz#8909fd490635a628d012625a3950bf893edd166a"
+  integrity sha1-iQn9SQY1pijQEmJaOVC/iT7dFmo=
   dependencies:
     axios "^0.21.1"
     fastest-levenshtein "^1.0.12"
@@ -2295,20 +2282,13 @@ koishi-plugin-tools@^2.1.1:
     qrcode "^1.4.4"
     xml-js "^1.6.11"
 
-koishi-plugin-webui@^4.0.1:
-  version "4.0.2"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-webui/download/koishi-plugin-webui-4.0.2.tgz#19c3d293a1878974798303d161f6462956fa64e4"
-  integrity sha1-GcPSk6GHiXR5gwPRYfZGKVb6ZOQ=
+koishi-plugin-webui@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-webui/download/koishi-plugin-webui-4.1.0.tgz#96cb2e2389e4f1df892d47416c5037c2cb5b824e"
+  integrity sha1-lssuI4nk8d+JLUdBbFA3wstbgk4=
   dependencies:
     systeminformation "^5.6.10"
     ws "^7.4.4"
-
-koishi-utils@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.npm.taobao.org/koishi-utils/download/koishi-utils-4.1.2.tgz#c9b116d65909921288657529aaa3c41d729d9186"
-  integrity sha1-ybEW1lkJkhKIZXUpqqPEHXKdkYY=
-  dependencies:
-    supports-color "^8.1.1"
 
 koishi-utils@^4.1.3:
   version "4.1.3"
@@ -2317,15 +2297,15 @@ koishi-utils@^4.1.3:
   dependencies:
     supports-color "^8.1.1"
 
-koishi@^3.6.1:
-  version "3.7.0"
-  resolved "https://registry.npm.taobao.org/koishi/download/koishi-3.7.0.tgz#a3b0869a38b04931d19408d4636a990cba4e5440"
-  integrity sha1-o7CGmjiwSTHRlAjUY2qZDLpOVEA=
+koishi@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.npm.taobao.org/koishi/download/koishi-3.7.1.tgz#1f76648fcf97a010d223d57c8ea064aebbd89186"
+  integrity sha1-H3Zkj8+XoBDSI9V8jqBkrrvYkYY=
   dependencies:
     cac "^6.7.2"
     chokidar "^3.5.1"
     kleur "^4.1.4"
-    koishi-core "^3.7.0"
+    koishi-core "^3.7.1"
     koishi-utils "^4.1.3"
     prompts "^2.4.0"
 
@@ -3524,7 +3504,7 @@ supports-color@^8.1.1:
   dependencies:
     has-flag "^4.0.0"
 
-systeminformation@^5.6.10, systeminformation@^5.6.7:
+systeminformation@^5.6.10:
   version "5.6.10"
   resolved "https://registry.npm.taobao.org/systeminformation/download/systeminformation-5.6.10.tgz#832fb1e57a798f4419123119e0e90ed8eeb38e56"
   integrity sha1-gy+x5Xp5j0QZEjEZ4OkO2O6zjlY=

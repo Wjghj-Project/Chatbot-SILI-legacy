@@ -42,7 +42,6 @@ koishi.start()
 koishi.on('connect', () => {
   sysLog('🌈', 'Koishi 启动成功')
 })
-
 module.exports = {
   name: 'index',
   // 导出 App 实例
