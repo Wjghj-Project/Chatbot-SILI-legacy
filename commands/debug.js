@@ -1,9 +1,8 @@
-const axios = require('axios').default
 const path = require('path')
 const reply = require('../utils/reply')
 const { koishi } = require('../index')
-const bots = require('../utils/bots')
 const { segment } = require('koishi-utils')
+const txt2img = require('../utils/txt2img')
 
 module.exports = () => {
   /**
@@ -12,13 +11,15 @@ module.exports = () => {
   koishi
     .command('debug', '运行诊断测试', { authority: 2 })
     .option('announcement', '<content:text> 发送群公告')
-    .option('face', '[id:string] 发送QQ表情', { type: 'string' })
+    .option('face', '[id:string] 发送QQ表情')
     .option('localimg', '本地图片')
-    .option('reply [content]', '回复消息')
-    .option('tts [text]', '基于文字发送tts语音消息')
+    .option('reply [content:text]', '回复消息')
+    .option('tts [text:text]', '基于文字发送tts语音消息')
     .option('urlimg <url>', '网络图片')
     .option('version', '-v 显示SILI的版本信息', { authority: 1 })
     .option('xml', '')
+    .option('parser', '-p <message:text> 解析消息到消息段')
+    .option('html', '<html:text>')
     .option('nothing', '')
     .action(async ({ session, options }) => {
       koishi.logger('!debug').info(options)
@@ -35,7 +36,16 @@ module.exports = () => {
       }
 
       if (options.nothing) {
-        return false
+        return true
+      }
+
+      if (options.parser) {
+        const json = segment.parse(options.parser)
+        return txt2img.shotCode(JSON.stringify(json, null, 2), 'json')
+      }
+
+      if (options.html) {
+        return txt2img.shotHtml(options.html)
       }
 
       // face

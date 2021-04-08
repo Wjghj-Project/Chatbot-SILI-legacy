@@ -1,11 +1,10 @@
 const axios = require('axios').default
 const qqNumber = require('../secret/qqNumber')
 const parseDiscordEmoji = require('../utils/parseDiscordEmoji')
-const parseDiscordImages = require('../utils/parseDiscordImages')
 const resolveBrackets = require('../utils/resolveBrackets')
 const sysLog = require('../utils/sysLog')
 const { koishi } = require('../index')
-const bots = require('../utils/bots')
+const { segment } = require('koishi-utils')
 
 module.exports = () => {
   // QQ 收到消息
@@ -78,11 +77,11 @@ async function qqToDiscord(session) {
   }
   send = send.replace(/\[cq:at,qq=(.+?)\]/gi, '`@$1`')
 
-  if (/\[cq:reply,id=.+\]/i.test(message)) {
-    var replyMsg = '',
-      replyMsgId = message.match(/\[cq:reply,id=(.+?)\]/i)[1] || 0
-
-    let replyMeta = await session.bot.getMessage(session.channelId, replyMsgId)
+  if (/\[cq:reply.+\]/i.test(message)) {
+    let replyMsg = ''
+    const replySeg = segment.parse(/\[cq:reply.+?\]/i.exec(message)[0])
+    const replyId = replySeg?.[0]?.data?.id || ''
+    const replyMeta = await session.bot.getMessage(session.channelId, replyId)
 
     let replyTime = new Date(replyMeta.timestamp),
       replyDate = `${replyTime.getHours()}:${replyTime.getMinutes()}`
@@ -94,7 +93,7 @@ async function qqToDiscord(session) {
     replyMsg =
       `> **__回复 ${replyMeta.author.nickname ||
         replyMeta.author.username} 在 ${replyDate} 的消息__**\n` + replyMsg
-    send = send.replace(/\[cq:reply,id=.+?\]/i, replyMsg)
+    send = send.replace(/\[cq:reply.+?\]/i, replyMsg)
   }
 
   // 安全性问题

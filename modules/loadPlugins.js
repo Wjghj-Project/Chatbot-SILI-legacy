@@ -68,7 +68,7 @@ module.exports = () => {
     uiPath: '/dash',
     apiPath: '/dash/status'
   })
-  // koishi.plugin(require('koishi-plugin-chat'))
+  koishi.plugin(require('koishi-plugin-chat'))
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!'
   })

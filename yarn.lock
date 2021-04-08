@@ -2207,6 +2207,11 @@ koishi-plugin-blame@^3.0.0:
   resolved "https://registry.npm.taobao.org/koishi-plugin-blame/download/koishi-plugin-blame-3.0.0.tgz#4940eef531597711c321f973cd5fd3e2d3acfaf3"
   integrity sha1-SUDu9TFZdxHDIflzzV/T4tOs+vM=
 
+koishi-plugin-chat@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npm.taobao.org/koishi-plugin-chat/download/koishi-plugin-chat-0.2.0.tgz#dc6769254a2f22b212171c404677117aa2ebfb02"
+  integrity sha1-3GdpJUovIrISFxxARncReqLr+wI=
+
 koishi-plugin-common@^4.2.2:
   version "4.2.2"
   resolved "https://registry.npm.taobao.org/koishi-plugin-common/download/koishi-plugin-common-4.2.2.tgz#a57f1e7fac32d00a5b2f856813097c03b3fb6f5d"
@@ -2263,7 +2268,7 @@ koishi-plugin-shell@^0.0.4:
   resolved "https://registry.npmjs.org/koishi-plugin-shell/-/koishi-plugin-shell-0.0.4.tgz#9b6415efa5346477c7859f315aca7bcbf6278ee3"
   integrity sha512-4swF9QRTOkP+8WZpvabDmjUpop51aUjnHxNrJbyA/8V5KnN0wq1sQpfzXxrW9Zp4hmScXKoImHzHa9AGSq+DGQ==
 
-koishi-plugin-teach@^2.1.0:
+koishi-plugin-teach@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npm.taobao.org/koishi-plugin-teach/download/koishi-plugin-teach-2.1.2.tgz#8909fd490635a628d012625a3950bf893edd166a"
   integrity sha1-iQn9SQY1pijQEmJaOVC/iT7dFmo=
