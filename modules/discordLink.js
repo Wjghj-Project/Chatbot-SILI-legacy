@@ -62,9 +62,10 @@ function discordToQQ(session) {
 }
 
 async function qqToDiscord(session) {
-  if (/^\[discord\]/i.test(session.content)) return
   let message = session.message || session.content
   message = resolveBrackets(message)
+  if (/^\[discord\]/i.test(message) || /__nodc__/gi.test(message)) return
+
   let send = ''
   if (/\[cq:image,.+\]/gi.test(message)) {
     let image = message.replace(

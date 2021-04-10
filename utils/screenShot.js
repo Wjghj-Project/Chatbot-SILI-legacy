@@ -6,7 +6,8 @@ module.exports = async (url, selector) => {
   if (!url) return ''
   const browser = await puppeteer.launch({ headless: 0 })
   try {
-    const page = await browser.newPage()
+    const page = await browser.newPage({})
+    page.cookies()
     await page.goto(url)
 
     let image

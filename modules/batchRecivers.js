@@ -22,7 +22,7 @@ module.exports = () => {
   })
 
   // 群成员增加
-  koishi.on('group-member-added', session => {
+  koishi.on('group-member-added',async session => {
     sysLog(
       '🔰',
       '检测到群成员增加',
@@ -30,11 +30,12 @@ module.exports = () => {
       '用户' + session.userId
     )
     if (session.userId === session.selfId) {
-      // sysLog('💌', '检测到加入群聊，发送自我介绍')
-      // koishi.executeCommandLine('about', session)
+      sysLog('💌', '检测到加入群聊，发送自我介绍')
+      session.execute('about')
     } else {
-      bots[session.platform]().sendMsg(
-        session.groupId,
+      const atTarget = segment('at', { id: session.userId })
+      if (session)
+      session.send(
         `❤群成员增加了，${segment('at', { id: session.userId })}欢迎新大佬！`
       )
     }

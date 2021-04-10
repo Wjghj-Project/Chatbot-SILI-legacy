@@ -14,5 +14,6 @@ dist
 @*.*
 
 # Secret files (save passwords etc.)
-secret_*.*
+secret*.*
 secret/
+!secret*.sample.*

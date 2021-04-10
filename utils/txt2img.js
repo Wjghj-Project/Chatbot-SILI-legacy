@@ -14,18 +14,20 @@ class Main {
     <html>
     <head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-light.css"></head>
     <body>
-    <pre class="hljs ${lang ? 'lang-' + lang : ''}">${content}</pre>
+    <pre id="hljs-codeblock" class="hljs ${
+      lang ? 'lang-' + lang : ''
+    }">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.3.1/build/highlight.min.js"></script>
     <script>(()=>{
       const blocks = document.getElementsByClassName('hljs')
         for (let item of blocks) {
-          if (item.innerText.length > 20000) return
+          if (item.innerText.length > 100000) return
         hljs.highlightBlock(item)
       }
     })()</script>
     </body>
     </html>`
-    return this.shotHtml(html)
+    return this.shotHtml(html, '#hljs-codeblock')
   }
   shotSvg(svg) {
     return this.shotHtml(svg, 'svg')

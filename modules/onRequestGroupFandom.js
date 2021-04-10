@@ -14,8 +14,16 @@ module.exports = () => {
       const { userId, groupId, content } = session
       const answer = content.split('答案：')[1] || ''
 
-      var command = `!verify-qq --qq ${userId} --user ${answer}`
-      session.bot.sendMessage(groupId, command)
+      // 修正用户名
+      let userName = answer.trim()
+      userName = userName.replace(/^user:/i, '')
+      userName = userName.replace(/\s/g, '_')
+      userName = userName.split('')
+      var _userNameFirst = userName.shift().toUpperCase()
+      userName = _userNameFirst + userName.join('')
+
+      var command = `!verify-qq --qq ${userId} --user ${userName}`
+      session.sendQueued(command)
 
       verifyQQ(
         session,
@@ -23,26 +31,23 @@ module.exports = () => {
           qq: userId,
           user: answer,
         },
-        ({ msg, status }) => {
-          bots.onebot().sendMsg(groupId, msg)
+        async ({ msg, status }) => {
+          session.sendQueued(msg)
           if (status === true) {
-            session.bot.handleGroupRequest(session.messageId, true)
-            session.bot.sendMessage(groupId, '已自动通过入群申请')
+            try {
+              await session.bot.handleGroupMemberRequest(
+                session.messageId,
+                true
+              )
+              session.sendQueued('已自动通过入群申请。')
+            } catch (err) {
+              session.sendQueued(`无法自动通过入群申请：${err}`)
+            }
           } else {
-            // 修正用户名
-            var userName = answer.trim()
-            userName = userName.replace(/^user:/i, '')
-            userName = userName.replace(/\s/g, '_')
-            userName = userName.split('')
-            var _userNameFirst = userName.shift().toUpperCase()
-            userName = _userNameFirst + userName.join('')
-
-            session.bot.sendMessage(
-              groupId,
+            session.sendQueued(
               [
                 '请手动检查该用户信息:',
-                'https://community.fandom.com/wiki/Special:Lookupuser/' +
-                  userName,
+                `https://community.fandom.com/wiki/Special:Lookupuser/${userName}`,
                 '复制拒绝理由: QQ号验证失败，请参阅群说明',
               ].join('\n')
             )
