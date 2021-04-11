@@ -2304,10 +2304,10 @@ koishi-plugin-common@^4.2.2:
   resolved "https://registry.npm.taobao.org/koishi-plugin-common/download/koishi-plugin-common-4.2.2.tgz#a57f1e7fac32d00a5b2f856813097c03b3fb6f5d"
   integrity sha1-pX8ef6wy0ApbL4VoEwl8A7P7b10=
 
-koishi-plugin-genshin@^2.0.0-beta.1:
-  version "2.0.0-beta.1"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-genshin/download/koishi-plugin-genshin-2.0.0-beta.1.tgz?cache=0&sync_timestamp=1618166354315&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fkoishi-plugin-genshin%2Fdownload%2Fkoishi-plugin-genshin-2.0.0-beta.1.tgz#7486bb34cca94864ea310efa1ba95cc55b376a07"
-  integrity sha1-dIa7NMypSGTqMQ76G6lcxVs3agc=
+koishi-plugin-genshin@^2.0.0-beta.2:
+  version "2.0.0-beta.2"
+  resolved "https://registry.npmjs.org/koishi-plugin-genshin/-/koishi-plugin-genshin-2.0.0-beta.2.tgz#4f971ee8f459fa642f86c2f39884cbca7fff856f"
+  integrity sha512-K9DMswCwvWOx7FwFnjfPvrRzIxE3zbGcqEnRxpZpLGzwB69ga+xS2M8FCBuTs9o3yeY1x0rTvvT4VzOwUiPveg==
   dependencies:
     genshin-kit "^1.0.1"
     pug "^3.0.2"
