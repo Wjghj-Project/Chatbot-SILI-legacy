@@ -66,7 +66,7 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-webui'), {
     title: 'SILI 监控中心',
     uiPath: '/dash',
-    apiPath: '/dash/status',
+    apiPath: '/api/status',
   })
   koishi.plugin(require('koishi-plugin-chat'))
   koishi.plugin(require('koishi-plugin-teach'), {
