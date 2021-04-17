@@ -1,6 +1,6 @@
 {
   "name": "wjghj-chatbot-sili",
-  "version": "3.6.5",
+  "version": "3.6.6",
   "description": "Wjghj Project Chat Bot, SILI - Sara Lindery",
   "main": "index.js",
   "private": true,
