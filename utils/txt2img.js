@@ -29,6 +29,31 @@ class Main {
     </html>`
     return this.shotHtml(html, '#hljs-codeblock')
   }
+  shotMarkdown(content) {
+    const html = `
+    <html>
+    <head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-light.css"></head>
+    <body>
+    <div id="app">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@12.0.6/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.3.1/build/highlight.min.js"></script>
+    <script>(()=>{
+      const app = docoment.getElementById('app')
+      app.innerHTML = window.markdownit({
+        highlight: function(str, lang) {
+          return '<pre class="hljs lang-' + lang + '">' + str + '</pre>'
+        }
+      }).render(app.innerText)
+      const blocks = document.getElementsByClassName('hljs')
+        for (let item of blocks) {
+          if (item.innerText.length > 100000) return
+        hljs.highlightBlock(item)
+      }
+    })()</script>
+    </body>
+    </html>`
+    return this.shotHtml(html)
+  }
   shotSvg(svg) {
     return this.shotHtml(svg, 'svg')
   }

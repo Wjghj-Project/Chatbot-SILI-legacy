@@ -1,6 +1,7 @@
 const { default: axios } = require('axios')
 const { template, segment } = require('koishi-utils')
 const { koishi } = require('..')
+const shot = require('../utils/screenShot')
 
 template.set('github.api', {
   repos: 'https://api.github.com/repos/{{ owner }}/{{ repo }}',
@@ -19,13 +20,13 @@ module.exports = () => {
 
     let data
     try {
-      const url = template('github.api.repos', { owner, repo })
-      const res = await axios.get(url)
+      const res = await axios.get(template('github.api.repos', { owner, repo }))
       data = res.data
     } catch (err) {
       koishi.logger('ghDetails').warn(err)
       return
     }
+
     const {
       name,
       description,
@@ -45,5 +46,15 @@ module.exports = () => {
           `更新：${updated_at}`,
         ].join('\n')
     )
+
+    try {
+      const readme = await shot(
+        `https://pd.zwc365.com/seturl/https://github.com/${owner}/${repo}`,
+        'article.markdown-body'
+      )
+      session.send(readme)
+    } catch (err) {
+      return
+    }
   })
 }

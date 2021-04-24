@@ -54,7 +54,7 @@ module.exports = () => {
     appId: password.github.appId,
     appSecret: password.github.appSecret,
   })
-  koishi.plugin(require('koishi-plugin-genshin'), {
+  koishi.plugin(require('../../koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
   })
   koishi.plugin(require('koishi-plugin-image-search'))
