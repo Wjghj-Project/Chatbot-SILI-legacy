@@ -15,7 +15,7 @@ module.exports = () => {
     .option('nth', '-n <nth:posint> 从多张插画中进行选择', { fallback: 1 })
     .action(async ({ options }, id) => {
       const { data } = await axios.get(`https://api.pixivel.moe/pixiv`, {
-        data: {
+        params: {
           type: 'illust',
           id,
         },
