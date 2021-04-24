@@ -8,12 +8,19 @@ const { segment } = require('koishi-utils')
 const { koishi } = require('..')
 
 module.exports = () => {
+  koishi.command('pixiv', 'Pixiv 相关功能').action(({ session }) => {
+    return session.execute('pixiv -h')
+  })
+
   koishi
-    .command('pixiv.illust <id:posint> 查询 Pixiv 插画', {
+    .command('pixiv.illust <id:posint>', '查询 Pixiv 插画', {
       minInterval: 10 * 1000,
     })
+    .alias('pixiv插画', 'p站插画')
     .option('nth', '-n <nth:posint> 从多张插画中进行选择', { fallback: 1 })
-    .action(async ({ options }, id) => {
+    .action(async ({ session, options }, id) => {
+      if (!id) return session.execute('pixiv.illust -h')
+
       const { data } = await axios.get(`https://api.pixivel.moe/pixiv`, {
         params: {
           type: 'illust',
@@ -23,31 +30,50 @@ module.exports = () => {
       const { error, illust } = data
       if (error || !illust) {
         koishi.logger('pixiv').warn(error)
-        return error?.message || error?.user_message || '出现未知问题'
+        return [
+          segment('quote', { id: session.messageId }),
+          error?.message || error?.user_message || '出现未知问题',
+        ].join('')
       }
 
-      const allPics = illust.meta_pages
-      const picNums = allPics.length
-      const nth = Math.min(picNums, options.nth)
+      let imageUrl = '',
+        allPics,
+        picNums,
+        nth = options.nth
 
-      const image = allPics[nth - 1].image_urls.original.replace(
+      if (illust?.meta_single_page?.original_image_url) {
+        imageUrl = illust.meta_single_page.original_image_url
+      } else {
+        allPics = illust.meta_pages
+        picNums = allPics.length
+        nth = Math.min(picNums, nth)
+        imageUrl = allPics[nth - 1].image_urls.original
+      }
+
+      const image = imageUrl.replace(
         'https://i.pximg.net',
         'https://p1.pximg.pixivel.moe'
       )
+      const caption = illust.caption.replace(/<br.*?\/>/g, '\n')
 
       const message = [
+        segment('quote', { id: session.messageId }),
         segment('image', {
           url: image,
         }),
-        picNums > 1 ? `第 ${nth} 张，共 ${picNums} 张` : null,
+        picNums ? `第 ${nth} 张，共 ${picNums} 张` : null,
         `标题：${illust.title}`,
         `作者：${illust.user.name}`,
-        illust.caption.replace(/<br.*?\/>/g, '\n').replace(/\n\n/g, '\n'),
-      ].join('\n')
+        caption.length > 120 ? caption.substring(0, 120) + '...' : caption,
+        'https://pixivel.moe/detail?id=' + illust.id,
+      ]
+        .join('\n')
+        .replace(/\n+/g, '\n')
       koishi.logger('pixiv').info(message)
       return message
     })
 
+  // 快捷方式
   koishi.middleware(session => {
     const reg = /(?:(?:https?:)?\/\/)?www\.pixiv\.net\/artworks\/([0-9]+)/i
     const pixivId = reg.exec(session.content)
