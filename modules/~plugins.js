@@ -55,7 +55,13 @@ module.exports = () => {
     appSecret: password.github.appSecret,
   })
   koishi.plugin(require('../../koishi-plugin-genshin'), {
+    // browserPath: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
+    browserPath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     cookie: password.mhyCookie,
+    // gachaPool: require('../utils/genshinGachaPool'),
+    wish: {
+      enable: true,
+    },
   })
   koishi.plugin(require('koishi-plugin-image-search'))
   koishi.plugin(require('koishi-plugin-rss'))
@@ -77,6 +83,6 @@ module.exports = () => {
   // Local plugins
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/youdao'))
-  koishi.plugin(require('../plugins/webui-plus'))
+  // koishi.plugin(require('../plugins/webui-plus'))
   koishi.plugin(require('../../koishi-plugin-mediawiki'))
 }

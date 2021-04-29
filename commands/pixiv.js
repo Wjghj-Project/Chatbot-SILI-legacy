@@ -74,8 +74,9 @@ module.exports = () => {
     })
 
   // 快捷方式
-  koishi.middleware(session => {
-    const reg = /(?:(?:https?:)?\/\/)?www\.pixiv\.net\/artworks\/([0-9]+)/i
+  koishi.middleware(async (session, next) => {
+    await next()
+    const reg = /(?:(?:https?:)?\/\/)?www\.pixiv\.net\/(?:en\/)?artworks\/([0-9]+)/i
     const pixivId = reg.exec(session.content)
     if (pixivId && pixivId[1]) {
       session.execute(`pixiv.illust ${pixivId[1]}`)

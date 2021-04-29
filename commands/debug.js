@@ -20,7 +20,7 @@ module.exports = () => {
     .option('xml', '')
     .option('parser', '-p <message:text> 解析消息到消息段')
     .option('html', '<html:text>')
-    .option('markdown', '<markdown:text>')
+    .option('markdown', '-M <markdown:text>')
     .option('nothing', '')
     .action(async ({ session, options }) => {
       koishi.logger('!debug').info(options)

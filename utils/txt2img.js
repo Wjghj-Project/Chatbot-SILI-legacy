@@ -1,6 +1,8 @@
 const puppeteer = require('puppeteer')
 const { segment } = require('koishi-utils')
 const path = require('path')
+const { default: axios } = require('axios')
+const resolveBrackets = require('./resolveBrackets')
 
 class Main {
   constructor() {}
@@ -29,49 +31,30 @@ class Main {
     </html>`
     return this.shotHtml(html, '#hljs-codeblock')
   }
-  shotMarkdown(content) {
-    const html = `
-    <html>
-    <head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/solarized-light.css"></head>
-    <body>
-    <div id="app">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it@12.0.6/dist/markdown-it.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.3.1/build/highlight.min.js"></script>
-    <script>(()=>{
-      const app = docoment.getElementById('app')
-      app.innerHTML = window.markdownit({
-        highlight: function(str, lang) {
-          return '<pre class="hljs lang-' + lang + '">' + str + '</pre>'
-        }
-      }).render(app.innerText)
-      const blocks = document.getElementsByClassName('hljs')
-        for (let item of blocks) {
-          if (item.innerText.length > 100000) return
-        hljs.highlightBlock(item)
-      }
-    })()</script>
-    </body>
-    </html>`
-    return this.shotHtml(html)
+  async shotMarkdown(text) {
+    text = resolveBrackets(text)
+    const { data } = await axios({
+      method: 'post',
+      url: 'https://api.github.com/markdown',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: { text: resolveBrackets(text) },
+    })
+    return this.shotHtml(data)
   }
   shotSvg(svg) {
     return this.shotHtml(svg, 'svg')
   }
 
-  async shotHtml(html, selector = '') {
+  async shotHtml(html, selector = 'body') {
     if (!html) return ''
     const browser = await puppeteer.launch({ headless: 1 })
     try {
-      const page = await browser.newPage()
+      const page = await browser.newPage({})
       await page.setContent(html)
-      let image
-
-      if (selector) {
-        let element = await page.$(selector)
-        image = await element.screenshot()
-      } else {
-        image = await page.screenshot({ fullPage: 1 })
-      }
+      let element = await page.$(selector)
+      const image = await element.screenshot()
 
       await browser.close()
 
