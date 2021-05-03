@@ -54,15 +54,6 @@ module.exports = () => {
     appId: password.github.appId,
     appSecret: password.github.appSecret,
   })
-  koishi.plugin(require('../../koishi-plugin-genshin'), {
-    // browserPath: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
-    browserPath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    cookie: password.mhyCookie,
-    // gachaPool: require('../utils/genshinGachaPool'),
-    wish: {
-      enable: true,
-    },
-  })
   koishi.plugin(require('koishi-plugin-image-search'))
   koishi.plugin(require('koishi-plugin-rss'))
   koishi.plugin(require('koishi-plugin-schedule'))
@@ -80,9 +71,28 @@ module.exports = () => {
   })
   koishi.plugin(require('koishi-plugin-tools'), {})
 
+  // 原神插件
+
+  koishi.plugin(require('../../koishi-plugin-genshin'), {
+    // browserPath: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
+    browserPath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    cookie: password.mhyCookie,
+    // gachaPool: require('../utils/genshinGachaPool'),
+    wish: {
+      enable: true,
+    },
+  })
+  koishi
+    .command('genshin.wish', { authority: 2 })
+    .shortcut(/^原神(武器|角色|常驻)池?([0-9]+)连抽?$/, {
+      options: { type: '$1', number: '$2' },
+    })
+  koishi.command('genshin.backpack', { authority: 2 }).shortcut('原神背包')
+
   // Local plugins
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/youdao'))
   // koishi.plugin(require('../plugins/webui-plus'))
-  koishi.plugin(require('../../koishi-plugin-mediawiki'))
+  koishi.plugin(require('../../koishi-plugin-mediawiki'), {})
+  koishi.plugin(require('../../koishi-plugin-welcome'), {})
 }

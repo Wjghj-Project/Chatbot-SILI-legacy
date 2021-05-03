@@ -38,10 +38,10 @@ koishi.plugin(require('koishi-plugin-mongo'), {
 require('./commands/_index')
 require('./modules/_index')
 
-koishi.start()
-koishi.on('connect', () => {
+koishi.start().then(() => {
   sysLog('🌈', 'Koishi 启动成功')
 })
+
 module.exports = {
   name: 'index',
   // 导出 App 实例
