@@ -1,37 +1,27 @@
 // const { segment } = require('koishi-utils')
+const { Session } = require('koishi-core')
 const { koishi } = require('../')
 
 module.exports = () => {
   koishi
     .platform('discord')
-    .group('566623674770260004', '614402285895811082')
-    .on('before-command', ({ session }) => {
-      if (/^!/.test(session.content)) {
-        koishi.logger('MAIN').info('为避免前缀重合，已终止响应该指令')
-        return ''
-      }
-    })
-
+    .on('before-command', ({ session }) => killCmd(session, ''))
   koishi
     .platform('discord')
-    .on('before-command', ({ session }) => killCmd(session, 'command'))
-  koishi
-    .platform('discord')
-    .on('dialogue/before-send', ({ session }) => killCmd(session, 'dialogue'))
+    .on('dialogue/before-send', ({ session }) => killCmd(session, true))
 
-  function killCmd(session, type) {
+  /**
+   * @param {Session} session
+   * @param {*} rep
+   */
+  function killCmd(session, rep) {
     if (
+      session.author.isBot ||
       !session.author.discriminator ||
       session.author.discriminator === '0000'
     ) {
       koishi.logger('MAIN').info('不响应非人类调用的指令')
-      switch (type) {
-        case 'dialogue':
-          return true
-        case 'command':
-        default:
-          return ''
-      }
+      return rep
     }
   }
 }

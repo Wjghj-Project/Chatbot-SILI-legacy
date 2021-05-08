@@ -2323,10 +2323,10 @@ koa@^2.13.1:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-koishi-adapter-discord@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.nlark.com/koishi-adapter-discord/download/koishi-adapter-discord-1.1.1.tgz#c9e8785c525e472e3e4f931b441998a21bd27414"
-  integrity sha1-yeh4XFJeRy4+T5MbRBmYohvSdBQ=
+koishi-adapter-discord@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.nlark.com/koishi-adapter-discord/download/koishi-adapter-discord-1.1.2.tgz#1f191912ba6d41de00912f28302042ec2c91e639"
+  integrity sha1-HxkZErptQd4AkS8oMCBC7CyR5jk=
   dependencies:
     axios "^0.21.1"
     file-type "^16.3.0"
@@ -2342,10 +2342,10 @@ koishi-adapter-onebot@^3.0.8:
     koishi-utils "^4.2.0"
     ws "^7.4.4"
 
-koishi-core@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.nlark.com/koishi-core/download/koishi-core-3.10.1.tgz#656387f177b469de35b454bbe27c2dd28309b3fe"
-  integrity sha1-ZWOH8Xe0ad41tFS74nwt0oMJs/4=
+koishi-core@^3.10.2:
+  version "3.10.2"
+  resolved "https://registry.nlark.com/koishi-core/download/koishi-core-3.10.2.tgz#a0c015380c8090468c60ef777bae2dca34752958"
+  integrity sha1-oMAVOAyAkEaMYO93e64tyjR1KVg=
   dependencies:
     "@koa/router" "^10.0.0"
     "@types/koa-bodyparser" "^4.3.0"
@@ -2364,10 +2364,10 @@ koishi-plugin-blame@^3.0.0:
   resolved "https://registry.npm.taobao.org/koishi-plugin-blame/download/koishi-plugin-blame-3.0.0.tgz#4940eef531597711c321f973cd5fd3e2d3acfaf3"
   integrity sha1-SUDu9TFZdxHDIflzzV/T4tOs+vM=
 
-koishi-plugin-chat@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.nlark.com/koishi-plugin-chat/download/koishi-plugin-chat-0.4.0.tgz#2554d0a4e105bb675736ce05a475301f65b009c5"
-  integrity sha1-JVTQpOEFu2dXNs4FpHUwH2WwCcU=
+koishi-plugin-chat@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.nlark.com/koishi-plugin-chat/download/koishi-plugin-chat-0.4.1.tgz#6346dd17c0fae476fe8121b27385989449b37370"
+  integrity sha1-Y0bdF8D65Hb+gSGyc4WYlEmzc3A=
 
 koishi-plugin-common@^4.2.4:
   version "4.2.4"
@@ -2446,12 +2446,12 @@ koishi-plugin-tools@^2.1.1:
     qrcode "^1.4.4"
     xml-js "^1.6.11"
 
-koishi-plugin-webui@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.nlark.com/koishi-plugin-webui/download/koishi-plugin-webui-4.4.2.tgz#a1758ab5b0c8cbba18cd0ef48761b4b0e1c59b4e"
-  integrity sha1-oXWKtbDIy7oYzQ70h2G0sOHFm04=
+koishi-plugin-webui@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.nlark.com/koishi-plugin-webui/download/koishi-plugin-webui-4.5.0.tgz#dd95a6919dfa1e88509fc11bbc91625ea66a9035"
+  integrity sha1-3ZWmkZ36HohQn8EbvJFiXqZqkDU=
   dependencies:
-    systeminformation "^5.6.12"
+    systeminformation "^5.6.14"
     ws "^7.4.5"
 
 koishi-utils@^4.2.0, koishi-utils@^4.2.2:
@@ -2461,16 +2461,16 @@ koishi-utils@^4.2.0, koishi-utils@^4.2.2:
   dependencies:
     supports-color "^8.1.0"
 
-koishi@^3.10.1:
-  version "3.10.1"
-  resolved "https://registry.nlark.com/koishi/download/koishi-3.10.1.tgz#300c9c7cb974267627007722ba0ad41ec381bb6c"
-  integrity sha1-MAycfLl0JnYnAHciugrUHsOBu2w=
+koishi@^3.10.2:
+  version "3.10.2"
+  resolved "https://registry.nlark.com/koishi/download/koishi-3.10.2.tgz#235613ddbf93d062310a704c1ae6a7def1b70ef6"
+  integrity sha1-I1YT3b+T0GIxCnBMGuan3vG3DvY=
   dependencies:
     cac "^6.7.3"
     chokidar "^3.5.1"
     js-yaml "^4.1.0"
     kleur "^4.1.4"
-    koishi-core "^3.10.1"
+    koishi-core "^3.10.2"
     koishi-utils "^4.2.2"
     prompts "^2.4.1"
 
@@ -3799,10 +3799,10 @@ supports-color@^8.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-systeminformation@^5.6.12:
-  version "5.6.12"
-  resolved "https://registry.npm.taobao.org/systeminformation/download/systeminformation-5.6.12.tgz#cdb8338eef48c219352d95f2b0839f9ad5399fae"
-  integrity sha1-zbgzju9Iwhk1LZXysIOfmtU5n64=
+systeminformation@^5.6.14:
+  version "5.6.20"
+  resolved "https://registry.nlark.com/systeminformation/download/systeminformation-5.6.20.tgz#f4a5a09820c6f5b8f9f10f15269e4dfeded51620"
+  integrity sha1-9KWgmCDG9bj58Q8VJp5N/t7VFiA=
 
 table@^6.0.4:
   version "6.0.7"

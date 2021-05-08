@@ -94,5 +94,5 @@ module.exports = () => {
   koishi.plugin(require('../plugins/youdao'))
   // koishi.plugin(require('../plugins/webui-plus'))
   koishi.plugin(require('../../koishi-plugin-mediawiki'), {})
-  koishi.plugin(require('../../koishi-plugin-welcome'), {})
+  // koishi.plugin(require('../../koishi-plugin-welcome'), {})
 }

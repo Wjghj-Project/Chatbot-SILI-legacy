@@ -4,7 +4,7 @@ const qqNumber = require('./secret/qqNumber') // 机器人的QQ
 const discordToken = require('./secret/discord').botToken
 const https = require('https')
 const agent = new https.Agent({
-  rejectUnauthorized: false,
+  rejectUnauthorized: false
 })
 
 module.exports = {
@@ -16,18 +16,23 @@ module.exports = {
     {
       type: 'onebot:ws',
       server: 'ws://127.0.0.1:5700',
-      selfId: qqNumber.user.mySelf,
+      selfId: qqNumber.user.mySelf
     },
     // Discord
     {
       type: 'discord',
-      token: discordToken.SILI,
-    },
+      token: discordToken.SILI
+    }
   ],
   // 昵称
   nickname: 'sili',
   // 指令前缀
-  prefix: ['!', '！'],
+  prefix(session) {
+    if (session.groupId === '566623674770260004') {
+      return ['.', '。']
+    }
+    return ['!', '！']
+  },
   // 当数据库中不存在用户，以 1 级权限填充
   autoAuthorize: 1,
   // 自动配置群组
@@ -35,12 +40,12 @@ module.exports = {
   // 延迟
   delay: {
     message: 1000,
-    prompt: 30 * 1000,
+    prompt: 30 * 1000
   },
   axiosConfig: {
     httpsAgent: agent,
     Headers: {
-      'User-Agent': password.userAgent,
-    },
-  },
+      'User-Agent': password.userAgent
+    }
+  }
 }
