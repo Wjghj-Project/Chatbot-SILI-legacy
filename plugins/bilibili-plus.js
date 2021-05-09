@@ -11,7 +11,7 @@ const colName = 'bilibili-plus'
  */
 function apply(ctx) {
   ctx
-    .command('bilibili.searchuser <username:string>')
+    .command('bilibili.searchuser <username:string>', '查找 bilibili 用户')
     .shortcut(/^(?:查|找|查找)b站用户(.+)$/, { args: ['$1'] })
     .action(async ({ session }, username) => {
       if (!username) return
@@ -124,11 +124,11 @@ function apply(ctx) {
 
   ctx
     .command('bilibili.follow', '单推主播')
-    .option('room', '-r <id:posint> 通过直播间号单推')
-    .option('uid', '-u <uid:posint> 通过主播 UID 单推')
-    .option('username', '-U <name:string> 通过主播用户名单推')
+    .option('room', '-r <id:posint> 通过直播间号单推', { authority: 2 })
+    .option('uid', '-u <uid:posint> 通过主播 UID 单推', { authority: 2 })
+    .option('username', '-U <name:string> 通过主播用户名单推', { authority: 2 })
     .option('list', '-l 查看本群单推的主播')
-    .option('remove', '-d, -R <uid:posint> 通过 UID 取消单推')
+    .option('remove', '-d, -R <uid:posint> 通过 UID 取消单推', { authority: 2 })
     .shortcut(/^单推b站主播(.+)$/i, { options: { username: '$1' } })
     .shortcut(/^单推列表$/, { options: { list: true } })
     .action(async ({ session, options }) => {
