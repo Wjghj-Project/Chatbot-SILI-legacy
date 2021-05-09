@@ -23,12 +23,12 @@ module.exports = async (url, selector) => {
 
     let base64 = image.toString('base64')
     // console.log(base64)
-    return segment('image', { file: 'base64://' + base64 })
+    return segment('image', { url: 'base64://' + base64 })
   } catch (err) {
     // console.log('error', e)
     await browser.close()
     return `${segment('image', {
-      file:
+      url:
         'file:///' +
         path.resolve(__dirname, '../images/connection_err_firefox.png'),
     })}\n(截图时遇到问题：${err})`
