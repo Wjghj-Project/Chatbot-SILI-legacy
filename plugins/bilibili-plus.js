@@ -1,7 +1,6 @@
 const { default: axios } = require('axios')
 const { Context, segment, Time, Session } = require('koishi-core')
 const { Logger, Tables } = require('koishi')
-const { ctx } = require('..')
 const logger = new Logger('bilibili')
 logger.log = logger.info
 
@@ -196,7 +195,7 @@ function apply(ctx) {
 
     loopTimmer()
     // eslint-disable-next-line no-undef
-    setInterval(loopTimmer, 30 * 1000)
+    setInterval(loopTimmer, 60 * 1000)
   })
 
   // 扩展数据库
@@ -369,13 +368,13 @@ async function addFollowedBiliUps(session, uid) {
 
   channels.push(channel)
 
-  const { roomid, username, live_time } = await getLiveDetailsByUid(uid)
+  const { roomid, username, liveTime } = await getLiveDetailsByUid(uid)
 
   const updateData = {
     b_uid: uid,
     b_username: username,
     b_roomid: roomid,
-    lastCall: live_time,
+    lastCall: liveTime,
     channels
   }
 
@@ -474,7 +473,7 @@ async function broadcast(ctx, user) {
   )
   logger.info(
     new Date().toISOString(),
-    liveStatus === 1 ? '开播' : '下播',
+    liveStatus === 1 ? '开播广播' : '下播广播',
     b_uid
   )
 }
