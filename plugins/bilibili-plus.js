@@ -10,6 +10,8 @@ const colName = 'bilibili-plus'
  * @param {Context} ctx
  */
 function apply(ctx) {
+  ctx = ctx.select('database')
+
   ctx
     .command('bilibili.searchuser <username:string>', '查找 bilibili 用户')
     .shortcut(/^(?:查|找|查找)b站用户(.+)$/, { args: ['$1'] })
@@ -92,6 +94,9 @@ function apply(ctx) {
         return session.execute('bilibili.live -h')
       }
 
+      const details = await getLiveDetailsByUid(uid)
+      logger.info(details)
+      if (!details) return '未查询到直播间信息呢。'
       const {
         title,
         cover,
@@ -103,7 +108,7 @@ function apply(ctx) {
         liveStatus,
         liveTime,
         online
-      } = await getLiveDetailsByUid(uid)
+      } = details
 
       return [
         segment('image', { url: cover }),
@@ -142,7 +147,7 @@ function apply(ctx) {
             const lastTime = item.lastCall
               ? `(最近直播于 ${Time.formatTime(Date.now() - item.lastCall)} 前)`
               : '(未跟踪到直播信息)'
-            const roomUrl = `https://space.bilibili.com/${item.b_roomid}`
+            const roomUrl = `https://live.bilibili.com/${item.b_roomid}`
             return `${index + 1}. ${item.b_username} (${
               item.b_uid
             })\n${roomUrl} ${lastTime}`
@@ -199,7 +204,7 @@ function apply(ctx) {
   })
 
   // 扩展数据库
-  Tables.extend(colName, { primary: '_id' })
+  Tables.extend(colName, { primary: 'id' })
 }
 
 async function findUsersByName(keyword) {
@@ -297,6 +302,8 @@ async function getLiveDetailsByUid(uid) {
     getLiveMaster(uid)
   ])
 
+  if (!liveDetails.roomid || liveDetails.roomid === 0) return null
+
   const {
     roomStatus,
     liveStatus,
@@ -368,7 +375,9 @@ async function addFollowedBiliUps(session, uid) {
 
   channels.push(channel)
 
-  const { roomid, username, liveTime } = await getLiveDetailsByUid(uid)
+  const details = await getLiveDetailsByUid(uid)
+  if (!details) return '未查询到直播间信息呢。'
+  const { roomid, username, liveTime } = details
 
   const updateData = {
     b_uid: uid,
@@ -381,7 +390,7 @@ async function addFollowedBiliUps(session, uid) {
   if (userData.length < 1) {
     await session.database.create(colName, updateData)
   } else {
-    await session.database.update(colName, [{ ...updateData, _id: user._id }])
+    await session.database.update(colName, [{ ...updateData, id: user.id }])
   }
 
   return `单推成功：${username} (直播间 ${roomid})`
@@ -409,10 +418,10 @@ async function removeFollowedBiliUps(session, uid) {
   }
 
   if (channels.length < 1) {
-    await session.database.remove(colName, [user._id])
+    await session.database.remove(colName, { b_uid: [user.b_uid] })
     logger.info('无频道关注，移除记录', uid)
   } else {
-    await session.database.update(colName, [{ channels, _id: user._id }])
+    await session.database.update(colName, [{ channels, id: user.id }])
   }
 
   return `取关成功：${user.b_username} (直播间 ${user.b_roomid})，再见吧臭弟弟，你肯定喜欢上别的主播了。`
@@ -433,7 +442,7 @@ async function checkForBroadcast(ctx, user) {
  * @param {Session} session
  */
 async function broadcast(ctx, user) {
-  const { _id, b_uid, channels } = user
+  const { id, b_uid, channels } = user
   const {
     title,
     roomid,
@@ -466,11 +475,9 @@ async function broadcast(ctx, user) {
         : null
     ].join('\n')
   )
-  await ctx.database.update(
-    colName,
-    [{ _id, lastCall: liveTime, b_username: username, b_roomid: roomid }],
-    '_id'
-  )
+  await ctx.database.update(colName, [
+    { id, lastCall: liveTime, b_username: username, b_roomid: roomid }
+  ])
   logger.info(
     new Date().toISOString(),
     liveStatus === 1 ? '开播广播' : '下播广播',
