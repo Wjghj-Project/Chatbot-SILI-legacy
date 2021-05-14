@@ -19,13 +19,13 @@
 
 ## 常用指令
 
-可以通过 `@SILI <command>` `sili，<command>` 或者 `!<command>` 触发。
+可以通过 `@SILI <command>` `sili，<command>` 或者 `!<command>` 使用 SILI 的指令。不过许多指令带有别名和容易记住的中文捷径。
 
 全部指令以及使用说明可以通过`!help -a`获取。
 
 ### `wiki <pagename>`
 
-通过配置好的 MediaWiki API 返回一个 wiki 的页面信息与链接。
+使用频道绑定的 MediaWiki 网站返回 wiki 的页面信息与链接。
 
 例如 `[[Help:Content]]` → https://community.fandom.com/zh/wiki/Help:Content
 
@@ -33,10 +33,11 @@ Fandom 的全域跨语言链接同样适用，例如 `[[w:c:zh.ngnl:初濑伊纲
 
 ### `genshin`
 
-查询《原神》国服玩家信息。
+查询《原神》玩家信息。
 
-- `genshin.5star` 展示你的 5 型星色
-- `genshin.abyss` 查看深境螺旋通关情况。
+- `我的原神信息` 展示你的游戏信息卡
+- `原神角色xxx` 炫耀你的角色
+- `原神深渊` 查看深境螺旋通关情况
 
 ### `fandom-community-search`
 
@@ -49,6 +50,28 @@ Fandom 的全域跨语言链接同样适用，例如 `[[w:c:zh.ngnl:初濑伊纲
 - **第几个结果** 预设显示第一个结果，必须是 1-10 的数字，否则显示第一个
 
 范例：`!fms 游戏人生 -l zh`
+
+### `youdao`
+
+使用无道词典进行翻译，支持超过一百种语言互译！
+
+- 极简自动翻译：`sili，hello world是什么意思`
+- 快速中外翻译：`sili，你好用埃塞俄比亚语怎么说`
+- 指定语言互译：`sili，英语hello world用日语怎么说`
+
+### `pixiv`
+
+快速查看 P 站插画！
+
+`!p站插画 123456`
+
+### `bilibili`
+
+查询 b 站用户，一键单推主播！
+
+- 查用户：`查b站用户xxx`
+- 查直播间：`查b站xxx的直播间`
+- 直播间订阅：`单推b站主播xxx`
 
 ### `inpageedit-search [sitename]`
 
@@ -70,3 +93,9 @@ Fandom 的全域跨语言链接同样适用，例如 `[[w:c:zh.ngnl:初濑伊纲
 > sili就是笨蛋！
 < ¿你说谁是笨蛋呢?
 ```
+
+### 更多有趣的功能
+
+发送`sili，帮助`即可查看完整的帮助！
+
+**PRs Welcome** 想到了什么有意思的功能？欢迎直接通过 PR 来添加！
