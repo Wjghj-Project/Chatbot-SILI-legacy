@@ -11,9 +11,9 @@ module.exports = () => {
     catch: ['unhandledRejection'],
     send: {
       private: ['onebot:' + require('../secret/qqNumber').user.xiaoyujun],
-      group: []
+      group: [],
     },
-    sender: ['onebot:' + require('../secret/qqNumber').user.mySelf]
+    sender: ['onebot:' + require('../secret/qqNumber').user.mySelf],
   })
   koishi.plugin(require('koishi-plugin-common'), {
     // 复读机
@@ -43,31 +43,31 @@ module.exports = () => {
       if (state.times === 6 && now - globalThis.stopRepeatLast > stopRepeatCD) {
         return (
           segment('image', {
-            file: `file:///${path.resolve('./images/no_repeat.jpg')}`
+            file: `file:///${path.resolve('./images/no_repeat.jpg')}`,
           }) + 'No，不要再复读了！'
         )
       }
-    }
+    },
   })
   koishi.plugin(require('koishi-plugin-github'), {
     path: '/api/github',
     appId: password.github.appId,
-    appSecret: password.github.appSecret
+    appSecret: password.github.appSecret,
   })
   koishi.plugin(require('koishi-plugin-image-search'))
   koishi.plugin(require('koishi-plugin-rss'))
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-shell'), {
-    shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
+    shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
   })
   koishi.plugin(require('koishi-plugin-webui'), {
     title: 'SILI 监控中心',
     uiPath: '/dash',
-    apiPath: '/api/status'
+    apiPath: '/api/status',
   })
   koishi.plugin(require('koishi-plugin-chat'))
   koishi.plugin(require('koishi-plugin-teach'), {
-    prefix: '?!'
+    prefix: '?!',
   })
   koishi.plugin(require('koishi-plugin-tools'), {})
 
@@ -79,13 +79,13 @@ module.exports = () => {
     cookie: password.mhyCookie,
     // gachaPool: require('../utils/genshinGachaPool'),
     wish: {
-      enable: true
-    }
+      enable: true,
+    },
   })
   koishi
     .command('genshin.wish', { authority: 2 })
     .shortcut(/^原神(武器|角色|常驻)池?([0-9]+)连抽?$/, {
-      options: { type: '$1', number: '$2' }
+      options: { type: '$1', number: '$2' },
     })
   koishi.command('genshin.backpack', { authority: 2 }).shortcut('原神背包')
 
@@ -94,6 +94,7 @@ module.exports = () => {
   koishi.plugin(require('../plugins/youdao'))
   // koishi.plugin(require('../plugins/webui-plus'))
   koishi.plugin(require('../../koishi-plugin-mediawiki'), {})
+  // koishi.plugin(require('../../koishi-plugin-blive'), {})
   koishi.plugin(require('../plugins/bilibili-plus'), {})
   // koishi.plugin(require('../../koishi-plugin-welcome'), {})
 }
