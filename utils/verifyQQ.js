@@ -23,7 +23,7 @@ async function verifyQQ(session, options) {
   )
 
   if (userBlacklist.includes(session.userId)) {
-    msg = '验证失败，用户位于群封锁名单。'
+    msg = '验证失败，用户位于群黑名单。'
     status = false
     return { msg, status }
   }

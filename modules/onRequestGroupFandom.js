@@ -9,9 +9,9 @@ const bots = require('../utils/bots')
 module.exports = () => {
   koishi
     .group(qqNumber.group.fandom, qqNumber.group.dftest)
-    .command('ban', '', { authority: 2 })
-    .option('add', '-a <user:posint>')
-    .option('remove', '-r <user:posint>')
+    .command('ban', '自动验证黑名单系统', { authority: 2 })
+    .option('add', '-a <user:posint> 新增黑名单记录')
+    .option('remove', '-r <user:posint> 移除黑名单记录')
     .channelFields(['userBlacklist'])
     .action(async ({ session, options }) => {
       session.channel.userBlacklist = session.channel.userBlacklist || []
@@ -19,31 +19,31 @@ module.exports = () => {
       if (options.add) {
         const user = String(options.add)
         if (session.channel.userBlacklist.includes(user)) {
-          return `${user} 已位于封锁名单中。`
+          return `${user} 已位于黑名单中。`
         } else {
           session.channel.userBlacklist.push(user)
-          return `已将 ${user} 加入封锁名单。`
+          return `已将 ${user} 加入黑名单。`
         }
       }
 
       if (options.remove) {
         const user = String(options.remove)
         if (!session.channel.userBlacklist.includes(user)) {
-          return `封锁名单中没有与 ${user} 相关的记录。`
+          return `黑名单中没有与 ${user} 相关的记录。`
         } else {
           session.channel.userBlacklist.splice(
             session.channel.userBlacklist.indexOf(user),
             1
           )
-          return `已将 ${user} 从封锁名单中移除。`
+          return `已将 ${user} 从黑名单中移除。`
         }
       }
 
       return session.channel.userBlacklist.length
-        ? `本群封锁名单上共有 ${
+        ? `本群黑名单上共有 ${
             session.channel.userBlacklist.length
           } 名用户：\n${session.channel.userBlacklist.join('、')}`
-        : `哦耶，本群封锁名单上尚无记录~`
+        : `哦耶，本群黑名单上尚无记录~`
     })
 
   koishi
