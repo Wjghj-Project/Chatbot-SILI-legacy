@@ -1,6 +1,6 @@
 {
   "name": "wjghj-chatbot-sili",
-  "version": "3.8.5",
+  "version": "3.8.6",
   "description": "Wjghj Project Chat Bot, SILI - Sara Lindery",
   "main": "index.js",
   "private": true,
@@ -41,6 +41,8 @@
     "stop": "pm2 delete qq-bot-sili"
   },
   "author": "Dragon-Fish",
+  "repository": "https://github.com/Wjghj-Project/Chatbot-SILI.git",
+  "homepage": "https://sili.wjghj.cn",
   "license": "MIT",
   "keywords": [
     "mirai",

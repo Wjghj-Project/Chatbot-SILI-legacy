@@ -18,6 +18,12 @@ module.exports = () => {
 
       if (options.add) {
         const user = String(options.add)
+
+        try {
+          session.bot?.$setGroupKick(session.groupId, user)
+        // eslint-disable-next-line no-empty
+        } catch (err) {}
+
         if (session.channel.userBlacklist.includes(user)) {
           return `${user} 已位于黑名单中。`
         } else {
