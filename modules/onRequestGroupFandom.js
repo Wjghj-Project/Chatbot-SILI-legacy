@@ -21,7 +21,7 @@ module.exports = () => {
 
         try {
           session.bot?.$setGroupKick(session.groupId, user)
-        // eslint-disable-next-line no-empty
+          // eslint-disable-next-line no-empty
         } catch (err) {}
 
         if (session.channel.userBlacklist.includes(user)) {
@@ -59,21 +59,21 @@ module.exports = () => {
       const { userId, content } = session
       const answer = content.split('答案：')[1] || ''
 
-      // 修正用户名
-      let userName = answer.trim()
-      userName = userName.replace(/^user:/i, '')
-      userName = userName.replace(/\s/g, '_')
-      userName = userName.split('')
-      var _userNameFirst = userName.shift().toUpperCase()
-      userName = _userNameFirst + userName.join('')
-
-      var command = `!verify-qq --qq ${userId} --user ${userName}`
+      var command = `!verify-qq --qq ${userId} --user ${answer.trim()}`
       session.sendQueued(command)
 
-      const { msg, status } = await verifyQQ(session, {
-        qq: userId,
-        user: userName,
-      })
+      let msg, status
+      try {
+        const verify = await verifyQQ(session, {
+          qq: userId,
+          user: answer.trim(),
+        })
+        msg = verify.msg
+        status = verify.status
+      } catch (err) {
+        koishi.logger('verify-qq').warn(err)
+        return `查询时遇到错误：${err.message}`
+      }
 
       session.sendQueued(msg)
       if (status === true) {

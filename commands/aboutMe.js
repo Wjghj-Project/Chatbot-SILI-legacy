@@ -18,7 +18,7 @@ module.exports = () => {
         '很多人认为我的名字取自苹果公司的语音助理Siri，其实是出自单词silly，意思是笨蛋。',
         '⚡ 更多信息',
         '我的创造者是' + segment('at', { id: '824399619' }),
-        '我的人设可以在这里查看: https://epbureau.fandom.com/index.php?curid=884',
+        '我的源码可以在这里查看(记得点✨哦): https://github.com/Wjghj-Project/Chatbot-SILI',
       ].join('\n')
     )
   })

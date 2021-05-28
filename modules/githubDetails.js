@@ -49,7 +49,7 @@ module.exports = () => {
 
     try {
       const readme = await shot(
-        `https://pd.zwc365.com/seturl/https://github.com/${owner}/${repo}`,
+        `https://hub.fastgit.org/${owner}/${repo}`,
         'article.markdown-body'
       )
       session.send(readme)

@@ -77,10 +77,10 @@
     methods "^1.1.2"
     path-to-regexp "^6.1.0"
 
-"@octokit/webhooks-types@^3.70.1":
-  version "3.71.1"
-  resolved "https://registry.nlark.com/@octokit/webhooks-types/download/@octokit/webhooks-types-3.71.1.tgz#bfdbb7c95bc2629bfd0acd8bc6da46c1aa97eec5"
-  integrity sha1-v9u3yVvCYpv9Cs2LxtpGwaqX7sU=
+"@octokit/webhooks-types@^3.71.2":
+  version "3.75.2"
+  resolved "https://registry.nlark.com/@octokit/webhooks-types/download/@octokit/webhooks-types-3.75.2.tgz#43a502d1ab4cd7ba6f17e0b57d7d79a5190ca6fc"
+  integrity sha1-Q6UC0atM17pvF+C1fX15pRkMpvw=
 
 "@opencensus/core@0.0.9":
   version "0.0.9"
@@ -819,6 +819,17 @@ cheerio-select-tmp@^0.1.0:
     domhandler "^4.0.0"
     domutils "^2.4.4"
 
+cheerio-select@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/cheerio-select/download/cheerio-select-1.4.0.tgz?cache=0&sync_timestamp=1618573607383&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcheerio-select%2Fdownload%2Fcheerio-select-1.4.0.tgz#3a16f21e37a2ef0f211d6d1aa4eff054bb22cdc9"
+  integrity sha1-OhbyHjei7w8hHW0apO/wVLsizck=
+  dependencies:
+    css-select "^4.1.2"
+    css-what "^5.0.0"
+    domelementtype "^2.2.0"
+    domhandler "^4.2.0"
+    domutils "^2.6.0"
+
 cheerio@^1.0.0-rc.5:
   version "1.0.0-rc.5"
   resolved "https://registry.npm.taobao.org/cheerio/download/cheerio-1.0.0-rc.5.tgz#88907e1828674e8f9fee375188b27dadd4f0fa2f"
@@ -831,6 +842,19 @@ cheerio@^1.0.0-rc.5:
     htmlparser2 "^6.0.0"
     parse5 "^6.0.0"
     parse5-htmlparser2-tree-adapter "^6.0.0"
+
+cheerio@^1.0.0-rc.6:
+  version "1.0.0-rc.9"
+  resolved "https://registry.nlark.com/cheerio/download/cheerio-1.0.0-rc.9.tgz?cache=0&sync_timestamp=1620316722234&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcheerio%2Fdownload%2Fcheerio-1.0.0-rc.9.tgz#a3ae6b7ce7af80675302ff836f628e7cb786a67f"
+  integrity sha1-o65rfOevgGdTAv+Db2KOfLeGpn8=
+  dependencies:
+    cheerio-select "^1.4.0"
+    dom-serializer "^1.3.1"
+    domhandler "^4.2.0"
+    htmlparser2 "^6.1.0"
+    parse5 "^6.0.1"
+    parse5-htmlparser2-tree-adapter "^6.0.1"
+    tslib "^2.2.0"
 
 chokidar@^3.2.2, chokidar@^3.5.1:
   version "3.5.1"
@@ -1041,10 +1065,26 @@ css-select@^3.1.2:
     domutils "^2.4.3"
     nth-check "^2.0.0"
 
+css-select@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.nlark.com/css-select/download/css-select-4.1.2.tgz#8b52b6714ed3a80d8221ec971c543f3b12653286"
+  integrity sha1-i1K2cU7TqA2CIeyXHFQ/OxJlMoY=
+  dependencies:
+    boolbase "^1.0.0"
+    css-what "^5.0.0"
+    domhandler "^4.2.0"
+    domutils "^2.6.0"
+    nth-check "^2.0.0"
+
 css-what@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/css-what/download/css-what-4.0.0.tgz#35e73761cab2eeb3d3661126b23d7aa0e8432233"
   integrity sha1-Nec3Ycqy7rPTZhEmsj16oOhDIjM=
+
+css-what@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.nlark.com/css-what/download/css-what-5.0.0.tgz#f0bf4f8bac07582722346ab243f6a35b512cfc47"
+  integrity sha1-8L9Pi6wHWCciNGqyQ/ajW1Es/Ec=
 
 culvert@^0.1.2:
   version "0.1.2"
@@ -1203,10 +1243,24 @@ dom-serializer@^1.0.1, dom-serializer@~1.2.0:
     domhandler "^4.0.0"
     entities "^2.0.0"
 
+dom-serializer@^1.3.1:
+  version "1.3.2"
+  resolved "https://registry.nlark.com/dom-serializer/download/dom-serializer-1.3.2.tgz?cache=0&sync_timestamp=1621256918158&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdom-serializer%2Fdownload%2Fdom-serializer-1.3.2.tgz#6206437d32ceefaec7161803230c7a20bc1b4d91"
+  integrity sha1-YgZDfTLO767HFhgDIwx6ILwbTZE=
+  dependencies:
+    domelementtype "^2.0.1"
+    domhandler "^4.2.0"
+    entities "^2.0.0"
+
 domelementtype@^2.0.1, domelementtype@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/domelementtype/download/domelementtype-2.1.0.tgz?cache=0&sync_timestamp=1606866004215&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdomelementtype%2Fdownload%2Fdomelementtype-2.1.0.tgz#a851c080a6d1c3d94344aed151d99f669edf585e"
   integrity sha1-qFHAgKbRw9lDRK7RUdmfZp7fWF4=
+
+domelementtype@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.nlark.com/domelementtype/download/domelementtype-2.2.0.tgz#9a0b6c2782ed6a1c7323d42267183df9bd8b1d57"
+  integrity sha1-mgtsJ4LtahxzI9QiZxg9+b2LHVc=
 
 domhandler@^4.0.0:
   version "4.0.0"
@@ -1214,6 +1268,13 @@ domhandler@^4.0.0:
   integrity sha1-Aep4Id6ZbYX2kCnoH6hzwhgzCY4=
   dependencies:
     domelementtype "^2.1.0"
+
+domhandler@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.nlark.com/domhandler/download/domhandler-4.2.0.tgz#f9768a5f034be60a89a27c2e4d0f74eba0d8b059"
+  integrity sha1-+XaKXwNL5gqJonwuTQ9066DYsFk=
+  dependencies:
+    domelementtype "^2.2.0"
 
 domutils@^2.4.3, domutils@^2.4.4:
   version "2.4.4"
@@ -1223,6 +1284,15 @@ domutils@^2.4.3, domutils@^2.4.4:
     dom-serializer "^1.0.1"
     domelementtype "^2.0.1"
     domhandler "^4.0.0"
+
+domutils@^2.5.2, domutils@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.nlark.com/domutils/download/domutils-2.6.0.tgz#2e15c04185d43fb16ae7057cb76433c6edb938b7"
+  integrity sha1-LhXAQYXUP7Fq5wV8t2Qzxu25OLc=
+  dependencies:
+    dom-serializer "^1.0.1"
+    domelementtype "^2.2.0"
+    domhandler "^4.2.0"
 
 dot-prop@^5.2.0:
   version "5.3.0"
@@ -1857,6 +1927,16 @@ htmlparser2@^6.0.0:
     domutils "^2.4.4"
     entities "^2.0.0"
 
+htmlparser2@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.nlark.com/htmlparser2/download/htmlparser2-6.1.0.tgz#c4d762b6c3371a05dbe65e94ae43a9f845fb8fb7"
+  integrity sha1-xNditsM3GgXb5l6UrkOp+EX7j7c=
+  dependencies:
+    domelementtype "^2.0.1"
+    domhandler "^4.0.0"
+    domutils "^2.5.2"
+    entities "^2.0.0"
+
 http-assert@^1.3.0:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/http-assert/download/http-assert-1.4.1.tgz#c5f725d677aa7e873ef736199b89686cceb37878"
@@ -2323,29 +2403,30 @@ koa@^2.13.1:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-koishi-adapter-discord@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.nlark.com/koishi-adapter-discord/download/koishi-adapter-discord-1.1.2.tgz#1f191912ba6d41de00912f28302042ec2c91e639"
-  integrity sha1-HxkZErptQd4AkS8oMCBC7CyR5jk=
+koishi-adapter-discord@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.nlark.com/koishi-adapter-discord/download/koishi-adapter-discord-1.1.3.tgz#f66f4eeff198eaef389487460bd1427de23b69a5"
+  integrity sha1-9m9O7/GY6u84lIdGC9FCfeI7aaU=
   dependencies:
     axios "^0.21.1"
     file-type "^16.3.0"
     form-data "^4.0.0"
     ws "^7.4.5"
 
-koishi-adapter-onebot@^3.0.8:
-  version "3.0.8"
-  resolved "https://registry.nlark.com/koishi-adapter-onebot/download/koishi-adapter-onebot-3.0.8.tgz#d48e84fb87bfbbed2081653cb03960ff29852f48"
-  integrity sha1-1I6E+4e/u+0ggWU8sDlg/ymFL0g=
+koishi-adapter-onebot@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.nlark.com/koishi-adapter-onebot/download/koishi-adapter-onebot-3.0.9.tgz#73927f5e021dde5d8ff8f5a7343a4152175a4ad9"
+  integrity sha1-c5J/XgId3l2P+PWnNDpBUhdaStk=
   dependencies:
     axios "^0.21.1"
-    koishi-utils "^4.2.0"
-    ws "^7.4.4"
+    koishi-utils "^4.2.2"
+    qface "1.1.0"
+    ws "^7.4.5"
 
-koishi-core@^3.10.2:
-  version "3.10.2"
-  resolved "https://registry.nlark.com/koishi-core/download/koishi-core-3.10.2.tgz#a0c015380c8090468c60ef777bae2dca34752958"
-  integrity sha1-oMAVOAyAkEaMYO93e64tyjR1KVg=
+koishi-core@^3.11.1:
+  version "3.11.1"
+  resolved "https://registry.nlark.com/koishi-core/download/koishi-core-3.11.1.tgz#48aae8c630b70f3e1914f49176c921b42f086e5d"
+  integrity sha1-SKroxjC3Dz4ZFPSRdskhtC8Ibl0=
   dependencies:
     "@koa/router" "^10.0.0"
     "@types/koa-bodyparser" "^4.3.0"
@@ -2359,20 +2440,27 @@ koishi-core@^3.10.2:
     koishi-utils "^4.2.2"
     lru-cache "^6.0.0"
 
+koishi-plugin-animal-picture@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/koishi-plugin-animal-picture/-/koishi-plugin-animal-picture-0.2.1.tgz#fd4511f82f2d52c3ea712493eb7be31159841e82"
+  integrity sha512-VnyLUPLFae9stGKT29XOlBJ1mRz9LVXMP6yY3VitcuqqUjroe6WIzslysrFr4TK2Yo0+UfezuQdeNUgWLIn9xQ==
+  dependencies:
+    axios "^0.21.1"
+
 koishi-plugin-blame@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/koishi-plugin-blame/download/koishi-plugin-blame-3.0.0.tgz#4940eef531597711c321f973cd5fd3e2d3acfaf3"
   integrity sha1-SUDu9TFZdxHDIflzzV/T4tOs+vM=
 
-koishi-plugin-chat@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.nlark.com/koishi-plugin-chat/download/koishi-plugin-chat-0.4.1.tgz#6346dd17c0fae476fe8121b27385989449b37370"
-  integrity sha1-Y0bdF8D65Hb+gSGyc4WYlEmzc3A=
+koishi-plugin-chat@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.nlark.com/koishi-plugin-chat/download/koishi-plugin-chat-0.5.1.tgz#90b56d99406fa488bec5ead0e0df81c0ac84dbbc"
+  integrity sha1-kLVtmUBvpIi+xerQ4N+BwKyE27w=
 
-koishi-plugin-common@^4.2.4:
-  version "4.2.4"
-  resolved "https://registry.nlark.com/koishi-plugin-common/download/koishi-plugin-common-4.2.4.tgz#d23f7cbf88fa03fb89ece2d142ebb6c50e9650cb"
-  integrity sha1-0j98v4j6A/uJ7OLRQuu2xQ6WUMs=
+koishi-plugin-common@4.2.6:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/koishi-plugin-common/-/koishi-plugin-common-4.2.6.tgz#9910d622f185948df8c4290e04c1c7a95bf00c37"
+  integrity sha512-JrMrFojUPZ/xr2ObPF1LXCCcH4I2P1jSSMT47gT17nmjgYTzDrnrSJg0hlcJQmTJf1zS+V9kw/Kr8dP1UjfgFQ==
 
 koishi-plugin-genshin@^2.0.0-beta.10:
   version "2.0.0-beta.10"
@@ -2383,22 +2471,22 @@ koishi-plugin-genshin@^2.0.0-beta.10:
     pug "^3.0.2"
     puppeteer "^8.0.0"
 
-koishi-plugin-github@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.nlark.com/koishi-plugin-github/download/koishi-plugin-github-3.1.0.tgz#56af9baf1e1b314caf8faad30301cfba9f0ce8fd"
-  integrity sha1-Vq+brx4bMUyvj6rTAwHPup8M6P0=
+koishi-plugin-github@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.nlark.com/koishi-plugin-github/download/koishi-plugin-github-3.1.1.tgz#9dfac24762b39a099ccf516f6c4bbf50de93598e"
+  integrity sha1-nfrCR2Kzmgmcz1FvbEu/UN6TWY4=
   dependencies:
-    "@octokit/webhooks-types" "^3.70.1"
+    "@octokit/webhooks-types" "^3.71.2"
     axios "^0.21.1"
     marked "^2.0.3"
 
-koishi-plugin-image-search@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.nlark.com/koishi-plugin-image-search/download/koishi-plugin-image-search-3.0.3.tgz#8c346294f9095d4e1b778de9e71685f795b4a2c5"
-  integrity sha1-jDRilPkJXU4bd43p5xaF95W0osU=
+koishi-plugin-image-search@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.nlark.com/koishi-plugin-image-search/download/koishi-plugin-image-search-3.0.4.tgz#e1bd45965dd8034dc3ad1cef916aab3b3fbce2f1"
+  integrity sha1-4b1Fll3YA03DrRzvkWqrOz+84vE=
   dependencies:
     axios "^0.21.1"
-    cheerio "^1.0.0-rc.5"
+    cheerio "^1.0.0-rc.6"
     iqdb-client "^1.0.3"
     nhentai-api "^3.0.2"
 
@@ -2417,15 +2505,15 @@ koishi-plugin-rss@^2.0.0:
   dependencies:
     rss-feed-emitter "^3.2.2"
 
-koishi-plugin-schedule@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npm.taobao.org/koishi-plugin-schedule/download/koishi-plugin-schedule-3.0.4.tgz#bfe3de43bf0554739dd4b05635c4c7390468c5f9"
-  integrity sha1-v+PeQ78FVHOd1LBWNcTHOQRoxfk=
+koishi-plugin-schedule@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.nlark.com/koishi-plugin-schedule/download/koishi-plugin-schedule-3.0.5.tgz#237bfe0cef6ce8f74612a955773d315f65116450"
+  integrity sha1-I3v+DO9s6PdGEqlVdz0xX2URZFA=
 
-koishi-plugin-shell@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.npmjs.org/koishi-plugin-shell/-/koishi-plugin-shell-0.0.4.tgz#9b6415efa5346477c7859f315aca7bcbf6278ee3"
-  integrity sha512-4swF9QRTOkP+8WZpvabDmjUpop51aUjnHxNrJbyA/8V5KnN0wq1sQpfzXxrW9Zp4hmScXKoImHzHa9AGSq+DGQ==
+koishi-plugin-shell@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.nlark.com/koishi-plugin-shell/download/koishi-plugin-shell-0.0.6.tgz#18eedf6e9b26331c233d1ffde284af5d1156491b"
+  integrity sha1-GO7fbpsmMxwjPR/94oSvXRFWSRs=
 
 koishi-plugin-teach@^2.1.5:
   version "2.1.5"
@@ -2446,31 +2534,31 @@ koishi-plugin-tools@^2.1.1:
     qrcode "^1.4.4"
     xml-js "^1.6.11"
 
-koishi-plugin-webui@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.nlark.com/koishi-plugin-webui/download/koishi-plugin-webui-4.5.0.tgz#dd95a6919dfa1e88509fc11bbc91625ea66a9035"
-  integrity sha1-3ZWmkZ36HohQn8EbvJFiXqZqkDU=
+koishi-plugin-webui@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.nlark.com/koishi-plugin-webui/download/koishi-plugin-webui-4.6.0.tgz#56bc165dc21034c6c2c6dcb1cc6d7aed14761676"
+  integrity sha1-VrwWXcIQNMbCxtyxzG167RR2FnY=
   dependencies:
     systeminformation "^5.6.14"
     ws "^7.4.5"
 
-koishi-utils@^4.2.0, koishi-utils@^4.2.2:
+koishi-utils@^4.2.2:
   version "4.2.2"
   resolved "https://registry.nlark.com/koishi-utils/download/koishi-utils-4.2.2.tgz#0597c0fdb651d0b08b5608fe0a6ee9fef015b160"
   integrity sha1-BZfA/bZR0LCLVgj+Cm7p/vAVsWA=
   dependencies:
     supports-color "^8.1.0"
 
-koishi@^3.10.2:
-  version "3.10.2"
-  resolved "https://registry.nlark.com/koishi/download/koishi-3.10.2.tgz#235613ddbf93d062310a704c1ae6a7def1b70ef6"
-  integrity sha1-I1YT3b+T0GIxCnBMGuan3vG3DvY=
+koishi@^3.11.1:
+  version "3.11.1"
+  resolved "https://registry.nlark.com/koishi/download/koishi-3.11.1.tgz#05ff51deaebda49abe545a035caafa631e3af5d5"
+  integrity sha1-Bf9R3q69pJq+VFoDXKr6Yx469dU=
   dependencies:
     cac "^6.7.3"
     chokidar "^3.5.1"
     js-yaml "^4.1.0"
     kleur "^4.1.4"
-    koishi-core "^3.10.2"
+    koishi-core "^3.11.1"
     koishi-utils "^4.2.2"
     prompts "^2.4.1"
 
@@ -2898,7 +2986,7 @@ parent-module@^1.0.0:
   dependencies:
     callsites "^3.0.0"
 
-parse5-htmlparser2-tree-adapter@^6.0.0:
+parse5-htmlparser2-tree-adapter@^6.0.0, parse5-htmlparser2-tree-adapter@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npm.taobao.org/parse5-htmlparser2-tree-adapter/download/parse5-htmlparser2-tree-adapter-6.0.1.tgz#2cdf9ad823321140370d4dbf5d3e92c7c8ddc6e6"
   integrity sha1-LN+a2CMyEUA3DU2/XT6Sx8jdxuY=
@@ -3291,6 +3379,11 @@ puppeteer@^9.1.0:
     tar-fs "^2.0.0"
     unbzip2-stream "^1.3.3"
     ws "^7.2.3"
+
+qface@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.nlark.com/qface/download/qface-1.1.0.tgz#63643ea11baf96ae40243c3b788d95ad861a3592"
+  integrity sha1-Y2Q+oRuvlq5AJDw7eI2VrYYaNZI=
 
 qrcode@^1.4.4:
   version "1.4.4"
@@ -4152,11 +4245,6 @@ ws@^7.0.0, ws@^7.2.3:
   version "7.4.3"
   resolved "https://registry.npm.taobao.org/ws/download/ws-7.4.3.tgz#1f9643de34a543b8edb124bdcbc457ae55a6e5cd"
   integrity sha1-H5ZD3jSlQ7jtsSS9y8RXrlWm5c0=
-
-ws@^7.4.4:
-  version "7.4.4"
-  resolved "https://registry.npm.taobao.org/ws/download/ws-7.4.4.tgz?cache=0&sync_timestamp=1615063662500&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fws%2Fdownload%2Fws-7.4.4.tgz#383bc9742cb202292c9077ceab6f6047b17f2d59"
-  integrity sha1-ODvJdCyyAikskHfOq29gR7F/LVk=
 
 ws@^7.4.5:
   version "7.4.5"
