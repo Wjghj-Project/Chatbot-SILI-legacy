@@ -96,5 +96,5 @@ module.exports = () => {
   koishi.plugin(require('../../koishi-plugin-mediawiki'), {})
   // koishi.plugin(require('../../koishi-plugin-blive'), {})
   koishi.plugin(require('../plugins/bilibili-plus'), {})
-  // koishi.plugin(require('../../koishi-plugin-welcome'), {})
+  koishi.plugin(require('../../koishi-plugin-welcome'), {})
 }

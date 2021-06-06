@@ -1,11 +1,11 @@
 /**
  * @name cmd.pixiv 查询 Pixiv 插画
- * @desc 注意：pixivel.moe 服务条款不允许第三方爬取他们的数据
- *       本程序在使用前已征得开发者同意并将在合理范围内进行请求
  */
 const { default: axios } = require('axios')
 const { segment } = require('koishi-utils')
 const { koishi } = require('..')
+
+const API_BASE = 'https://pixiv.wjghj.cn'
 
 module.exports = () => {
   koishi.command('pixiv', 'Pixiv 相关功能').action(({ session }) => {
@@ -21,18 +21,14 @@ module.exports = () => {
     .action(async ({ session, options }, id) => {
       if (!id) return session.execute('pixiv.illust -h')
 
-      const { data } = await axios.get(`https://api.pixivel.moe/pixiv`, {
-        params: {
-          type: 'illust',
-          id,
-        },
-      })
-      const { error, illust } = data
-      if (error || !illust) {
+      let data
+      try {
+        data = (await axios.get(`${API_BASE}/api/illust/${id}`)).data
+      } catch (error) {
         koishi.logger('pixiv').warn(error)
         return [
-          segment('quote', { id: session.messageId }),
-          error?.message || error?.user_message || '出现未知问题',
+          segment.quote(session.messageId),
+          error.message || '出现未知问题',
         ].join('')
       }
 
@@ -41,35 +37,53 @@ module.exports = () => {
         picNums,
         nth = options.nth
 
-      if (illust?.meta_single_page?.original_image_url) {
-        imageUrl = illust.meta_single_page.original_image_url
-      } else {
-        allPics = illust.meta_pages
-        picNums = allPics.length
-        nth = Math.min(picNums, nth)
-        imageUrl = allPics[nth - 1].image_urls.original
-      }
+      allPics = data.pages
+      picNums = allPics.length
+      nth = Math.min(picNums, nth)
+      imageUrl = allPics[nth - 1].urls.original
 
-      const image = imageUrl.replace(
-        'https://i.pximg.net',
-        'https://p1.pximg.pixivel.moe'
-      )
-      const caption = illust.caption.replace(/<br.*?\/>/g, '\n')
+      const desc = data.description.replace(/<br.*?\/>/g, '\n')
 
       const message = [
-        segment('quote', { id: session.messageId }),
-        segment('image', {
-          url: image,
-        }),
+        segment.quote(session.messageId),
+        segment.image(`${API_BASE}${imageUrl}`),
         picNums ? `第 ${nth} 张，共 ${picNums} 张` : null,
-        `标题：${illust.title}`,
-        `作者：${illust.user.name}`,
-        caption.length > 120 ? caption.substring(0, 120) + '...' : caption,
-        'https://pixivel.moe/detail?id=' + illust.id,
+        `标题：${data.title}`,
+        `作者：${data.userName} (${data.userId})`,
+        desc.length > 120 ? desc.substring(0, 120) + '...' : desc,
+        'https://pixivel.moe/detail?id=' + data.id,
       ]
         .join('\n')
         .replace(/\n+/g, '\n')
-      koishi.logger('pixiv').info(message)
+
+      return message
+    })
+
+  koishi
+    .command('pixiv.user <id:posint>')
+    .alias('pixiv用户', 'p站用户')
+    .action(async ({ session }, id) => {
+      if (!id) return session.execute('pixiv.user -h')
+
+      let data
+      try {
+        data = (await axios.get(`${API_BASE}/api/user/${id}`)).data
+      } catch (error) {
+        koishi.logger('pixiv').warn(error)
+        return [
+          segment.quote(session.messageId),
+          error.message || '出现未知问题',
+        ].join('')
+      }
+
+      const { imageBig, userId, name, comment } = data
+
+      const message = [
+        segment.image(`${API_BASE}${imageBig}`),
+        `${name} (${userId})`,
+        comment,
+      ].join('\n')
+
       return message
     })
 
