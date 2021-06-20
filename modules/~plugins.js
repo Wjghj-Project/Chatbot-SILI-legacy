@@ -2,6 +2,7 @@ const password = require('../secret/password')
 const { koishi } = require('../index')
 const { segment } = require('koishi-utils')
 const path = require('path')
+const { Time } = require('koishi')
 
 /**
  * @module loadPlugins 插件配置
@@ -49,6 +50,19 @@ module.exports = () => {
       }
     },
   })
+  koishi.command('switch', '', { authority: 2 })
+  // .option('target', '', { authority: 3 })
+  koishi.command('switch')._options.target.authority = 3
+  koishi
+    .command('callme', '', { minInterval: Time.hour, maxUsage: 5 })
+    .userFields(['name'])
+    .check(({ session }, i) => {
+      if (!i)
+        return session.user.name
+          ? `sili认得你，${session.user.name}，你好～`
+          : '你还没有给自己取一个名字呢'
+    })
+
   koishi.plugin(require('koishi-plugin-github'), {
     path: '/api/github',
     appId: password.github.appId,
@@ -83,11 +97,11 @@ module.exports = () => {
     },
   })
   koishi
-    .command('genshin.wish', { authority: 2 })
+    .command('genshin.wish', '', { authority: 2 })
     .shortcut(/^原神(武器|角色|常驻)池?([0-9]+)连抽?$/, {
       options: { type: '$1', number: '$2' },
     })
-  koishi.command('genshin.backpack', { authority: 2 }).shortcut('原神背包')
+  koishi.command('genshin.backpack', '', { authority: 2 }).shortcut('原神背包')
 
   // Local plugins
   koishi.plugin(require('../plugins/dbadmin'))
