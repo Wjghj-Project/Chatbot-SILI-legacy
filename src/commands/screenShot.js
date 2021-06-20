@@ -1,5 +1,4 @@
 const screenShot = require('../utils/screenShot')
-const reply = require('../utils/reply')
 const { koishi } = require('../index')
 
 module.exports = () => {
@@ -7,8 +6,8 @@ module.exports = () => {
     .command('screenshot <url>', {
       authority: 3,
     })
+    .alias('截图', 'shot')
     .option('selector', '-s <selector>')
-    .alias('截图')
     .action(async ({ session, options }, url) => {
       if (options.selector === true) options.selector = undefined
       let image = await screenShot(url, options.selector)

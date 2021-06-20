@@ -77,10 +77,10 @@
     methods "^1.1.2"
     path-to-regexp "^6.1.0"
 
-"@octokit/webhooks-types@^3.71.2":
-  version "3.75.2"
-  resolved "https://registry.nlark.com/@octokit/webhooks-types/download/@octokit/webhooks-types-3.75.2.tgz#43a502d1ab4cd7ba6f17e0b57d7d79a5190ca6fc"
-  integrity sha1-Q6UC0atM17pvF+C1fX15pRkMpvw=
+"@octokit/webhooks-types@^3.75.2":
+  version "3.77.1"
+  resolved "https://registry.nlark.com/@octokit/webhooks-types/download/@octokit/webhooks-types-3.77.1.tgz#7ca41ab925adc0015728ad47547e4ba72c3bf62d"
+  integrity sha1-fKQauSWtwAFXKK1HVH5Lpyw79i0=
 
 "@opencensus/core@0.0.9":
   version "0.0.9"
@@ -268,13 +268,6 @@
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/@types/keygrip/download/@types/keygrip-1.0.2.tgz#513abfd256d7ad0bf1ee1873606317b33b1b2a72"
   integrity sha1-UTq/0lbXrQvx7hhzYGMXszsbKnI=
-
-"@types/koa-bodyparser@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.npm.taobao.org/@types/koa-bodyparser/download/@types/koa-bodyparser-4.3.0.tgz#54ecd662c45f3a4fa9de849528de5fc8ab269ba5"
-  integrity sha1-VOzWYsRfOk+p3oSVKN5fyKsmm6U=
-  dependencies:
-    "@types/koa" "*"
 
 "@types/koa-compose@*":
   version "3.2.5"
@@ -830,6 +823,30 @@ cheerio-select@^1.4.0:
     domhandler "^4.2.0"
     domutils "^2.6.0"
 
+cheerio-select@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.nlark.com/cheerio-select/download/cheerio-select-1.5.0.tgz#faf3daeb31b17c5e1a9dabcee288aaf8aafa5823"
+  integrity sha1-+vPa6zGxfF4anavO4oiq+Kr6WCM=
+  dependencies:
+    css-select "^4.1.3"
+    css-what "^5.0.1"
+    domelementtype "^2.2.0"
+    domhandler "^4.2.0"
+    domutils "^2.7.0"
+
+cheerio@^1.0.0-rc.10:
+  version "1.0.0-rc.10"
+  resolved "https://registry.nlark.com/cheerio/download/cheerio-1.0.0-rc.10.tgz?cache=0&sync_timestamp=1623167648923&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcheerio%2Fdownload%2Fcheerio-1.0.0-rc.10.tgz#2ba3dcdfcc26e7956fc1f440e61d51c643379f3e"
+  integrity sha1-K6Pc38wm55VvwfRA5h1RxkM3nz4=
+  dependencies:
+    cheerio-select "^1.5.0"
+    dom-serializer "^1.3.2"
+    domhandler "^4.2.0"
+    htmlparser2 "^6.1.0"
+    parse5 "^6.0.1"
+    parse5-htmlparser2-tree-adapter "^6.0.1"
+    tslib "^2.2.0"
+
 cheerio@^1.0.0-rc.5:
   version "1.0.0-rc.5"
   resolved "https://registry.npm.taobao.org/cheerio/download/cheerio-1.0.0-rc.5.tgz#88907e1828674e8f9fee375188b27dadd4f0fa2f"
@@ -1076,6 +1093,17 @@ css-select@^4.1.2:
     domutils "^2.6.0"
     nth-check "^2.0.0"
 
+css-select@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.nlark.com/css-select/download/css-select-4.1.3.tgz?cache=0&sync_timestamp=1622994276976&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcss-select%2Fdownload%2Fcss-select-4.1.3.tgz#a70440f70317f2669118ad74ff105e65849c7067"
+  integrity sha1-pwRA9wMX8maRGK10/xBeZYSccGc=
+  dependencies:
+    boolbase "^1.0.0"
+    css-what "^5.0.0"
+    domhandler "^4.2.0"
+    domutils "^2.6.0"
+    nth-check "^2.0.0"
+
 css-what@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/css-what/download/css-what-4.0.0.tgz#35e73761cab2eeb3d3661126b23d7aa0e8432233"
@@ -1085,6 +1113,11 @@ css-what@^5.0.0:
   version "5.0.0"
   resolved "https://registry.nlark.com/css-what/download/css-what-5.0.0.tgz#f0bf4f8bac07582722346ab243f6a35b512cfc47"
   integrity sha1-8L9Pi6wHWCciNGqyQ/ajW1Es/Ec=
+
+css-what@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.nlark.com/css-what/download/css-what-5.0.1.tgz?cache=0&sync_timestamp=1622227760882&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcss-what%2Fdownload%2Fcss-what-5.0.1.tgz#3efa820131f4669a8ac2408f9c32e7c7de9f4cad"
+  integrity sha1-PvqCATH0ZpqKwkCPnDLnx96fTK0=
 
 culvert@^0.1.2:
   version "0.1.2"
@@ -1207,11 +1240,6 @@ destroy@^1.0.4:
   resolved "https://registry.npm.taobao.org/destroy/download/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
-devtools-protocol@0.0.854822:
-  version "0.0.854822"
-  resolved "https://registry.npm.taobao.org/devtools-protocol/download/devtools-protocol-0.0.854822.tgz?cache=0&sync_timestamp=1617194229954&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdevtools-protocol%2Fdownload%2Fdevtools-protocol-0.0.854822.tgz#eac3a5260a6b3b4e729a09fdc0c77b0d322e777b"
-  integrity sha1-6sOlJgprO05ymgn9wMd7DTIud3s=
-
 devtools-protocol@0.0.869402:
   version "0.0.869402"
   resolved "https://registry.nlark.com/devtools-protocol/download/devtools-protocol-0.0.869402.tgz?cache=0&sync_timestamp=1620031314666&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdevtools-protocol%2Fdownload%2Fdevtools-protocol-0.0.869402.tgz#03ade701761742e43ae4de5dc188bcd80f156d8d"
@@ -1243,7 +1271,7 @@ dom-serializer@^1.0.1, dom-serializer@~1.2.0:
     domhandler "^4.0.0"
     entities "^2.0.0"
 
-dom-serializer@^1.3.1:
+dom-serializer@^1.3.1, dom-serializer@^1.3.2:
   version "1.3.2"
   resolved "https://registry.nlark.com/dom-serializer/download/dom-serializer-1.3.2.tgz?cache=0&sync_timestamp=1621256918158&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdom-serializer%2Fdownload%2Fdom-serializer-1.3.2.tgz#6206437d32ceefaec7161803230c7a20bc1b4d91"
   integrity sha1-YgZDfTLO767HFhgDIwx6ILwbTZE=
@@ -1289,6 +1317,15 @@ domutils@^2.5.2, domutils@^2.6.0:
   version "2.6.0"
   resolved "https://registry.nlark.com/domutils/download/domutils-2.6.0.tgz#2e15c04185d43fb16ae7057cb76433c6edb938b7"
   integrity sha1-LhXAQYXUP7Fq5wV8t2Qzxu25OLc=
+  dependencies:
+    dom-serializer "^1.0.1"
+    domelementtype "^2.2.0"
+    domhandler "^4.2.0"
+
+domutils@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.nlark.com/domutils/download/domutils-2.7.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdomutils%2Fdownload%2Fdomutils-2.7.0.tgz#8ebaf0c41ebafcf55b0b72ec31c56323712c5442"
+  integrity sha1-jrrwxB66/PVbC3LsMcVjI3EsVEI=
   dependencies:
     dom-serializer "^1.0.1"
     domelementtype "^2.2.0"
@@ -1742,10 +1779,18 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.npm.taobao.org/functional-red-black-tree/download/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
-genshin-kit@^1.1.0:
+genshin-gacha-kit@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.npmjs.org/genshin-kit/-/genshin-kit-1.1.0.tgz#b9e56b2a6d73dde680ca7b9d5f5582c1276a787d"
-  integrity sha512-GoXLG53Hban3igaKFeMTL/uMPURF+Teuwwej/1+lx+Jzz8/lBVSWT1rJf79QkLknjI7TYLTaS+XnX0MYXKcx6A==
+  resolved "https://registry.nlark.com/genshin-gacha-kit/download/genshin-gacha-kit-1.1.0.tgz#dd1b73e69e7c04bd7b94e4e2113bd05b5229a93b"
+  integrity sha1-3Rtz5p58BL17lOTiETvQW1IpqTs=
+  dependencies:
+    axios "^0.21.1"
+    tslib "^2.2.0"
+
+genshin-kit@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.nlark.com/genshin-kit/download/genshin-kit-2.1.0.tgz#db063428824ba6fd4cddcdb525445000cc18491f"
+  integrity sha1-2wY0KIJLpv1M3c21JURQAMwYSR8=
   dependencies:
     axios "^0.21.1"
     querystring "^0.2.1"
@@ -2403,10 +2448,10 @@ koa@^2.13.1:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-koishi-adapter-discord@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.nlark.com/koishi-adapter-discord/download/koishi-adapter-discord-1.1.3.tgz#f66f4eeff198eaef389487460bd1427de23b69a5"
-  integrity sha1-9m9O7/GY6u84lIdGC9FCfeI7aaU=
+koishi-adapter-discord@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.nlark.com/koishi-adapter-discord/download/koishi-adapter-discord-1.2.0.tgz#94e8b864a980901c5dabd9e1c282eef72cb78103"
+  integrity sha1-lOi4ZKmAkBxdq9nhwoLu9yy3gQM=
   dependencies:
     axios "^0.21.1"
     file-type "^16.3.0"
@@ -2423,13 +2468,12 @@ koishi-adapter-onebot@^3.0.9:
     qface "1.1.0"
     ws "^7.4.5"
 
-koishi-core@^3.11.1:
-  version "3.11.1"
-  resolved "https://registry.nlark.com/koishi-core/download/koishi-core-3.11.1.tgz#48aae8c630b70f3e1914f49176c921b42f086e5d"
-  integrity sha1-SKroxjC3Dz4ZFPSRdskhtC8Ibl0=
+koishi-core@^3.12.0:
+  version "3.12.0"
+  resolved "https://registry.nlark.com/koishi-core/download/koishi-core-3.12.0.tgz#688ac6c647cf15f91e918504a7fe7f4d407f8e8b"
+  integrity sha1-aIrGxkfPFfkekYUEp/5/TUB/jos=
   dependencies:
     "@koa/router" "^10.0.0"
-    "@types/koa-bodyparser" "^4.3.0"
     "@types/koa__router" "^8.0.4"
     "@types/lru-cache" "^5.1.0"
     "@types/ws" "^7.4.2"
@@ -2452,31 +2496,32 @@ koishi-plugin-blame@^3.0.0:
   resolved "https://registry.npm.taobao.org/koishi-plugin-blame/download/koishi-plugin-blame-3.0.0.tgz#4940eef531597711c321f973cd5fd3e2d3acfaf3"
   integrity sha1-SUDu9TFZdxHDIflzzV/T4tOs+vM=
 
-koishi-plugin-chat@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.nlark.com/koishi-plugin-chat/download/koishi-plugin-chat-0.5.1.tgz#90b56d99406fa488bec5ead0e0df81c0ac84dbbc"
-  integrity sha1-kLVtmUBvpIi+xerQ4N+BwKyE27w=
+koishi-plugin-chat@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.nlark.com/koishi-plugin-chat/download/koishi-plugin-chat-0.5.2.tgz#ea797c6c57e22fa94e7044e7c97a372e0b3d8458"
+  integrity sha1-6nl8bFfiL6lOcETnyXo3Lgs9hFg=
 
-koishi-plugin-common@4.2.6:
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/koishi-plugin-common/-/koishi-plugin-common-4.2.6.tgz#9910d622f185948df8c4290e04c1c7a95bf00c37"
-  integrity sha512-JrMrFojUPZ/xr2ObPF1LXCCcH4I2P1jSSMT47gT17nmjgYTzDrnrSJg0hlcJQmTJf1zS+V9kw/Kr8dP1UjfgFQ==
+koishi-plugin-common@^4.2.7:
+  version "4.2.7"
+  resolved "https://registry.nlark.com/koishi-plugin-common/download/koishi-plugin-common-4.2.7.tgz#13c256ca43532cb5dceb1be3490b8083b1811430"
+  integrity sha1-E8JWykNTLLXc6xvjSQuAg7GBFDA=
 
-koishi-plugin-genshin@^2.0.0-beta.10:
-  version "2.0.0-beta.10"
-  resolved "https://registry.npmjs.org/koishi-plugin-genshin/-/koishi-plugin-genshin-2.0.0-beta.10.tgz#7eb6094304b1f852cd3133ea645cc03a98ef01f8"
-  integrity sha512-WwwE4Gc6yOXSX2vPHUS7MhxgNqZAUUcF87e24FaKKdb+Z+Oph8/dxrG3savRQoupRyy12zsjPsOB9yU2iQhDpg==
+koishi-plugin-genshin@^2.0.0-beta.12:
+  version "2.0.0-beta.12"
+  resolved "https://registry.nlark.com/koishi-plugin-genshin/download/koishi-plugin-genshin-2.0.0-beta.12.tgz#c8e4fd1ae4eff87518e188c8d5ff98c55bf0a593"
+  integrity sha1-yOT9GuTv+HUY4YjI1f+YxVvwpZM=
   dependencies:
-    genshin-kit "^1.1.0"
+    genshin-gacha-kit "^1.1.0"
+    genshin-kit "^2.1.0"
     pug "^3.0.2"
-    puppeteer "^8.0.0"
+    puppeteer-core "^9.0.0"
 
-koishi-plugin-github@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.nlark.com/koishi-plugin-github/download/koishi-plugin-github-3.1.1.tgz#9dfac24762b39a099ccf516f6c4bbf50de93598e"
-  integrity sha1-nfrCR2Kzmgmcz1FvbEu/UN6TWY4=
+koishi-plugin-github@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.nlark.com/koishi-plugin-github/download/koishi-plugin-github-3.1.2.tgz#698e0a4ce3a47a11503332afb83328636794e76f"
+  integrity sha1-aY4KTOOkehFQMzKvuDMoY2eU528=
   dependencies:
-    "@octokit/webhooks-types" "^3.71.2"
+    "@octokit/webhooks-types" "^3.75.2"
     axios "^0.21.1"
     marked "^2.0.3"
 
@@ -2524,21 +2569,22 @@ koishi-plugin-teach@^2.1.5:
     fastest-levenshtein "^1.0.12"
     regexpp "^3.1.0"
 
-koishi-plugin-tools@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.nlark.com/koishi-plugin-tools/download/koishi-plugin-tools-2.1.1.tgz#1ce690862e8f593b35c342e0b2d83de4635142a6"
-  integrity sha1-HOaQhi6PWTs1w0Lgstg95GNRQqY=
+koishi-plugin-tools@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.nlark.com/koishi-plugin-tools/download/koishi-plugin-tools-2.1.2.tgz#d8c4933b08c63ab86e5f8b4e1e38a23b37130aef"
+  integrity sha1-2MSTOwjGOrhuX4tOHjiiOzcTCu8=
   dependencies:
     axios "^0.21.1"
-    cheerio "^1.0.0-rc.5"
+    cheerio "^1.0.0-rc.6"
     qrcode "^1.4.4"
     xml-js "^1.6.11"
 
-koishi-plugin-webui@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.nlark.com/koishi-plugin-webui/download/koishi-plugin-webui-4.6.0.tgz#56bc165dc21034c6c2c6dcb1cc6d7aed14761676"
-  integrity sha1-VrwWXcIQNMbCxtyxzG167RR2FnY=
+koishi-plugin-webui@^4.6.2:
+  version "4.6.2"
+  resolved "https://registry.nlark.com/koishi-plugin-webui/download/koishi-plugin-webui-4.6.2.tgz#b996ffb18309b44b9e4ddf67f936cd61cbccadca"
+  integrity sha1-uZb/sYMJtEueTd9n+TbNYcvMrco=
   dependencies:
+    semver "^7.3.5"
     systeminformation "^5.6.14"
     ws "^7.4.5"
 
@@ -2549,16 +2595,16 @@ koishi-utils@^4.2.2:
   dependencies:
     supports-color "^8.1.0"
 
-koishi@^3.11.1:
-  version "3.11.1"
-  resolved "https://registry.nlark.com/koishi/download/koishi-3.11.1.tgz#05ff51deaebda49abe545a035caafa631e3af5d5"
-  integrity sha1-Bf9R3q69pJq+VFoDXKr6Yx469dU=
+koishi@^3.12.0:
+  version "3.12.0"
+  resolved "https://registry.nlark.com/koishi/download/koishi-3.12.0.tgz#036790daabe3cdf83b363d0735c8313bcda97047"
+  integrity sha1-A2eQ2qvjzfg7Nj0HNcgxO82pcEc=
   dependencies:
     cac "^6.7.3"
     chokidar "^3.5.1"
     js-yaml "^4.1.0"
     kleur "^4.1.4"
-    koishi-core "^3.11.1"
+    koishi-core "^3.12.0"
     koishi-utils "^4.2.2"
     prompts "^2.4.1"
 
@@ -3344,13 +3390,13 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.npm.taobao.org/puppeteer/download/puppeteer-8.0.0.tgz#a236669118aa795331c2d0ca19877159e7664705"
-  integrity sha1-ojZmkRiqeVMxwtDKGYdxWedmRwU=
+puppeteer-core@^9.0.0:
+  version "9.1.1"
+  resolved "https://registry.nlark.com/puppeteer-core/download/puppeteer-core-9.1.1.tgz#0c189c3275967d65c39270e6b146e559baca3d47"
+  integrity sha1-DBicMnWWfWXDknDmsUblWbrKPUc=
   dependencies:
     debug "^4.1.0"
-    devtools-protocol "0.0.854822"
+    devtools-protocol "0.0.869402"
     extract-zip "^2.0.0"
     https-proxy-agent "^5.0.0"
     node-fetch "^2.6.1"
@@ -3661,6 +3707,13 @@ semver@^7.2, semver@^7.2.1:
   version "7.3.4"
   resolved "https://registry.npm.taobao.org/semver/download/semver-7.3.4.tgz?cache=0&sync_timestamp=1606854311104&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsemver%2Fdownload%2Fsemver-7.3.4.tgz#27aaa7d2e4ca76452f98d3add093a72c943edc97"
   integrity sha1-J6qn0uTKdkUvmNOt0JOnLJQ+3Jc=
+  dependencies:
+    lru-cache "^6.0.0"
+
+semver@^7.3.5:
+  version "7.3.5"
+  resolved "https://registry.nlark.com/semver/download/semver-7.3.5.tgz?cache=0&sync_timestamp=1618846864940&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fsemver%2Fdownload%2Fsemver-7.3.5.tgz#0b621c879348d8998e4b0e4be94b3f12e6018ef7"
+  integrity sha1-C2Ich5NI2JmOSw5L6Us/EuYBjvc=
   dependencies:
     lru-cache "^6.0.0"
 

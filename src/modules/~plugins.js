@@ -1,5 +1,5 @@
 const password = require('../secret/password')
-const { koishi } = require('../index')
+const { koishi } = require('..')
 const { segment } = require('koishi-utils')
 const path = require('path')
 const { Time } = require('koishi')
@@ -8,6 +8,7 @@ const { Time } = require('koishi')
  * @module loadPlugins 插件配置
  */
 module.exports = () => {
+  koishi.plugin(require('koishi-plugin-animal-picture'))
   koishi.plugin(require('koishi-plugin-blame'), {
     catch: ['unhandledRejection'],
     send: {
@@ -86,8 +87,7 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-tools'), {})
 
   // 原神插件
-
-  koishi.plugin(require('../../koishi-plugin-genshin'), {
+  koishi.plugin(require('/koishi-plugin-genshin'), {
     // browserPath: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
     browserPath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     cookie: password.mhyCookie,
@@ -107,8 +107,8 @@ module.exports = () => {
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/youdao'))
   // koishi.plugin(require('../plugins/webui-plus'))
-  koishi.plugin(require('../../koishi-plugin-mediawiki'), {})
+  koishi.plugin(require('/koishi-plugin-mediawiki'), {})
   // koishi.plugin(require('../../koishi-plugin-blive'), {})
   koishi.plugin(require('../plugins/bilibili-plus'), {})
-  koishi.plugin(require('../../koishi-plugin-welcome'), {})
+  koishi.plugin(require('/koishi-plugin-welcome'), {})
 }

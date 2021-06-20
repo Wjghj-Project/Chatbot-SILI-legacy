@@ -1,5 +1,4 @@
 // 这些文件不会被push，保存着各种不可告人的秘密
-const password = require('./secret/password')
 const qqNumber = require('./secret/qqNumber') // 机器人的QQ
 const discordToken = require('./secret/discord').botToken
 const https = require('https')

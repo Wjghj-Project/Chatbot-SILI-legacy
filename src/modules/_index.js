@@ -4,9 +4,9 @@ const { Logger } = require('koishi-utils')
 const logger = new Logger('INIT')
 
 !(() => {
-  fs.readdir(path.resolve('./modules'), (err, files) => {
+  fs.readdir(path.resolve(__dirname), (err, files) => {
     files.forEach(file => {
-      if (/^_/.test(file) || !/\.js$/.test(file)) return
+      if (file.startsWith('_') || !file.endsWith('.js')) return
       try {
         require('./' + file)()
         logger.info('√', 'Loaded auto module:', file)

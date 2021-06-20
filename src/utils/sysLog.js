@@ -36,7 +36,11 @@ function sysLog(...params) {
   logger.info(...params)
   var text = []
   var now = new Date()
-  var file = path.resolve('./log/', now.format('yyyy-MM-dd') + '.log')
+  var file = path.resolve(
+    __dirname,
+    '../../log',
+    now.format('yyyy-MM-dd') + '.log'
+  )
   text.push('[' + now.format('yyyy-MM-dd hh:mm:ss') + ']')
   for (let i of params) {
     if (typeof i === 'string') {

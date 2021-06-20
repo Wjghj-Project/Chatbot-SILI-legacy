@@ -2,16 +2,15 @@ const { koishi } = require('..')
 
 module.exports = () => {
   koishi
-    .command('admin/sudo <cmd:text>', 'Super User Do', { authority: 0 })
+    .command('admin/sudo <cmd:text>', 'Super user do', { authority: 0 })
+    .alias('root')
     .option('add', '-a <user:user>', { hidden: true })
     .option('remove', '-r <user:user>', { hidden: true })
-    .userFields(['authority', 'authoritySuper'])
+    .userFields(['uuid', 'authority', 'authoritySuper'])
     .check(({ session, options }, cmd) => {
-      koishi
-        .logger('sudo')
-        .info({ authoritySuper: session.user.authoritySuper, options, cmd })
+      koishi.logger('sudo').info({ user: session.user, options, cmd })
       if (session.user.authoritySuper !== true) {
-        return '权限不足。'
+        return '您不是超级管理员。'
       }
     })
     .check(async ({ session, options }) => {
@@ -25,7 +24,7 @@ module.exports = () => {
           await session.database.setUser(pid, uid, {
             authoritySuper: Boolean(options.add),
           })
-          return `已保存配置。`
+          return `已${options.add ? '添加' : '移除'}超级管理员。`
         } catch (err) {
           return `修改配置时出现问题：${err.message}`
         }
