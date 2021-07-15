@@ -9,6 +9,12 @@ const { Time } = require('koishi')
  */
 module.exports = () => {
   koishi.plugin(require('koishi-plugin-animal-picture'))
+  koishi.plugin(require('koishi-plugin-assets'), {
+    type: 'local',
+    root: path.resolve(__dirname, '../../assets'),
+    secret: password.dbPassword.mongo,
+    path: '/api/assets',
+  })
   koishi.plugin(require('koishi-plugin-blame'), {
     catch: ['unhandledRejection'],
     send: {
@@ -69,7 +75,9 @@ module.exports = () => {
     appId: password.github.appId,
     appSecret: password.github.appSecret,
   })
-  koishi.plugin(require('koishi-plugin-image-search'))
+  koishi.plugin(require('koishi-plugin-image-search'), {
+    saucenaoApiKey: password.saucenaoApiKey,
+  })
   koishi.plugin(require('koishi-plugin-rss'))
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-shell'), {

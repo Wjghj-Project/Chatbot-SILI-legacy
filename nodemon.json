@@ -1,5 +1,6 @@
 {
   "ignore": [
+    "assets",
     "node_modules/*",
     "package.json"
   ]

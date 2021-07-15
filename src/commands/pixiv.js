@@ -5,21 +5,27 @@ const { default: axios } = require('axios')
 const { segment } = require('koishi-utils')
 const { koishi } = require('..')
 
-const API_BASE = 'https://pixiv.wjghj.cn'
+const API_BASE = 'https://pixiv.js.org'
 
 module.exports = () => {
-  koishi.command('pixiv', 'Pixiv 相关功能').action(({ session }) => {
-    return session.execute('pixiv -h')
-  })
+  koishi
+    .command('pixiv [id:posint]', 'Pixiv 相关功能')
+    .action(({ session }, id) => {
+      if (id) return session.execute(`pixiv.illust ${id}`)
+      return session.execute('pixiv -h')
+    })
 
   koishi
     .command('pixiv.illust <id:posint>', '查询 Pixiv 插画', {
       minInterval: 10 * 1000,
     })
-    .alias('pixiv插画', 'p站插画')
+    .alias('pixiv插画', 'p站插画', 'pixiv.i', 'pixiv.artwork')
     .option('nth', '-n <nth:posint> 从多张插画中进行选择', { fallback: 1 })
+    .option('original', '-o 显示原画 (可能会慢很多)')
     .action(async ({ session, options }, id) => {
       if (!id) return session.execute('pixiv.illust -h')
+
+      koishi.logger('pixiv').info({ id, options })
 
       let data
       try {
@@ -28,7 +34,7 @@ module.exports = () => {
         koishi.logger('pixiv').warn(error)
         return [
           segment.quote(session.messageId),
-          error.message || '出现未知问题',
+          error?.response?.data?.message || error.message || '出现未知问题',
         ].join('')
       }
 
@@ -40,7 +46,9 @@ module.exports = () => {
       allPics = data.pages
       picNums = allPics.length
       nth = Math.min(picNums, nth)
-      imageUrl = allPics[nth - 1].urls.original
+      imageUrl = options.original
+        ? allPics[nth - 1].urls.original
+        : allPics[nth - 1].urls.regular
 
       const desc = data.description.replace(/<br.*?\/>/g, '\n')
 
@@ -51,7 +59,7 @@ module.exports = () => {
         `标题：${data.title}`,
         `作者：${data.userName} (${data.userId})`,
         desc.length > 120 ? desc.substring(0, 120) + '...' : desc,
-        'https://pixivel.moe/detail?id=' + data.id,
+        `${API_BASE}/-/${data.id}`,
       ]
         .join('\n')
         .replace(/\n+/g, '\n')
@@ -61,7 +69,7 @@ module.exports = () => {
 
   koishi
     .command('pixiv.user <id:posint>')
-    .alias('pixiv用户', 'p站用户')
+    .alias('pixiv用户', 'p站用户', 'pixiv.u')
     .action(async ({ session }, id) => {
       if (!id) return session.execute('pixiv.user -h')
 
@@ -90,7 +98,7 @@ module.exports = () => {
   // 快捷方式
   koishi.middleware(async (session, next) => {
     await next()
-    const reg = /(?:(?:https?:)?\/\/)?www\.pixiv\.net\/(?:en\/)?artworks\/([0-9]+)/i
+    const reg = /(?:(?:https?:)?\/\/)?(?:www\.pixiv\.net|pixiv\.js\.org)\/(?:en\/)?(?:artworks|i)\/(\d+)/i
     const pixivId = reg.exec(session.content)
     if (pixivId && pixivId[1]) {
       session.execute(`pixiv.illust ${pixivId[1]}`)

@@ -9,6 +9,10 @@ public/
 # This part is for development, ignore
 /dev
 dist
+log
+
+# Assets
+/assets
 
 # Hidden routing rules for Wjghj Server
 @*.*
