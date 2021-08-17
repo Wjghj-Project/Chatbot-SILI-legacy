@@ -4,6 +4,13 @@ const { segment } = require('koishi-utils')
 const path = require('path')
 const { Time } = require('koishi')
 
+const chromeVer = require('puppeteer/lib/cjs/puppeteer/revisions')
+  .PUPPETEER_REVISIONS.chromium
+const chromePath = path.resolve(
+  __dirname,
+  `../../node_modules/puppeteer/.local-chromium/win64-${chromeVer}/chrome-win/chrome.exe`
+)
+
 /**
  * @module loadPlugins 插件配置
  */
@@ -78,6 +85,11 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-image-search'), {
     saucenaoApiKey: password.saucenaoApiKey,
   })
+  koishi.plugin(require('koishi-plugin-puppeteer'), {
+    browser: {
+      executablePath: chromePath,
+    },
+  })
   koishi.plugin(require('koishi-plugin-rss'))
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-shell'), {
@@ -96,8 +108,6 @@ module.exports = () => {
 
   // 原神插件
   koishi.plugin(require('koishi-plugin-genshin'), {
-    // browserPath: 'C:\\Program Files\\Mozilla Firefox\\firefox.exe',
-    browserPath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     cookie: password.mhyCookie,
     // gachaPool: require('../utils/genshinGachaPool'),
     wish: {
