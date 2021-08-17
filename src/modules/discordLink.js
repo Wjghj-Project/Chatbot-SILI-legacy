@@ -11,28 +11,32 @@ module.exports = () => {
   koishi
     .platform('onebot')
     .group(qqNumber.group.fandom)
-    .on('message', session => {
-      qqToDiscord(session)
+    .on('message', (session) => {
+      qqToDiscord(session, require('../secret/discord').fandom_zh.互联)
+      // 会议大厅
+      // qqToDiscord(session, require('../secret/discord').fandom_zh.会议大厅)
     })
 
   // QQ 自己发消息
   koishi
     .platform('onebot')
     .group(qqNumber.group.fandom)
-    .on('send', session => {
-      qqToDiscord(session)
+    .on('send', (session) => {
+      qqToDiscord(session, require('../secret/discord').fandom_zh.互联)
     })
 
   // Discord 收到消息
   koishi
     .platform('discord')
-    // .group('566623674770260004')
-    .channel('736880471891378246')
-    .on('message', session => {
+    .channel('736880471891378246', '568268934176964629')
+    .on('message', (session) => {
       if (
-        session.author.userId !== '736880520297971714' // QQ推送Hook
+        // QQ推送Hook
+        session.author.userId !== '736880520297971714' // &&
+        // 研讨会Hook
+        // session.author.userId !== '865799566417854524'
       ) {
-        discordToQQ(session)
+        discordToQQ(session, qqNumber.group.fandom)
       }
     })
 
@@ -40,12 +44,12 @@ module.exports = () => {
   koishi
     .platform('discord')
     .channel('736880471891378246')
-    .on('send', session => {
-      discordToQQ(session)
+    .on('send', (session) => {
+      discordToQQ(session, qqNumber.group.fandom)
     })
 }
 
-function discordToQQ(session) {
+function discordToQQ(session, channelId) {
   if (/(%disabled%|__noqq__)/i.test(session.content)) return
   if (/^\[qq\]/i.test(session.content)) return
 
@@ -58,10 +62,11 @@ function discordToQQ(session) {
   content = parseDiscordEmoji(content)
   let send = [`[Discord] ${sender}`, content].join('\n')
   sysLog('⇿', 'Discord信息已推送到QQ', sender, session.content)
-  bot.sendMessage(qqNumber.group.fandom, send)
+
+  bot.sendMessage(channelId, send)
 }
 
-async function qqToDiscord(session) {
+async function qqToDiscord(session, webhook) {
   let message = session.message || session.content
   message = resolveBrackets(message)
   if (/^\[discord\]/i.test(message) || /__nodc__/gi.test(message)) return
@@ -119,7 +124,7 @@ async function qqToDiscord(session) {
   axios({
     ...koishi.app.options.axiosConfig,
     method: 'post',
-    url: require('../secret/discord').fandom_zh.webhook,
+    url: webhook,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -128,7 +133,7 @@ async function qqToDiscord(session) {
     .then(() => {
       sysLog('⇿', 'QQ消息已推送到Discord')
     })
-    .catch(err => {
+    .catch((err) => {
       koishi.logger('bridge').error(err)
     })
 }

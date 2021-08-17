@@ -6,6 +6,7 @@ const { segment } = require('koishi-utils')
 const { koishi } = require('..')
 
 const API_BASE = 'https://pixiv.js.org'
+const isPixivelChannel = (session) => session?.channelId === '1126206149'
 
 module.exports = () => {
   koishi
@@ -16,7 +17,7 @@ module.exports = () => {
     })
 
   koishi
-    .command('pixiv.illust <id:posint>', '查询 Pixiv 插画', {
+    .command('pixiv.illust <id:posint>', '查看 Pixiv 插画', {
       minInterval: 10 * 1000,
     })
     .alias('pixiv插画', 'p站插画', 'pixiv.i', 'pixiv.artwork')
@@ -59,7 +60,9 @@ module.exports = () => {
         `标题：${data.title}`,
         `作者：${data.userName} (${data.userId})`,
         desc.length > 120 ? desc.substring(0, 120) + '...' : desc,
-        `${API_BASE}/-/${data.id}`,
+        isPixivelChannel(session)
+          ? `https://pixivel.moe/detail?id=${data.id}`
+          : `${API_BASE}/i/${data.id}`,
       ]
         .join('\n')
         .replace(/\n+/g, '\n')
@@ -97,6 +100,7 @@ module.exports = () => {
 
   // 快捷方式
   koishi.middleware(async (session, next) => {
+    if (isPixivelChannel(session)) return
     await next()
     const reg = /(?:(?:https?:)?\/\/)?(?:www\.pixiv\.net|pixiv\.js\.org)\/(?:en\/)?(?:artworks|i)\/(\d+)/i
     const pixivId = reg.exec(session.content)

@@ -21,3 +21,6 @@ log
 secret*.*
 secret/
 !secret*.sample.*
+
+# Packages
+/packages
