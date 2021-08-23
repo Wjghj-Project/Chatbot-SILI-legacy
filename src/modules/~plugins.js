@@ -16,6 +16,7 @@ const chromePath = path.resolve(
  */
 module.exports = () => {
   koishi.plugin(require('koishi-plugin-animal-picture'))
+  koishi.command('animal', { minInterval: 10 * 1000 })
   koishi.plugin(require('koishi-plugin-assets'), {
     type: 'local',
     root: path.resolve(__dirname, '../../assets'),
@@ -82,6 +83,7 @@ module.exports = () => {
     appId: password.github.appId,
     appSecret: password.github.appSecret,
   })
+  koishi.plugin(require('koishi-plugin-httpcat'), {})
   koishi.plugin(require('koishi-plugin-image-search'), {
     saucenaoApiKey: password.saucenaoApiKey,
   })

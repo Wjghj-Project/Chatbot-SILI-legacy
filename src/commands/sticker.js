@@ -1,18 +1,21 @@
-const { s } = require('koishi')
+const { s, Time, Logger } = require('koishi')
 const { koishi } = require('..')
-const txt2img = require('../utils/txt2img')
+const logger = new Logger('cmd.sticker')
 
 module.exports = () => {
   koishi.command('tools/sticker', '生成表情包')
 
   koishi
-    .command('sticker.original-main-said [content:text]', '沃里杰诺·梅因说')
+    .command('sticker.original-main-said [content:text]', '沃里杰诺·梅因说', {
+      minInterval: Time.minute,
+    })
     .action(async ({ session }, content) => {
       try {
-        return await txt2img.shotHtml(
+        const page = await session.app.puppeteer.page()
+        await page.setContent(
           `
       <div
-        style="position: relative; display: inline-block; {{{style}}}"
+        style="position: relative; display: inline-block;"
         id="sticker"
         >
       <img
@@ -26,12 +29,16 @@ module.exports = () => {
         transform: translateX(-50%);
         text-align: center;
         margin-top: 35px;
-      ">${content}</div>
+      ">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
       </div>
-      `,
-          '#sticker'
+      `
         )
+        const el = await page.$('#sticker')
+        const img = await el.screenshot({})
+        await page.close()
+        return s.image(img)
       } catch (err) {
+        logger.warn(err)
         return '生成表情包时出现问题。'
       }
     })
