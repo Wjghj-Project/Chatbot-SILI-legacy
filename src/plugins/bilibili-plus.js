@@ -34,7 +34,7 @@ function apply(ctx) {
               )
               .join('\n')
               .trim(),
-            '请输入想查看的用户对应的编号。'
+            '请输入想查看的用户对应的编号。',
           ].join('\n')
         )
         let answer = await session.prompt(30 * 1000)
@@ -54,7 +54,7 @@ function apply(ctx) {
         face,
         sign,
         level,
-        live_room
+        live_room,
       } = await getUserById(uid)
 
       return (
@@ -68,7 +68,7 @@ function apply(ctx) {
             ? `直播间：[${liveStatusName(live_room.liveStatus)}] ${
                 live_room.title
               } ${live_room.url} (人气 ${live_room.online})`
-            : null
+            : null,
         ].join('\n')
       )
     })
@@ -107,7 +107,7 @@ function apply(ctx) {
         followerNum,
         liveStatus,
         liveTime,
-        online
+        online,
       } = details
 
       return [
@@ -123,7 +123,7 @@ function apply(ctx) {
           ? `开播时间：${new Date(
               liveTime
             ).toLocaleString()} (${Time.formatTime(Date.now() - liveTime)})`
-          : null
+          : null,
       ].join('\n')
     })
 
@@ -156,7 +156,7 @@ function apply(ctx) {
 
         return [
           `本群一共单推了 ${users.length} 名 bilibili 主播！`,
-          userList
+          userList,
         ].join('\n')
       }
 
@@ -214,8 +214,8 @@ async function findUsersByName(keyword) {
       params: { keyword, search_type: 'bili_user' },
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0'
-      }
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0',
+      },
     }
   )
   return data?.data?.result || []
@@ -234,8 +234,8 @@ async function getUserById(mid) {
       params: { mid },
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0'
-      }
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0',
+      },
     }
   )
   if (data.code !== 0) throw data
@@ -260,8 +260,8 @@ async function getLiveInit(roomid) {
       params: { id: roomid },
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0'
-      }
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0',
+      },
     }
   )
   return data?.data
@@ -274,8 +274,8 @@ async function getLiveMaster(uid) {
       params: { uid },
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0'
-      }
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0',
+      },
     }
   )
   return data?.data
@@ -289,8 +289,8 @@ async function getLiveInfo(uid) {
       headers: {
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0',
-        Cookie: `LIVE_BUVID=${Math.random()}`
-      }
+        Cookie: `LIVE_BUVID=${Math.random()}`,
+      },
     }
   )
   return data?.data
@@ -299,7 +299,7 @@ async function getLiveInfo(uid) {
 async function getLiveDetailsByUid(uid) {
   const [liveDetails, liveMaster] = await Promise.all([
     getLiveInfo(uid),
-    getLiveMaster(uid)
+    getLiveMaster(uid),
   ])
 
   if (!liveDetails.roomid || liveDetails.roomid === 0) return null
@@ -311,7 +311,7 @@ async function getLiveDetailsByUid(uid) {
     title,
     cover,
     online,
-    roomid
+    roomid,
   } = liveDetails
   const { medal_name, room_news, follower_num } = liveMaster
   const { uname: username } = liveMaster.info
@@ -330,7 +330,7 @@ async function getLiveDetailsByUid(uid) {
     medalName: medal_name,
     roomNews: room_news,
     followerNum: follower_num,
-    liveTime: live_time * 1000
+    liveTime: live_time * 1000,
   }
 }
 
@@ -350,7 +350,7 @@ function liveStatusName(status) {
  */
 async function getFollowedBiliUps(session) {
   const data = await session.database.get(colName, {
-    channels: [`${session.platform}:${session.channelId}`]
+    channels: [`${session.platform}:${session.channelId}`],
   })
 
   return data
@@ -362,7 +362,7 @@ async function getFollowedBiliUps(session) {
 async function addFollowedBiliUps(session, uid) {
   const channel = `${session.platform}:${session.channelId}`
   let userData = await session.database.get(colName, {
-    b_uid: [uid]
+    b_uid: [uid],
   })
 
   logger.info(userData)
@@ -384,7 +384,7 @@ async function addFollowedBiliUps(session, uid) {
     b_username: username,
     b_roomid: roomid,
     lastCall: liveTime,
-    channels
+    channels,
   }
 
   if (userData.length < 1) {
@@ -402,7 +402,7 @@ async function addFollowedBiliUps(session, uid) {
 async function removeFollowedBiliUps(session, uid) {
   const channel = `${session.platform}:${session.channelId}`
   let userData = await session.database.get(colName, {
-    b_uid: [uid]
+    b_uid: [uid],
   })
 
   logger.info(userData)
@@ -453,7 +453,7 @@ async function broadcast(ctx, user) {
     followerNum,
     liveStatus,
     liveTime,
-    online
+    online,
   } = await getLiveDetailsByUid(b_uid)
   await ctx.broadcast(
     channels,
@@ -472,12 +472,15 @@ async function broadcast(ctx, user) {
         ? `开播时间：${new Date(liveTime).toLocaleString()} (${Time.formatTime(
             Date.now() - liveTime
           )})`
-        : null
+        : null,
     ].join('\n')
   )
-  await ctx.database.update(colName, [
-    { id, lastCall: liveTime, b_username: username, b_roomid: roomid }
-  ])
+  await ctx.database.mongo.db
+    .collection(colName)
+    .updateOne(
+      { b_uid },
+      { $set: { lastCall: liveTime, b_username: username, b_roomid: roomid } }
+    )
   logger.info(
     new Date().toISOString(),
     liveStatus === 1 ? '开播广播' : '下播广播',
@@ -487,5 +490,5 @@ async function broadcast(ctx, user) {
 
 module.exports = {
   name: colName,
-  apply
+  apply,
 }

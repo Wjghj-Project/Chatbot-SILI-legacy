@@ -92,7 +92,8 @@ module.exports = () => {
       executablePath: chromePath,
     },
   })
-  koishi.plugin(require('koishi-plugin-rss'))
+  // koishi.plugin(require('koishi-plugin-rss'))
+  // koishi.plugin(require('../plugins/rss-plus.js'))
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-shell'), {
     shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
