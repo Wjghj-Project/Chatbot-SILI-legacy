@@ -8,7 +8,7 @@ const chromeVer = require('puppeteer/lib/cjs/puppeteer/revisions')
   .PUPPETEER_REVISIONS.chromium
 const chromePath = path.resolve(
   __dirname,
-  `../../node_modules/puppeteer/.local-chromium/win64-${chromeVer}/chrome-win/chrome.exe`
+  `../../../node_modules/puppeteer/.local-chromium/win64-${chromeVer}/chrome-win/chrome.exe`
 )
 
 /**

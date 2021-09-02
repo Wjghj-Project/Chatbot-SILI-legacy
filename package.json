@@ -1,6 +1,6 @@
 {
   "name": "sili-project",
-  "version": "3.12.2",
+  "version": "3.12.3",
   "description": "Wjghj Project Chat Bot, SILI - Sara Lindery",
   "private": true,
   "workspaces": [
@@ -8,7 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "yarn workspace sili run dev"
+    "start": "yarn workspace sili run start",
+    "bump": "bump --nopublish"
   },
   "author": "Dragon-Fish",
   "repository": "https://github.com/Wjghj-Project/Chatbot-SILI.git",

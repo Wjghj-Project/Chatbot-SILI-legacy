@@ -1,6 +1,7 @@
 {
   "name": "sili",
   "main": "src/index.js",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@dragon-fish/words-filter": "^1.0.0",
@@ -37,10 +38,9 @@
     "pm2": "^4.5.6"
   },
   "scripts": {
-    "start": "pm2 start src/index.js --name=\"qq-bot-sili\"",
-    "dev": "nodemon --enable-source-maps --config nodemon.json src/index.js",
-    "bump": "bump --nopublish",
-    "stop": "pm2 delete qq-bot-sili"
+    "start": "nodemon --enable-source-maps --config nodemon.json src/index.js",
+    "service": "pm2 start src/index.js --name=\"qq-bot-sili\"",
+    "delete": "pm2 delete qq-bot-sili"
   },
   "author": "Dragon-Fish",
   "repository": "https://github.com/Wjghj-Project/Chatbot-SILI.git",
