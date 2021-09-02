@@ -12,7 +12,7 @@ dist
 log
 
 # Assets
-/assets
+core/assets
 
 # Hidden routing rules for Wjghj Server
 @*.*
