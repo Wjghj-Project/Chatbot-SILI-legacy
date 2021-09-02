@@ -1,0 +1,55 @@
+{
+  "name": "sili",
+  "main": "src/index.js",
+  "private": true,
+  "dependencies": {
+    "@dragon-fish/words-filter": "^1.0.0",
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.10",
+    "koishi": "^3.13.1",
+    "koishi-adapter-discord": "^1.3.3",
+    "koishi-adapter-onebot": "^3.1.0",
+    "koishi-plugin-animal-picture": "0.2.1",
+    "koishi-plugin-assets": "^1.1.1",
+    "koishi-plugin-blame": "^3.0.0",
+    "koishi-plugin-chat": "^0.5.3",
+    "koishi-plugin-common": "^4.3.3",
+    "koishi-plugin-genshin": "^2.0.0-beta.13",
+    "koishi-plugin-github": "^3.1.3",
+    "koishi-plugin-httpcat": "^0.0.2",
+    "koishi-plugin-image-search": "^3.0.4",
+    "koishi-plugin-mongo": "^2.5.1",
+    "koishi-plugin-puppeteer": "^2.1.5",
+    "koishi-plugin-rss": "^2.0.1",
+    "koishi-plugin-schedule": "^3.0.6",
+    "koishi-plugin-shell": "^0.0.6",
+    "koishi-plugin-teach": "^2.2.3",
+    "koishi-plugin-tools": "^2.1.3",
+    "koishi-plugin-webui": "^4.6.3",
+    "md5": "^2.3.0",
+    "puppeteer": "^10.2.0",
+    "qs": "^6.10.1"
+  },
+  "devDependencies": {
+    "@dragon-fish/bump": "^0.0.15",
+    "eslint": "^7.23.0",
+    "nodemon": "^2.0.12",
+    "pm2": "^4.5.6"
+  },
+  "scripts": {
+    "start": "pm2 start src/index.js --name=\"qq-bot-sili\"",
+    "dev": "nodemon --enable-source-maps --config nodemon.json src/index.js",
+    "bump": "bump --nopublish",
+    "stop": "pm2 delete qq-bot-sili"
+  },
+  "author": "Dragon-Fish",
+  "repository": "https://github.com/Wjghj-Project/Chatbot-SILI.git",
+  "homepage": "https://sili.wjghj.cn",
+  "license": "MIT",
+  "keywords": [
+    "mirai",
+    "cqhttp",
+    "qq-bot",
+    "bot"
+  ]
+}
