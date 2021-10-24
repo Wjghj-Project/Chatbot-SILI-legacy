@@ -134,6 +134,7 @@ function apply(ctx) {
     if (!ghTest) return
     ghTest.shift()
     const [target] = ghTest
+    if (target.split('/').length > 2) return
     session.execute(`github.details ${target.split(/[\n\s]/).shift()}`)
   })
 }
