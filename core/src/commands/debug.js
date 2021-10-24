@@ -9,7 +9,7 @@ module.exports = () => {
    * @module command-debug
    */
   koishi
-    .command('debug', '运行诊断测试', { authority: 2 })
+    .command('debug [input:text]', '运行诊断测试', { authority: 2 })
     .option('announcement', '<content:text> 发送群公告')
     .option('face', '[id:string] 发送QQ表情')
     .option('localimg', '本地图片')
@@ -20,8 +20,8 @@ module.exports = () => {
     .option('parser', '-p <message:text> 解析消息到消息段')
     .option('html', '<html:text>')
     .option('markdown', '-M <markdown:text>')
-    .action(async ({ session, options }) => {
-      koishi.logger('!debug').info(options)
+    .action(async ({ session, options }, input) => {
+      koishi.logger('!debug').info({ options, input })
 
       if (
         options.announcement &&

@@ -125,11 +125,11 @@ module.exports = () => {
   koishi.command('genshin.backpack', '', { authority: 2 }).shortcut('原神背包')
 
   // Local plugins
-  koishi.plugin(require('../plugins/dbadmin'))
-  koishi.plugin(require('../plugins/youdao'))
-  // koishi.plugin(require('../plugins/webui-plus'))
-  koishi.plugin(require('koishi-plugin-mediawiki'), {})
-  // koishi.plugin(require('../../koishi-plugin-blive'), {})
   koishi.plugin(require('../plugins/bilibili-plus'), {})
+  koishi.plugin(require('../plugins/dbadmin'))
+  koishi.plugin(require('../plugins/github-details'))
+  koishi.plugin(require('../plugins/youdao'))
+  koishi.plugin(require('../plugins/surl'), {})
+  koishi.plugin(require('koishi-plugin-mediawiki'), {})
   koishi.plugin(require('koishi-plugin-welcome'), {})
 }

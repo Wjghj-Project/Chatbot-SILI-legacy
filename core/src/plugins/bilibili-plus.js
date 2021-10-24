@@ -65,9 +65,8 @@ function apply(ctx) {
           `等级：${level}级，性别：${sex}`,
           sign,
           live_room.roomStatus === 1
-            ? `直播间：[${liveStatusName(live_room.liveStatus)}] ${
-                live_room.title
-              } ${live_room.url} (人气 ${live_room.online})`
+            ? `直播间：[${liveStatusName(live_room.liveStatus)}] ${live_room.title
+            } ${live_room.url} (人气 ${live_room.online})`
             : null,
         ].join('\n')
       )
@@ -115,14 +114,13 @@ function apply(ctx) {
         title,
         url,
         roomNews.content ? roomNews.content : null,
-        `主播：${
-          medalName ? '[' + medalName + ']' : ''
+        `主播：${medalName ? '[' + medalName + ']' : ''
         }${username} (${followerNum} 关注)`,
         `状态：${liveStatusName(liveStatus)} (${online} 人气)`,
         liveTime > 0
           ? `开播时间：${new Date(
-              liveTime
-            ).toLocaleString()} (${Time.formatTime(Date.now() - liveTime)})`
+            liveTime
+          ).toLocaleString()} (${Time.formatTime(Date.now() - liveTime)})`
           : null,
       ].join('\n')
     })
@@ -148,9 +146,8 @@ function apply(ctx) {
               ? `(最近直播于 ${Time.formatTime(Date.now() - item.lastCall)} 前)`
               : '(未跟踪到直播信息)'
             const roomUrl = `https://live.bilibili.com/${item.b_roomid}`
-            return `${index + 1}. ${item.b_username} (${
-              item.b_uid
-            })\n${roomUrl} ${lastTime}`
+            return `${index + 1}. ${item.b_username} (${item.b_uid
+              })\n${roomUrl} ${lastTime}`
           })
           .join('\n')
 
@@ -361,9 +358,13 @@ async function getFollowedBiliUps(session) {
  */
 async function addFollowedBiliUps(session, uid) {
   const channel = `${session.platform}:${session.channelId}`
-  let userData = await session.database.get(colName, {
-    b_uid: [uid],
-  })
+  let userData = await session.database.mongo.db
+    .collection(colName)
+    .find({
+      b_uid: { $in: [uid] },
+    })
+    .limit(1)
+    .toArray()
 
   logger.info(userData)
 
@@ -388,9 +389,9 @@ async function addFollowedBiliUps(session, uid) {
   }
 
   if (userData.length < 1) {
-    await session.database.create(colName, updateData)
+    await session.database.mongo.db.collection(colName).insertOne(updateData)
   } else {
-    await session.database.update(colName, [{ ...updateData, id: user.id }])
+    await session.database.mongo.db.collection(colName).updateOne({ b_uid: uid }, { $set: updateData })
   }
 
   return `单推成功：${username} (直播间 ${roomid})`
@@ -401,9 +402,13 @@ async function addFollowedBiliUps(session, uid) {
  */
 async function removeFollowedBiliUps(session, uid) {
   const channel = `${session.platform}:${session.channelId}`
-  let userData = await session.database.get(colName, {
-    b_uid: [uid],
-  })
+  let userData = await session.database.mongo.db
+    .collection(colName)
+    .find({
+      b_uid: { $in: [uid] },
+    })
+    .limit(1)
+    .toArray()
 
   logger.info(userData)
   if (userData.length < 1) return '找不到主播数据。'
@@ -458,20 +463,18 @@ async function broadcast(ctx, user) {
   await ctx.broadcast(
     channels,
     [
-      `您单推的主播${
-        liveStatus === 1 ? '开播啦！' : '已下播，记得下次再来哦！'
+      `您单推的主播${liveStatus === 1 ? '开播啦！' : '已下播，记得下次再来哦！'
       }`,
       title,
       url,
       roomNews.content ? roomNews.content : null,
-      `主播：${
-        medalName ? '[' + medalName + ']' : ''
+      `主播：${medalName ? '[' + medalName + ']' : ''
       }${username} (${followerNum} 关注)`,
       `状态：${liveStatusName(liveStatus)} (${online} 人气)`,
       liveTime > 0
         ? `开播时间：${new Date(liveTime).toLocaleString()} (${Time.formatTime(
-            Date.now() - liveTime
-          )})`
+          Date.now() - liveTime
+        )})`
         : null,
     ].join('\n')
   )
