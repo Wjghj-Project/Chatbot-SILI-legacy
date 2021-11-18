@@ -4,7 +4,8 @@ const { koishi } = require('../')
 module.exports = () => {
   koishi
     .command('admin/queue <commands:text>', '指令队列', { authority: 3 })
-    .action(async ({ session }, cmds) => {
+    .option('interval', '-i <ms:posint>', { fallback: 1000 })
+    .action(async ({ session, options }, cmds) => {
       if (!cmds) return
       const cmdList = cmds.split('\n')
       async function ex(list, index) {
@@ -13,7 +14,7 @@ module.exports = () => {
           await session.execute(cmd)
         }
         if (index + 1 < list.length) {
-          await sleep(1000)
+          await sleep(options.interval || 1000)
           await ex(list, index + 1)
         }
       }

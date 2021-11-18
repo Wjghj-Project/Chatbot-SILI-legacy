@@ -1,95 +1,71 @@
+const { Argv } = require('koishi-core')
 const { segment } = require('koishi-utils')
 
-function apply(koishi, pluginOpt) {
-  koishi
-    .command('admin/dbadmin', '数据库管理', { authority: 4 })
-    .example('dbadmin.set 更新值\ndbadmin.get 获取值')
-    .action(({ session }) => {
-      session.execute('dbadmin -h')
-    })
+Argv.createDomain('object', (item) => JSON.parse(item))
 
-  koishi
-    .command('admin/dbadmin.set <key> <val>', { authority: 4 })
-    .example(
-      'dbadmin.set --user=onebot:123456 nickname foo 将标识符为onebot:123456的用户数据中的nickname字段值修改为foo'
+/**
+ * @param {import('koishi-core').Context} ctx
+ */
+function apply(ctx) {
+  ctx
+    .command(
+      'admin/dbadmin <col:string> <action:string> <filter:text>',
+      '数据库管理',
+      {
+        authority: 4,
+      }
     )
-    .option('user', '-u <uid>', { type: 'string' })
-    .option('channel', '-c <channel>', { type: 'string' })
-    .action(async ({ session, options: opt }, key, val) => {
-      if (!key || !val || (!opt.user && !opt.channel)) {
-        let mis = []
-        if (!key) mis.push('key')
-        if (!val) mis.push('val')
-        if (!opt.user || !opt.channel) mis.push('指定用户或群聊的参数')
-        return `缺少参数：${mis.join(', ')}。`
-      }
-
-      if (opt.user && opt.user !== true) {
-        let { platform, id } = parseUser(opt.user)
-        if (!platform || !id)
-          return '未指定用户所在平台，您指的可能是：onebot:' + opt.user
-
-        let data = {}
-        data[key] = val
-
-        await session.database.setUser(platform, id, data)
-
-        session.send(
-          `用户信息已修改：\n用户：${platform}:${id}\n键：${key}\n值：${val}`
-        )
-        return
-      }
-
-      return '不支持的操作。\n$(dbadmin.set -h)'
-    })
-
-  koishi
-    .command('admin/dbadmin.get <key>', { authority: 4 })
+    .example(`查找 dbadmin channel findOne { "pid": "12345" }`)
     .example(
-      'dbadmin.get --user=onebot:123456 nickname 获取标识符为onebot:123456的用户数据中的nickname字段的值'
+      `更新 dbadmin channel updateOne { "pid": "12345" } |-| { "foo": "bar" }`
     )
-    .option('user', '-u <uid>', { type: 'string' })
-    .option('channel', '-c <channel>', { type: 'string' })
-    .action(async ({ session, options: opt }, key) => {
-      console.log(opt)
-
-      if (!key || (!opt.user && !opt.channel)) {
-        let mis = []
-        if (!key) mis.push('key')
-        if (!opt.user || !opt.channel) mis.push('指定用户或群聊的参数')
-        return `缺少参数：${mis.join(', ')}。`
-      }
-
-      if (opt.user && opt.user !== true) {
-        let { platform, id } = parseUser(opt.user)
-        if (!platform || !id)
-          return '未指定用户所在平台，您指的可能是：onebot:' + opt.user
-
-        let ret = await session.database.getUser(platform, id, key.split(','))
-        console.log(ret)
-
-        session.send(
-          `用户 ${platform}:${id} 的信息：\n${JSON.stringify(ret, null, 2)}`
-        )
-        return
-      }
-
-      return '不支持的操作。\n$(dbadmin.set -h)'
+    .check((_, col, action, filter) => {
+      if (!col || !action || !filter) return '缺少必要参数。'
     })
-}
+    .check((_, col, action) => {
+      if (!['find', 'findOne', 'update', 'updateOne'].includes(action))
+        return `不可用的操作: ${action}`
+    })
+    .action(async (_, col, action, filter) => {
+      let dbFilter = filter
+        .split('|-|')
+        .map((item) => (item ? JSON.parse(item) : {}))
 
-function parseUser(user) {
-  if (user.indexOf('[CQ:at') > -1) {
-    let segObj = segment.from(user)
-    user = segObj.data.id || segObj.data.qq
-    user = 'onebot:' + user
-  }
-  user = user.split(':')
-  if (user.length < 2) {
-    // return '未指定用户所在平台，您指的可能是：onebot:' + opt.user
-    return {}
-  }
-  return { platform: user[0], id: user[1] }
+      switch (action.toLowerCase()) {
+        case 'find':
+        case 'findne': {
+          if (dbFilter.length < 2) {
+            dbFilter.push({ _id: -1, id: 1, name: 1, authority: 1 })
+          }
+          console.log(dbFilter)
+          return ctx.database.mongo.db
+            .collection(col)
+            .find(dbFilter[0])
+            .project(dbFilter[1])
+            .limit(1)
+            .toArray()
+            .then((data) => JSON.stringify(data[0], null, 2))
+        }
+        case 'update':
+        case 'updateone': {
+          return new Promise((resolve, reject) => {
+            if (dbFilter.length < 2) {
+              return reject('缺少所更新的内容。')
+            }
+            const dbFinal = [
+              ...dbFilter,
+              (err, data) => {
+                if (err) {
+                  return reject(err)
+                }
+                resolve(JSON.stringify(data, null, 2))
+              },
+            ]
+            ctx.database.mongo.db.collection(col).updateOne(...dbFinal)
+          })
+        }
+      }
+    })
 }
 
 module.exports = {

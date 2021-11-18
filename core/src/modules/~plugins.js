@@ -23,6 +23,7 @@ module.exports = () => {
     secret: password.dbPassword.mongo,
     path: '/api/assets',
   })
+  koishi.plugin(require('@idlist/koishi-plugin-blive'))
   koishi.plugin(require('koishi-plugin-blame'), {
     catch: ['unhandledRejection'],
     send: {
@@ -78,6 +79,10 @@ module.exports = () => {
           : '你还没有给自己取一个名字呢'
     })
 
+  koishi.plugin(require('koishi-plugin-eval'), {
+    prefix: null,
+    userFields: ['id', 'authority', 'name']
+  })
   koishi.plugin(require('koishi-plugin-github'), {
     path: '/api/github',
     appId: password.github.appId,
@@ -87,6 +92,7 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-image-search'), {
     saucenaoApiKey: password.saucenaoApiKey,
   })
+  koishi.plugin(require('koishi-plugin-jrrp'), {})
   koishi.plugin(require('koishi-plugin-puppeteer'), {
     browser: {
       executablePath: chromePath,
@@ -125,7 +131,7 @@ module.exports = () => {
   koishi.command('genshin.backpack', '', { authority: 2 }).shortcut('原神背包')
 
   // Local plugins
-  koishi.plugin(require('../plugins/bilibili-plus'), {})
+  // koishi.plugin(require('../plugins/bilibili-plus'), {})
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/github-details'))
   koishi.plugin(require('../plugins/youdao'))

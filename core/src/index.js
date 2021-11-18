@@ -32,6 +32,9 @@ koishi.plugin(require('koishi-plugin-mongo'), {
   password: password.dbPassword.mongo.koishi,
 })
 
+// Hack QQ channel
+koishi.plugin(require('./plugins/qq-channel-patch'), {})
+
 /**
  * @module autoLoads
  */
