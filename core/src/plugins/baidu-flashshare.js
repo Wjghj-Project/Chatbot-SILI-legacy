@@ -1,11 +1,21 @@
+/**
+ * @name baidu-flashshare
+ * @desc 百度闪存 Baidu Netdist Flashshare Plugin for koishi.js
+ * @author Dragon-Fish <dragon-fish@qq.com>
+ * @license MIT
+ *
+ * @example app.plugin(reqiure('./baidu-flashshare'), { cookie: 'xxx', basePath: '/QQbotShare' })
+ */
+
+// Packages
 const { Buffer } = require('buffer')
 const axios = require('axios').default
 
 // Utils
 const atob = (str) => Buffer.from(str, 'base64').toString()
-const btoa = (str) => Buffer.from(str).toString('base64')
+// const btoa = (str) => Buffer.from(str).toString('base64')
 const atou = (str) => decodeURIComponent(escape(atob(str)))
-const utoa = (str) => btoa(unescape(encodeURIComponent(str)))
+// const utoa = (str) => btoa(unescape(encodeURIComponent(str)))
 
 /**
  * @param {string} str
@@ -30,35 +40,35 @@ class BaiduFlashShare {
    * @param {{bdstoken?: string; cookie: string}} params0
    */
   constructor({ bdstoken, cookie }) {
-    if (bdstoken) this.bdstoken = bdstoken
-    if (cookie) this.setCookie(cookie)
-    this.endpoints = {
-      saveFile: 'https://pan.baidu.com/api/rapidupload',
-    }
-  }
-
-  setCookie(cookie) {
-    this.cookie = cookie
-    return this
-  }
-
-  getCookie() {
-    const o = cookieToObj(this.cookie)
-    return `BDUSS=${o.BDUSS}; STOKEN=${o.STOKEN}`
+    if (bdstoken) this._bdstoken = bdstoken
+    if (cookie) this.cookie = cookie
+    this.request = axios.create({
+      baseURL: 'https://pan.baidu.com',
+      params: {},
+      headers: {},
+    })
   }
 
   async initToken() {
-    this.bdstoken = (
-      await axios.get(
-        'https://pan.baidu.com/api/gettemplatevariable?fields=["bdstoken"]',
-        {
-          headers: {
-            cookie: this.getCookie(),
-          },
-        }
-      )
+    this._bdstoken = (
+      await this.request.get('/api/gettemplatevariable', {
+        params: {
+          fields: '["bdstoken"]',
+        },
+      })
     ).data?.result?.bdstoken
     return this
+  }
+
+  // Cookie Validator
+  get cookie() {
+    const o = cookieToObj(this._cookie)
+    return `BDUSS=${o.BDUSS}; STOKEN=${o.STOKEN}`
+  }
+  set cookie(val) {
+    const o = cookieToObj(val)
+    this._cookie = `BDUSS=${o.BDUSS}; STOKEN=${o.STOKEN}`
+    this.request.defaults.headers.cookie = this._cookie
   }
 
   /**
@@ -112,29 +122,26 @@ class BaiduFlashShare {
   }
 
   /**
-   *
+   * Save file via Magiclink
    * @param {string} magicLink
-   * @param {`/${string}`?} path
+   * @param {`/${string}`?} fileName
    */
-  saveFile(magicLink, path) {
+  saveFile(magicLink, fileName) {
     const { md5, slice_md5, file_length, file_name } =
       this.parseMagicLink(magicLink)
-    path = path || file_name
-    if (!path.startsWith('/')) path = `/${path}`
-    return axios.post(
-      `${this.endpoints.saveFile}`,
+    fileName = fileName || file_name
+    if (!fileName.startsWith('/')) fileName = `/${fileName}`
+    return this.request.post(
+      '/api/rapidupload',
       new URLSearchParams({
         'content-length': file_length,
         'content-md5': md5.toLowerCase(),
         'slice-md5': slice_md5.toLowerCase(),
-        path,
+        path: fileName,
       }).toString(),
       {
         params: {
-          bdstoken: this.bdstoken,
-        },
-        headers: {
-          cookie: this.getCookie(),
+          bdstoken: this._bdstoken,
         },
       }
     )
@@ -146,11 +153,10 @@ class BaiduFlashShare {
  * @param {{cookie: string; basePath?: `/${string}`}} param1
  */
 async function apply(ctx, { cookie, basePath = '/' }) {
-  const app = new BaiduFlashShare({
-    cookie,
-  })
+  const app = new BaiduFlashShare()
+  app.cookie = cookie
   await app.initToken()
-  ctx.logger('bdpan').debug('Got token', app.bdstoken)
+  ctx.logger('bdpan').debug('Got token', app._bdstoken)
 
   ctx
     .command(
@@ -168,7 +174,7 @@ async function apply(ctx, { cookie, basePath = '/' }) {
         `链接解析成功，正在保存。\n分享协议：${s.protocol}\n文件名称：${s.file_name}\n文件大小：${s.file_length}`
       )
     })
-    .action(async ({ session }, magic) => {
+    .action(async (_, magic) => {
       const { file_name } = app.parseMagicLink(magic)
       let path = basePath
       if (!path.startsWith('/')) path = '/' + path
