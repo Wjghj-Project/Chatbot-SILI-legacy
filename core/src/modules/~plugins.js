@@ -81,7 +81,7 @@ module.exports = () => {
 
   koishi.plugin(require('koishi-plugin-eval'), {
     prefix: null,
-    userFields: ['id', 'authority', 'name']
+    userFields: ['id', 'authority', 'name'],
   })
   koishi.plugin(require('koishi-plugin-github'), {
     path: '/api/github',
@@ -132,6 +132,10 @@ module.exports = () => {
 
   // Local plugins
   // koishi.plugin(require('../plugins/bilibili-plus'), {})
+  koishi.plugin(require('../plugins/baidu-flashshare'), {
+    cookie: password.baidupan.cookie,
+    basePath: '/Autosave_SILI',
+  })
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/github-details'))
   koishi.plugin(require('../plugins/youdao'))
