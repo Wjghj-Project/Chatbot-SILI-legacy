@@ -1,8 +1,5 @@
 const sysLog = require('../utils/sysLog')
-const { mySelf } = require('../secret/qqNumber').user
 const { koishi } = require('../index')
-const { segment } = require('koishi-utils')
-const bots = require('../utils/bots')
 
 module.exports = () => {
   // 添加好友
@@ -20,25 +17,6 @@ module.exports = () => {
     sysLog('💌', '收到加群邀请', '群' + session.groupId)
     // bot.handelReauest()
   })
-
-  // // 群成员增加
-  // koishi.on('group-member-added', async (session) => {
-  //   sysLog(
-  //     '🔰',
-  //     '检测到群成员增加',
-  //     '群' + session.groupId,
-  //     '用户' + session.userId
-  //   )
-  //   if (session.userId === session.selfId) {
-  //     sysLog('💌', '检测到加入群聊，发送自我介绍')
-  //     session.execute('about')
-  //   }
-  // })
-
-  // // 群成员减少
-  // koishi.on('group-member-deleted', (session) => {
-  //   sysLog('💔', '检测到群成员减少', session)
-  // })
 
   // 群管理变动
   koishi.on('group-member/role', (session) => {

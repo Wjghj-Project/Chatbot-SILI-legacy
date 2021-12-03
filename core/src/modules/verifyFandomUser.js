@@ -7,7 +7,7 @@ const { koishi } = require('../index')
  */
 module.exports = () => {
   koishi
-    .group(fandomQQ)
+    .channel(fandomQQ)
     .command('verify-qq 验证保存在Fandom社区中心的QQ号信息')
     .option('user', '-u <user> 指定Fandom用户名')
     .option('qq', '-q [qq] 指定QQ号，预设为调用者的QQ')

@@ -1,4 +1,5 @@
 const { Buffer } = require('buffer')
+const { URLSearchParams } = require('url')
 const axios = require('axios').default
 
 // Utils
@@ -142,7 +143,7 @@ class BaiduFlashShare {
 }
 
 /**
- * @param {import('koishi-core').Context} ctx
+ * @param {import('koishi').Context} ctx
  * @param {{cookie: string; basePath?: `/${string}`}} param1
  */
 async function apply(ctx, { cookie, basePath = '/' }) {
@@ -159,7 +160,7 @@ async function apply(ctx, { cookie, basePath = '/' }) {
       {}
     )
     .alias('bdp', 'bdpan', '百度闪存')
-    .check(async ({ session, options }, magic) => {
+    .before(async ({ session, options }, magic) => {
       if (options.help) return session.execute('bdpan -h')
       const s = app.parseMagicLink(magic)
       ctx.logger('bdpan').info(s, app.getCookie())

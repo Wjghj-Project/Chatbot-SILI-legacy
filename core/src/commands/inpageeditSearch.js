@@ -1,5 +1,5 @@
 const axios = require('axios').default
-const { koishi } = require('../index')
+const { koishi, ctx } = require('../index')
 
 module.exports = () => {
   /**
@@ -14,21 +14,21 @@ module.exports = () => {
     .action(({ session }, sitename) => {
       var before = new Date().getTime()
       if (!sitename) sitename = ''
-      axios
-        .get('https://api.wjghj.cn/inpageedit/query/wiki', {
+      return axios
+        .get('https://a.ipe.wiki/api/search/wikis', {
           params: {
-            sitename: sitename,
-            sortby: '_total',
-            sortorder: -1,
+            siteName: sitename,
+            sort: '!_total',
+            limit: 3,
             prop: '_total|url|sitename|users',
           },
         })
-        .then(res => {
-          if (!res.data.query) {
-            session.send('查询数据时出现错误。')
-            return
+        .then(({ data }) => {
+          koishi.logger('ipes').info(JSON.stringify(data, null, 2))
+          if (!data.body.search) {
+            return '查询数据时出现错误。'
           }
-          var wikis = res.data.query
+          var wikis = data.body.search
           var msg = []
           if (wikis.length > 0) {
             if (sitename === '') {
@@ -45,10 +45,10 @@ module.exports = () => {
             }
             msg.push('')
             for (let i = 0; i < limit; i++) {
-              msg.push(`${wikis[i].sitename}`)
-              msg.push(`├ 链接: ${wikis[i].url}`)
-              msg.push(`├ 次数: ${wikis[i]._total}`)
-              msg.push(`└ 人数: ${Object.keys(wikis[i].users).length}`)
+              msg.push(`${wikis[i].siteName}`)
+              msg.push(`├ 链接: ${wikis[i].siteUrl}`)
+              msg.push(`└ 次数: ${wikis[i]._total}`)
+              // msg.push(`└ 人数: ${Object.keys(wikis[i].users).length}`)
               msg.push('')
             }
             msg.push(`(查询耗时${(new Date().getTime() - before) / 1000}秒)`)
@@ -58,7 +58,7 @@ module.exports = () => {
               '试试别的关键词吧！',
             ]
           }
-          session.send(msg.join('\n'))
+          return msg.join('\n')
         })
     })
 }

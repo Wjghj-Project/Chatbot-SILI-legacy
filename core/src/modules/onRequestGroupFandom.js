@@ -1,14 +1,13 @@
 const qqNumber = require('../secret/qqNumber')
 const verifyQQ = require('../utils/verifyQQ')
 const { koishi } = require('../index')
-const bots = require('../utils/bots')
 
 /**
  * @module Fandom群入群申请
  */
 module.exports = () => {
   koishi
-    .group(qqNumber.group.fandom, qqNumber.group.dftest)
+    .channel(qqNumber.group.fandom, qqNumber.group.dftest)
     .command('ban', '自动验证黑名单系统', { authority: 2 })
     .option('add', '-a <user:posint> 新增黑名单记录')
     .option('remove', '-r <user:posint> 移除黑名单记录')
@@ -53,7 +52,7 @@ module.exports = () => {
     })
 
   koishi
-    .group(qqNumber.group.fandom, qqNumber.group.dftest)
+    .channel(qqNumber.group.fandom, qqNumber.group.dftest)
     .on('group-member-request', async (session) => {
       // sysLog('💭', '收到入群申请', session)
       const { userId, content } = session
@@ -87,7 +86,7 @@ module.exports = () => {
         session.sendQueued(
           [
             '请手动检查该用户信息:',
-            `https://community.fandom.com/wiki/Special:Lookupuser/${userName}`,
+            `https://community.fandom.com/wiki/Special:Lookupuser/${answer.trim()}`,
             '复制拒绝理由: QQ号验证失败，请参阅群说明',
           ].join('\n')
         )

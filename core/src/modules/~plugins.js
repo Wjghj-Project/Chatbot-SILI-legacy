@@ -8,22 +8,22 @@ const chromeVer = require('puppeteer/lib/cjs/puppeteer/revisions')
   .PUPPETEER_REVISIONS.chromium
 const chromePath = path.resolve(
   __dirname,
-  `../../../node_modules/puppeteer/.local-chromium/win64-${chromeVer}/chrome-win/chrome.exe`
+  `../../node_modules/puppeteer/.local-chromium/win64-${chromeVer}/chrome-win/chrome.exe`
 )
 
 /**
  * @module loadPlugins 插件配置
  */
 module.exports = () => {
-  koishi.plugin(require('koishi-plugin-animal-picture'))
-  koishi.command('animal', { minInterval: 10 * 1000 })
-  koishi.plugin(require('koishi-plugin-assets'), {
-    type: 'local',
-    root: path.resolve(__dirname, '../../assets'),
-    secret: password.dbPassword.mongo,
-    path: '/api/assets',
-  })
-  koishi.plugin(require('@idlist/koishi-plugin-blive'))
+  // koishi.plugin(require('koishi-plugin-animal-picture'))
+  // koishi.command('animal', { minInterval: 10 * 1000 })
+  // koishi.plugin(require('koishi-plugin-assets'), {
+  //   type: 'local',
+  //   root: path.resolve(__dirname, '../../assets'),
+  //   secret: password.dbPassword.mongo,
+  //   path: '/api/assets',
+  // })
+  // koishi.plugin(require('@idlist/koishi-plugin-blive'))
   koishi.plugin(require('koishi-plugin-blame'), {
     catch: ['unhandledRejection'],
     send: {
@@ -32,7 +32,7 @@ module.exports = () => {
     },
     sender: ['onebot:' + require('../secret/qqNumber').user.mySelf],
   })
-  koishi.plugin(require('koishi-plugin-common'), {
+  koishi.plugin(require('@koishijs/plugin-common'), {
     // 复读机
     onRepeat(state) {
       let repeatCD = 45 * 1000
@@ -67,23 +67,21 @@ module.exports = () => {
     },
   })
   koishi.command('switch', '', { authority: 2 })
-  // .option('target', '', { authority: 3 })
-  koishi.command('switch')._options.target.authority = 3
   koishi
     .command('callme', '', { minInterval: Time.hour, maxUsage: 5 })
     .userFields(['name'])
-    .check(({ session }, i) => {
+    .before(({ session }, i) => {
       if (!i)
         return session.user.name
           ? `sili认得你，${session.user.name}，你好～`
           : '你还没有给自己取一个名字呢'
     })
 
-  koishi.plugin(require('koishi-plugin-eval'), {
-    prefix: null,
-    userFields: ['id', 'authority', 'name'],
-  })
-  koishi.plugin(require('koishi-plugin-github'), {
+  // koishi.plugin(require('@koishijs/plugin-eval'), {
+  //   prefix: null,
+  //   userFields: ['id', 'authority', 'name'],
+  // })
+  koishi.plugin(require('@koishijs/plugin-github'), {
     path: '/api/github',
     appId: password.github.appId,
     appSecret: password.github.appSecret,
@@ -92,28 +90,25 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-image-search'), {
     saucenaoApiKey: password.saucenaoApiKey,
   })
-  koishi.plugin(require('koishi-plugin-jrrp'), {})
-  koishi.plugin(require('koishi-plugin-puppeteer'), {
+  koishi.plugin(require('@koishijs/plugin-puppeteer'), {
     browser: {
       executablePath: chromePath,
     },
   })
-  // koishi.plugin(require('koishi-plugin-rss'))
-  // koishi.plugin(require('../plugins/rss-plus.js'))
-  koishi.plugin(require('koishi-plugin-schedule'))
+  koishi.plugin(require('@koishijs/plugin-schedule'), { minInterval: 10000 })
   koishi.plugin(require('koishi-plugin-shell'), {
     shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
   })
-  koishi.plugin(require('koishi-plugin-webui'), {
-    title: 'SILI 监控中心',
-    uiPath: '/dash',
-    apiPath: '/api/status',
-  })
-  koishi.plugin(require('koishi-plugin-chat'))
-  koishi.plugin(require('koishi-plugin-teach'), {
+  // koishi.plugin(require('koishi-plugin-webui'), {
+  //   title: 'SILI 监控中心',
+  //   uiPath: '/dash',
+  //   apiPath: '/api/status',
+  // })
+  // koishi.plugin(require('koishi-plugin-chat'))
+  koishi.plugin(require('@koishijs/plugin-teach'), {
     prefix: '?!',
   })
-  koishi.plugin(require('koishi-plugin-tools'), {})
+  koishi.plugin(require('@koishijs/plugin-tools'), {})
 
   // 原神插件
   koishi.plugin(require('koishi-plugin-genshin'), {

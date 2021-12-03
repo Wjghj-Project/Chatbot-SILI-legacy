@@ -3,7 +3,7 @@ const resolveBrackets = require('../utils/resolveBrackets')
 
 module.exports = () => {
   koishi
-    .group()
+    .guild()
     .command('admin/siliname <name:text>', '', { authority: 3 })
     .action(async ({ session }, name) => {
       if (!name) return

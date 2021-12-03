@@ -7,13 +7,13 @@ module.exports = () => {
     .option('add', '-a <user:user>', { hidden: true })
     .option('remove', '-r <user:user>', { hidden: true })
     .userFields(['uuid', 'authority', 'authoritySuper'])
-    .check(({ session, options }, cmd) => {
+    .before(({ session, options }, cmd) => {
       koishi.logger('sudo').info({ user: session.user, options, cmd })
       if (session.user.authoritySuper !== true) {
         return '您不是超级管理员。'
       }
     })
-    .check(async ({ session, options }) => {
+    .before(async ({ session, options }) => {
       if (options.add || options.remove) {
         const s = options.add
           ? options.add.split(':')

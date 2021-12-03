@@ -19,10 +19,10 @@ function apply(ctx) {
     .example(
       `更新 dbadmin channel updateOne { "pid": "12345" } |-| { "foo": "bar" }`
     )
-    .check((_, col, action, filter) => {
+    .before((_, col, action, filter) => {
       if (!col || !action || !filter) return '缺少必要参数。'
     })
-    .check((_, col, action) => {
+    .before((_, col, action) => {
       if (!['find', 'findOne', 'update', 'updateOne'].includes(action))
         return `不可用的操作: ${action}`
     })
