@@ -32,6 +32,7 @@ module.exports = () => {
     },
     sender: ['onebot:' + require('../secret/qqNumber').user.mySelf],
   })
+  koishi.plugin(require('koishi-plugin-chat'))
   koishi.plugin(require('koishi-plugin-common'), {
     // 复读机
     onRepeat(state) {
@@ -67,7 +68,6 @@ module.exports = () => {
     },
   })
   koishi.command('switch', '', { authority: 2 })
-  // .option('target', '', { authority: 3 })
   koishi.command('switch')._options.target.authority = 3
   koishi
     .command('callme', '', { minInterval: Time.hour, maxUsage: 5 })
@@ -92,6 +92,7 @@ module.exports = () => {
   koishi.plugin(require('koishi-plugin-image-search'), {
     saucenaoApiKey: password.saucenaoApiKey,
   })
+  koishi.plugin(require('koishi-plugin-mediawiki'), {})
   koishi.plugin(require('koishi-plugin-puppeteer'), {
     browser: {
       executablePath: chromePath,
@@ -106,7 +107,7 @@ module.exports = () => {
     uiPath: '/dash',
     apiPath: '/api/status',
   })
-  koishi.plugin(require('koishi-plugin-chat'))
+  koishi.plugin(require('koishi-plugin-welcome'), {})
   koishi.plugin(require('koishi-plugin-teach'), {
     prefix: '?!',
   })
@@ -115,7 +116,6 @@ module.exports = () => {
   // 原神插件
   koishi.plugin(require('koishi-plugin-genshin'), {
     cookie: password.mhyCookie,
-    // gachaPool: require('../utils/genshinGachaPool'),
     wish: {
       enable: true,
     },
@@ -128,7 +128,6 @@ module.exports = () => {
   koishi.command('genshin.backpack', '', { authority: 2 }).shortcut('原神背包')
 
   // Local plugins
-  // koishi.plugin(require('../plugins/bilibili-plus'), {})
   koishi.plugin(require('../plugins/baidu-flashshare'), {
     cookie: password.baidupan.cookie,
     basePath: '/Autosave_SILI',
@@ -137,6 +136,4 @@ module.exports = () => {
   koishi.plugin(require('../plugins/github-details'))
   koishi.plugin(require('../plugins/youdao'))
   koishi.plugin(require('../plugins/surl'), {})
-  koishi.plugin(require('koishi-plugin-mediawiki'), {})
-  koishi.plugin(require('koishi-plugin-welcome'), {})
 }

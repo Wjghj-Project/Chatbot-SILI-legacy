@@ -40,9 +40,9 @@ class BaiduFlashShare {
   /**
    * @param {{bdstoken?: string; cookie: string}} params0
    */
-  constructor({ bdstoken, cookie }) {
-    if (bdstoken) this._bdstoken = bdstoken
-    if (cookie) this.cookie = cookie
+  constructor() {
+    this._cookie = ''
+    this._bdstoken = ''
     this.request = axios.create({
       baseURL: 'https://pan.baidu.com',
       params: {},
@@ -51,13 +51,12 @@ class BaiduFlashShare {
   }
 
   async initToken() {
-    this._bdstoken = (
-      await this.request.get('/api/gettemplatevariable', {
-        params: {
-          fields: '["bdstoken"]',
-        },
-      })
-    ).data?.result?.bdstoken
+    const { data } = await this.request.get('/api/gettemplatevariable', {
+      params: {
+        fields: '["bdstoken"]',
+      },
+    })
+    this._bdstoken = data?.result?.bdstoken
     return this
   }
 
@@ -167,9 +166,8 @@ async function apply(ctx, { cookie, basePath = '/' }) {
     )
     .alias('bdp', 'bdpan', '百度闪存')
     .check(async ({ session, options }, magic) => {
-      if (options.help) return session.execute('bdpan -h')
+      if (options.help) return
       const s = app.parseMagicLink(magic)
-      ctx.logger('bdpan').info(s, app.getCookie())
       if (!s) return '无效的百度闪存魔力链接。'
       await session.send(
         `链接解析成功，正在保存。\n分享协议：${s.protocol}\n文件名称：${s.file_name}\n文件大小：${s.file_length}`
