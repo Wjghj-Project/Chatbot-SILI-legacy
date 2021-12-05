@@ -10,6 +10,7 @@
 // Packages
 const { Buffer } = require('buffer')
 const axios = require('axios').default
+const { URLSearchParams } = require('url')
 
 // Utils
 const atob = (str) => Buffer.from(str, 'base64').toString()
