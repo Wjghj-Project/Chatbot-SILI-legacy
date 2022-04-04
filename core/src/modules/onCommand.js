@@ -1,27 +1,24 @@
-// const { segment } = require('koishi-utils')
-const { Session } = require('koishi-core')
 const { koishi } = require('../')
 
 module.exports = () => {
   koishi
     .platform('discord')
-    .on('before-command', ({ session }) => killCmd(session, ''))
+    .on('before-command', ({ session }) => (isDiscordBot(session) ? '' : void 0))
   koishi
     .platform('discord')
-    .on('dialogue/before-send', ({ session }) => killCmd(session, true))
+    .on('dialogue/before-send', ({ session }) =>
+      isDiscordBot(session) ? true : void 0
+    )
+  // @FIX 空白信息会随机触发任意上下文的问答
+  koishi.on('dialogue/before-send', ({ session }) =>
+    !session.content?.trim() ? true : void 0
+  )
 
-  /**
-   * @param {Session} session
-   * @param {*} rep
-   */
-  function killCmd(session, rep) {
-    if (
+  function isDiscordBot(session) {
+    return !!(
       session.author.isBot ||
       !session.author.discriminator ||
       session.author.discriminator === '0000'
-    ) {
-      koishi.logger('MAIN').info('不响应非人类调用的指令')
-      return rep
-    }
+    )
   }
 }

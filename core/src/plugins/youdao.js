@@ -8,7 +8,7 @@ template.set('youdao', {
   info_failed: '翻译失败：{0}',
 })
 
-const langList = {
+const LANGUAGES = {
   中: 'zh-CHS',
   zh: 'zh-CHS',
   英: 'en',
@@ -130,8 +130,8 @@ const API_ENDPOINT = require('../secret/api').youdao
 function getLangCode(str) {
   if (!str) return 'auto'
   str = str.replace(/[语文]$/, '')
-  if (langList[str]) return langList[str]
-  if (Object.values(langList).includes(str)) return str
+  if (LANGUAGES[str]) return LANGUAGES[str]
+  if (Object.values(LANGUAGES).includes(str)) return str
   return null
 }
 
@@ -282,8 +282,12 @@ async function makeQuery(q, from, to) {
   return data
 }
 
-module.exports.apply = koishi => {
-  koishi
+/**
+ *
+ * @param {import('koishi').Context} ctx
+ */
+module.exports.apply = (ctx) => {
+  ctx
     .command('tools/youdao <text:text>', '使用无道词典进行翻译')
     .shortcut('翻译', { fuzzy: true, greedy: true })
     .shortcut(/(.+)用((.+)[语文])怎么说/, {
@@ -302,9 +306,19 @@ module.exports.apply = koishi => {
     })
     .option('from', '-f <lang> 源内容的语言')
     .option('to', '-t <lang> 翻译后的语言')
+    .option('list', '-l 显示所有支持的语言')
+    .check(({ options }) => {
+      if (options.list) {
+        return `当前支持以下语言互译：${Array.from(
+          new Set(Object.values(LANGUAGES))
+        )
+          .sort()
+          .join('/')}`
+      }
+    })
     .action(async ({ session, options }, text) => {
       if (!text) return session.execute('youdao -h')
-      koishi.logger('youdao').info('发起翻译', { options, text })
+      ctx.logger('youdao').info('发起翻译', { options, text })
 
       const from = getLangCode(options.from)
       const to = getLangCode(options.to)
@@ -319,11 +333,11 @@ module.exports.apply = koishi => {
         const data = await makeQuery(text, from, to)
 
         if (data.errorCode !== '0' && data.errorCode !== 0) {
-          koishi.logger('youdao').error('翻译出错', data)
+          ctx.logger('youdao').error('翻译出错', data)
           return template('youdao.info_failed', getErrorDesc(data.errorCode))
         }
 
-        koishi.logger('youdao').info('翻译完成')
+        ctx.logger('youdao').info('翻译完成')
         let { query, translation, isWord } = data
         let phonetic = ''
         if (isWord) {
@@ -339,7 +353,7 @@ module.exports.apply = koishi => {
           { query, phonetic, translation }
         )
       } catch (err) {
-        koishi.logger('youdao').error('请求出错', err)
+        ctx.logger('youdao').error('请求出错', err)
         return template('youdao.info_failed', '我们这边出现了一点问题。')
       }
     })

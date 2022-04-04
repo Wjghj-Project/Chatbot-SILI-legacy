@@ -7,22 +7,23 @@
 
 // Packages
 const { CQBot } = require('koishi-adapter-onebot')
-const { segment, Logger } = require('koishi-core')
-const JSONbig = require('json-bigint')
-const logger = new Logger('qq-channel')
+const { segment } = require('koishi-core')
 
 /**
  * @param {import('koishi-core').Context} ctx
  */
 function apply(ctx) {
-  // Hack JSON
-  JSON.parse = JSONbig.parse
-
   // Adjust guild cahnnelId
   ctx.on('message', (session) => {
     if (session.subtype === 'guild') {
       session.channelId = `guild:${session.guildId || ''}-${session.channelId}`
-      // logger.info('message', session.guildId, session.channelId)
+    }
+  })
+
+  ctx.before('command', ({ session }) => {
+    // console.log('on-command', session, session.channel)
+    if (session.subtype === 'guild') {
+      session.channel.disabled = session?.channel?.disabled || []
     }
   })
 
@@ -39,11 +40,6 @@ function apply(ctx) {
   }
   CQBot.prototype.sendGuildMessage = async function (channel, content) {
     if (!content) return
-    // logger.info(
-    //   'send',
-    //   channel,
-    //   content.length > 120 ? content.slice(0, 120) + '...' : content
-    // )
     const [guildId, channelId] = channel.split('-')
     const session = this.createSession({
       content,

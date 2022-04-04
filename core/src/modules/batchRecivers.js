@@ -1,8 +1,9 @@
 const sysLog = require('../utils/sysLog')
-const { mySelf } = require('../secret/qqNumber').user
+// const { mySelf } = require('../secret/qqNumber').user
 const { koishi } = require('../index')
-const { segment } = require('koishi-utils')
-const bots = require('../utils/bots')
+const { segment } = require('koishi')
+// const { segment } = require('koishi-utils')
+// const bots = require('../utils/bots')
 
 module.exports = () => {
   // 添加好友
@@ -52,7 +53,19 @@ module.exports = () => {
   })
 
   // 指令调用
-  koishi.on('command', ({ session }) => {
-    sysLog('🤖', '指令调用', session.userId, session.content)
+  koishi.unselect('user').before('command', ({ session, command }) => {
+    console.info(
+      !session.channel.disable?.includes(command.name),
+      command.name,
+      session.channel.disable
+    )
+  })
+  koishi.on('command', (argv) => {
+    const { session, command } = argv
+    sysLog(
+      '🤖',
+      '指令调用',
+      `${command.name} ${session.userId} [原文：${session.content}]`
+    )
   })
 }

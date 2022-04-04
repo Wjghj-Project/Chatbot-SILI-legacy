@@ -295,6 +295,14 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@genshin-kit/core@^2.5.0":
+  version "2.6.0"
+  resolved "https://registry.npmmirror.com/@genshin-kit/core/download/@genshin-kit/core-2.6.0.tgz#f76827d6739b3ae77b79845ea26898fba59b9526"
+  integrity sha512-382F4DV6gAdJ8c/830Tg2Nhlw4lYX5mcoW7V/d6gP8F1NdmN2vnQ6kXDkK/rvp1q3GgED8rz0jTGqrrVxM2Gxg==
+  dependencies:
+    axios "^0.24.0"
+    tslib "^2.3.1"
+
 "@idlist/koishi-plugin-blive@^0.1.1":
   version "0.1.1"
   resolved "https://registry.npmmirror.com/@idlist/koishi-plugin-blive/download/@idlist/koishi-plugin-blive-0.1.1.tgz#51859ccbc72481d4f2be7b07bc4944f3faf76176"
@@ -830,12 +838,12 @@ axios@^0.21.0, axios@^0.21.1:
   dependencies:
     follow-redirects "^1.10.0"
 
-axios@^0.21.4:
-  version "0.21.4"
-  resolved "https://registry.npmmirror.com/axios/download/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
-  integrity sha1-xnuQ3AVo5cHPKwuFjEO6KOLtpXU=
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.npmmirror.com/axios/download/axios-0.24.0.tgz?cache=0&sync_timestamp=1635213960429&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Faxios%2Fdownload%2Faxios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha1-gE5voeS5xSiFAd2d/1anoJQNINY=
   dependencies:
-    follow-redirects "^1.14.0"
+    follow-redirects "^1.14.4"
 
 babel-walk@3.0.0-canary-5:
   version "3.0.0-canary-5"
@@ -860,11 +868,6 @@ bcrypt-pbkdf@^1.0.0:
   integrity sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
   dependencies:
     tweetnacl "^0.14.3"
-
-bignumber.js@^9.0.0:
-  version "9.0.1"
-  resolved "https://registry.nlark.com/bignumber.js/download/bignumber.js-9.0.1.tgz#8d7ba124c882bfd8e43260c67475518d0689e4e5"
-  integrity sha1-jXuhJMiCv9jkMmDGdHVRjQaJ5OU=
 
 binary-extensions@^2.0.0:
   version "2.2.0"
@@ -2090,7 +2093,7 @@ follow-redirects@^1.10.0:
   resolved "https://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.13.3.tgz#e5598ad50174c1bc4e872301e82ac2cd97f90267"
   integrity sha1-5VmK1QF0wbxOhyMB6CrCzZf5Amc=
 
-follow-redirects@^1.14.0:
+follow-redirects@^1.14.4:
   version "1.14.5"
   resolved "https://registry.npmmirror.com/follow-redirects/download/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
   integrity sha1-8JpYSJgdPHcrU5Iwl3hSP42Fw4E=
@@ -2196,14 +2199,6 @@ genshin-gacha-kit@^1.1.0:
   dependencies:
     axios "^0.21.1"
     tslib "^2.2.0"
-
-genshin-kit@^2.4.0:
-  version "2.5.0"
-  resolved "https://registry.npmmirror.com/genshin-kit/download/genshin-kit-2.5.0.tgz#5635de919fff40fb66070acb0a7cb2781e3045b7"
-  integrity sha1-VjXekZ//QPtmBwrLCnyyeB4wRbc=
-  dependencies:
-    axios "^0.21.4"
-    tslib "^2.3.1"
 
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
@@ -2823,13 +2818,6 @@ jsesc@^2.5.1:
   resolved "https://registry.nlark.com/jsesc/download/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha1-gFZNLkg9rPbo7yCWUKZ98/DCg6Q=
 
-json-bigint@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.nlark.com/json-bigint/download/json-bigint-1.0.0.tgz#ae547823ac0cad8398667f8cd9ef4730f5b01ff1"
-  integrity sha1-rlR4I6wMrYOYZn+M2e9HMPWwH/E=
-  dependencies:
-    bignumber.js "^9.0.0"
-
 json-buffer@3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/json-buffer/download/json-buffer-3.0.0.tgz#5b1f397afc75d677bde8bcfc0e47e1f9a3d9a898"
@@ -3071,13 +3059,13 @@ koishi-plugin-eval@^3.2.5:
     json5 "^2.2.0"
     typescript "^4.4.2"
 
-koishi-plugin-genshin@^2.0.0-beta.16:
-  version "2.0.0-beta.16"
-  resolved "https://registry.npmmirror.com/koishi-plugin-genshin/download/koishi-plugin-genshin-2.0.0-beta.16.tgz#6412ba58d554ff0d6b9f6a2c41e59ab7699a88dc"
-  integrity sha1-ZBK6WNVU/w1rn2osQeWat2maiNw=
+koishi-plugin-genshin@^2.0.0-beta.19:
+  version "2.0.0-beta.19"
+  resolved "https://rg.cnpmjs.org/koishi-plugin-genshin/download/koishi-plugin-genshin-2.0.0-beta.19.tgz#eccde4af61382121ec036ec9e7f59555e5dab274"
+  integrity sha512-zNEm98xQvz6VMP1AfDXdZ0yCYHphNpwpNe7MtUXX62APEahDUj4QHEC86l0YyrHbVgE4uUfiK/LraU3Pt0lUlw==
   dependencies:
+    "@genshin-kit/core" "^2.5.0"
     genshin-gacha-kit "^1.1.0"
-    genshin-kit "^2.4.0"
     pug "^3.0.2"
 
 koishi-plugin-github@^3.1.3:

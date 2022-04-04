@@ -1,5 +1,6 @@
 const { Argv } = require('koishi-core')
 const { segment } = require('koishi-utils')
+const resoveBrackets = require('../utils/resolveBrackets')
 
 Argv.createDomain('object', (item) => JSON.parse(item))
 
@@ -29,7 +30,7 @@ function apply(ctx) {
     .action(async (_, col, action, filter) => {
       let dbFilter = filter
         .split('|-|')
-        .map((item) => (item ? JSON.parse(item) : {}))
+        .map((item) => (item ? JSON.parse(resoveBrackets(item)) : {}))
 
       switch (action.toLowerCase()) {
         case 'find':

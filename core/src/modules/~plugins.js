@@ -72,11 +72,17 @@ module.exports = () => {
   koishi
     .command('callme', '', { minInterval: Time.hour, maxUsage: 5 })
     .userFields(['name'])
-    .check(({ session }, i) => {
-      if (!i)
+    .check(({ session, options }, name) => {
+      if (session.channel.disable?.includes('callme') || options.help) {
+        return
+      }
+      if (!name) {
         return session.user.name
           ? `sili认得你，${session.user.name}，你好～`
           : '你还没有给自己取一个名字呢'
+      } else if (/(sili)/gi.test(name)) {
+        return `拒绝执行：无法接受的昵称。`
+      }
     })
 
   koishi.plugin(require('koishi-plugin-eval'), {
@@ -100,7 +106,7 @@ module.exports = () => {
   })
   koishi.plugin(require('koishi-plugin-schedule'))
   koishi.plugin(require('koishi-plugin-shell'), {
-    shell: 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+    shell: 'C:\\Program Files\\PowerShell\\7\\pwsh.exe',
   })
   koishi.plugin(require('koishi-plugin-webui'), {
     title: 'SILI 监控中心',
@@ -134,6 +140,7 @@ module.exports = () => {
   })
   koishi.plugin(require('../plugins/dbadmin'))
   koishi.plugin(require('../plugins/github-details'))
+  // koishi.plugin(require('../plugins/mgp-status'))
   koishi.plugin(require('../plugins/youdao'))
   koishi.plugin(require('../plugins/surl'), {})
 }
