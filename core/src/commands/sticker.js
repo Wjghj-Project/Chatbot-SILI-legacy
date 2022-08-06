@@ -14,23 +14,28 @@ module.exports = () => {
         const page = await session.app.puppeteer.page()
         await page.setContent(
           `
-      <div
-        style="position: relative; display: inline-block;"
-        id="sticker"
-        >
-      <img
-        src="https://i.loli.net/2021/07/25/CnBp6z3y8WFAJ4d.jpg"
-        style="display: inline-block; width: 250px; height: 250px;"
-      />
-      <div style="
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        margin-top: 35px;
-      ">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
-      </div>
+<div
+  style="position: relative; display: inline-block;"
+  id="sticker"
+  >
+<img
+  src="https://i.loli.net/2021/07/25/CnBp6z3y8WFAJ4d.jpg"
+  style="display: inline-block; width: 250px; height: 250px;"
+/>
+<div style="
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+">
+<div style="
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+">${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+</div>
+</div>
       `
         )
         const el = await page.$('#sticker')

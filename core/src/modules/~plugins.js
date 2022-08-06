@@ -143,4 +143,6 @@ module.exports = () => {
   // koishi.plugin(require('../plugins/mgp-status'))
   koishi.plugin(require('../plugins/youdao'))
   koishi.plugin(require('../plugins/surl'), {})
+  koishi.plugin(require('../plugins/mute'))
+  koishi.plugin(require('../plugins/mgp-group-utils'))
 }
